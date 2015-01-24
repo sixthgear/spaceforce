@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import ggj.escape.components.CameraComponent;
 import ggj.escape.components.Mappers;
+import ggj.escape.components.PhysicsComponent;
 
 public class CameraSystem extends EntitySystem {
 
@@ -39,12 +40,11 @@ public class CameraSystem extends EntitySystem {
             }
             avg.scl(1.0f / c.targets.size());
 
-
             // conform scolling to bounds
             float lb = c.camera.viewportWidth / 2;
-            float rb = c.level.width * c.level.TILESIZE - lb;
+            float rb = c.level.width - lb;
             float bb = c.camera.viewportHeight / 2;
-            float tb = c.level.height * c.level.TILESIZE - bb;
+            float tb = c.level.height - bb;
 
             // clamp to edges
             float x = MathUtils.clamp((avg.x - lb) * c.scale.x + lb, lb, (rb - lb) * c.scale.x + lb);

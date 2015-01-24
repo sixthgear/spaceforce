@@ -10,7 +10,8 @@ import java.util.ArrayList;
 public class PlayerComponent extends Component {
 
     public ArrayList<TextureRegion> regions = new ArrayList<TextureRegion>(4);
-
+    public int maxCooldown = 4;
+    public int cooldown = 0;
 
     public PlayerComponent() {
         for (int i = 0; i < 4; i++) {

@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 
 public class EscapeGame extends Game {
 
-	private double DT = 1.0/60.0f;
+	private double DT = 1.0/45.0f;
 	private double accumulator = 0.0;
 	private double t = 0.0;
 
