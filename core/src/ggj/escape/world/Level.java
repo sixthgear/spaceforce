@@ -10,33 +10,34 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
+
 import com.badlogic.gdx.utils.ObjectSet;
+import ggj.escape.components.BulletComponent;
 import ggj.escape.components.Mappers;
 import ggj.escape.components.PhysicsComponent;
 
+import java.util.ArrayList;
 
 
-public class Level {
+public class Level implements ContactListener {
 
     private Engine engine;
     private TiledMap map;
     private TiledMapRenderer mapRenderer;
 
     public World world;
-    public Box2DDebugRenderer debugRenderer;
+    public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();;
     public ObjectSet<Entity> toRemove = new ObjectSet<Entity>();
 
     public int width;
     public int height;
     public static int TILESIZE = 32;
+    private boolean debug = false;
 
     public Level(Engine engine) {
 
         this.world = new World(Vector2.Zero, true);
-        this.world.setContactListener(new LevelContact(this));
-
-        this.debugRenderer = new Box2DDebugRenderer();
+        this.world.setContactListener(this);
 
         this.map = new TmxMapLoader().load("maps/level-1.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(map, 1.0f/TILESIZE);
@@ -51,6 +52,7 @@ public class Level {
         assert prop.get("tilewidth", int.class) == TILESIZE;
         assert prop.get("orientation", String.class).equals("orthogonal");
 
+        // Iterate cells and create collision boxes
         TiledMapTileLayer cells = (TiledMapTileLayer) this.map.getLayers().get("Collisions");
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -76,13 +78,28 @@ public class Level {
         map.getLayers().get(layer).setVisible(!map.getLayers().get(layer).isVisible());
     }
 
+    public void toggleDebug() {
+        this.debug = !this.debug;
+    }
+
 
     // render the world
     public void render(OrthographicCamera camera) {
         mapRenderer.setView(camera);
         mapRenderer.render(new int[]{0,1,2});
 
-//        debugRenderer.render(world, camera.combined);
+    }
+
+    public void renderOverlay(OrthographicCamera camera) {
+
+        mapRenderer.setView(camera);
+        mapRenderer.render(new int[]{3});
+
+        if (debug){
+            mapRenderer.render(new int[]{4,5});
+            debugRenderer.render(world, camera.combined);
+        }
+
     }
 
     public TiledMapTileLayer.Cell getTileAt(Vector3 pos) {
@@ -93,6 +110,8 @@ public class Level {
     }
 
     public void update(float delta) {
+
+        // step the world
         world.step(delta, 6, 2);
 
         // remove dead entities
@@ -105,6 +124,37 @@ public class Level {
 
         toRemove.clear();
 
+
+    }
+    @Override
+    public void beginContact(Contact contact) {
+
+        ArrayList<Fixture> fixtures = new ArrayList<Fixture>();
+        fixtures.add(contact.getFixtureA());
+        fixtures.add(contact.getFixtureB());
+
+        for (Fixture f : fixtures) {
+            if (f.getUserData() != null && f.getUserData().getClass() == Entity.class) {
+                Entity e = (Entity) f.getUserData();
+                if (e.getComponent(BulletComponent.class) != null) {
+                    toRemove.add(e);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void endContact(Contact contact) {
+
+    }
+
+    @Override
+    public void preSolve(Contact contact, Manifold oldManifold) {
+
+    }
+
+    @Override
+    public void postSolve(Contact contact, ContactImpulse impulse) {
 
     }
 

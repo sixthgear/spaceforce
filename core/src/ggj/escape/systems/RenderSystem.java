@@ -18,6 +18,7 @@ import ggj.escape.components.SpriteComponent;
 public class RenderSystem extends EntitySystem {
 
     public static Texture tex = new Texture("sprites/placeholders.png");
+    public static Texture sprites = new Texture("sprites/sprite-sheet.png");
     public static TextureRegion bullet = new TextureRegion(RenderSystem.tex, 128, 0, 32, 32);
 
     private ImmutableArray<Entity> entities;

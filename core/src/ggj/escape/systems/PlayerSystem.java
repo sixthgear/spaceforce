@@ -2,8 +2,6 @@ package ggj.escape.systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
@@ -61,14 +59,29 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
             firing.x = Controllers.getControllers().get(i).getAxis(XBox360Pad.AXIS_RIGHT_X);
             firing.y = Controllers.getControllers().get(i).getAxis(XBox360Pad.AXIS_RIGHT_Y) * -1;
 
+            if (movement.angle() > 337.5 && movement.angle() <= 22.5)
+                s.region = pl.regions.get(0);
+            if (movement.angle() > 22.5  && movement.angle() <= 67.5)
+                s.region = pl.regions.get(1);
+            if (movement.angle() > 67.5  && movement.angle() <= 112.5)
+                s.region = pl.regions.get(2);
+            if (movement.angle() > 112.5 && movement.angle() <= 157.5)
+                s.region = pl.regions.get(3);
+            if (movement.angle() > 157.5 && movement.angle() <= 202.5)
+                s.region = pl.regions.get(4);
+            if (movement.angle() > 202.5 && movement.angle() <= 247.5)
+                s.region = pl.regions.get(5);
+            if (movement.angle() > 247.5 && movement.angle() <= 292.5)
+                s.region = pl.regions.get(6);
+            if (movement.angle() > 292.5 && movement.angle() <= 337.5)
+                s.region = pl.regions.get(7);
+
             // deadzone
             if (movement.len2() > 0.4) {
                 movement.scl(4);
-//                System.out.println(movement);
                 p.body.setLinearVelocity(movement);
                 p.body.setLinearDamping(0f);
             } else {
-//                p.body.setLinearVelocity(Vector2.Zero);
                 p.body.setLinearDamping(10f);
             }
 
@@ -156,24 +169,6 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
 
     @Override
     public boolean axisMoved(Controller controller, int axisCode, float value) {
-        // This is your analog stick
-        // Value will be from -1 to 1 depending how far left/right, up/down the stick is
-        // For the Y translation, I use a negative because I like inverted analog stick
-        // Like all normal people do! ;)
-
-//        System.out.println(axisCode);
-//        // Left Stick
-//        if(axisCode == XBox360Pad.AXIS_LEFT_X)
-//            System.out.printf("%d: %f\n", axisCode, value);
-//        if(axisCode == XBox360Pad.AXIS_LEFT_Y)
-//            System.out.printf("%d: %f\n", axisCode, value);
-//
-//        // Right stick
-//        if(axisCode == XBox360Pad.AXIS_RIGHT_X)
-//            System.out.printf("%d: %f\n", axisCode, value);
-//        if(axisCode == XBox360Pad.AXIS_RIGHT_Y)
-//            System.out.printf("%d: %f\n", axisCode, value);
-
         return false;
     }
 

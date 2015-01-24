@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="50" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="50" tilewidth="32" tileheight="32" nextobjectid="1">
  <tileset firstgid="1" name="terrain" tilewidth="32" tileheight="32">
   <image source="../tilesets/terrain.png" width="600" height="600"/>
  </tileset>
  <tileset firstgid="325" name="collisions" tilewidth="32" tileheight="32">
   <image source="../tilesets/collisions.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="341" name="meta" tilewidth="32" tileheight="32">
+  <image source="../sprites/meta.png" width="128" height="128"/>
  </tileset>
  <layer name="Floor" width="80" height="50">
   <data encoding="base64" compression="zlib">
@@ -33,7 +36,7 @@
  </layer>
  <layer name="Meta" width="80" height="50">
   <data encoding="base64" compression="zlib">
-   eJztwQEBAAAAgJD+r+4ICgAAAAAAAAAAAAAAAAAAAGo+gAAB
+   eJzt2UsKgCAUBVBbZL/9byQaBA4KyX6m54DgUC4XkWcIAOSau69PUI4xyqI/kYsM88mOu0xRlwa9AgAKFr+Bj/YANXL/Aa1y/71Pttes+ckQAAAAAADKlZrj1zzn3/4x9hZpT+TXUh/1D/5pAcojD28=
   </data>
  </layer>
  <objectgroup name="Regions"/>

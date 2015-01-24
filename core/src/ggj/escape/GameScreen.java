@@ -22,14 +22,13 @@ import ggj.escape.world.Level;
 
 public class GameScreen extends ScreenAdapter {
 
-
-
     public Level level;
     public Engine engine;
     public PooledEngine pool;
 
     // references to important entities
     public Family players = Family.getFor(PlayerComponent.class);
+    public Family enemies = Family.getFor(EnemyComponent.class);
     public Entity camera;
 
     @Override
@@ -52,16 +51,16 @@ public class GameScreen extends ScreenAdapter {
         engine.addSystem(new RenderSystem());
         engine.addSystem(new CameraSystem());
 
+        // count connected controllers
         int numPlayers = Controllers.getControllers().size;
 
-        // add the player entities
+        // add one player for each controller
         for (int i = 0; i < numPlayers; i++) {
             Entity player = new Entity();
             PlayerComponent p = new PlayerComponent();
             player.add(p);
-            player.add(new PhysicsComponent(level.world, 8 + 4 * i, 45, 0.5f, 0.5f, (short) 1));
+            player.add(new PhysicsComponent(level.world, 8 + 5 * i, 45, 0.5f, 0.5f, (short) 1));
             player.add(new SpriteComponent(p.regions.get(i)));
-
             engine.addEntity(player);
         }
 
@@ -70,7 +69,7 @@ public class GameScreen extends ScreenAdapter {
         camera.add(new CameraComponent(w, h, new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(players)));
         engine.addEntity(camera);
 
-        // set up input handling
+        // set up main window input handling
         Gdx.input.setInputProcessor(new InputAdapter() {
 
             public boolean keyDown (int keycode) {
@@ -93,6 +92,9 @@ public class GameScreen extends ScreenAdapter {
                     case Input.Keys.NUM_5:
                         level.toggleLayer(4);
                         return true;
+                    case Input.Keys.D:
+                        level.toggleDebug();
+                        return true;
                     default:
                         return false;
                 }
@@ -105,7 +107,7 @@ public class GameScreen extends ScreenAdapter {
         // update the engine
         engine.update(delta);
 
-        // update the world
+        // update the level
         level.update(delta);
 
     }
@@ -121,14 +123,15 @@ public class GameScreen extends ScreenAdapter {
         // scroll cameras (important to do this here to account for interpolated sprites)
         cameraSystem.follow();
 
+        // render the level
         level.render(Mappers.camera.get(camera).camera);
 
         // render engine entities
         renderSystem.render(Mappers.camera.get(camera).camera);
 
+        // render the level overlay
+        level.renderOverlay(Mappers.camera.get(camera).camera);
+
     }
-
-
-
 
 }
