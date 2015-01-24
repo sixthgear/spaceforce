@@ -33,7 +33,7 @@ public class World {
 //        // collect and validate map properties
 //        MapProperties prop = map.getProperties();
         width = 40; // prop.get("width", 0, int.class);
-        height = 20; // prop.get("height", 0, int.class);
+        height = 25; // prop.get("height", 0, int.class);
 //        assert prop.get("tileheight", int.class) == TILESIZE;
 //        assert prop.get("tilewidth", int.class) == TILESIZE;
 //        assert prop.get("orientation", String.class).equals("orthogonal");
@@ -108,14 +108,14 @@ public class World {
             Entity entity = entities.get(i);
             PhysicsComponent p = Mappers.physics.get(entity);
 
-            for (TiledMapTileLayer.Cell cell : getTouchingTiles(entity)) {
+//            for (TiledMapTileLayer.Cell cell : getTouchingTiles(entity)) {
 
-                if (cell == null)
-                    continue;
+//                if (cell == null)
+//                    continue;
 
-                TiledMapTile tile = cell.getTile();
+//                TiledMapTile tile = cell.getTile();
 
-            }
+//            }
 
             if (p.pos.x < 0)
                 p.pos.x = 0;

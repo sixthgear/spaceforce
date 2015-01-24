@@ -16,7 +16,7 @@ import ggj.escape.components.SpriteComponent;
 
 public class RenderSystem extends EntitySystem {
 
-    public static Texture tex = new Texture("badlogic.jpg");
+    public static Texture tex = new Texture("sprites/placeholders.png");
     private ImmutableArray<Entity> entities;
     private SpriteBatch batch = new SpriteBatch();
 

@@ -37,110 +37,11 @@ public class XBox360Pad
     public static final int BUTTON_L3 = 6;
     public static final int BUTTON_RB = 9;
     public static final int BUTTON_R3 = 7;
-    public static final int AXIS_LEFT_X = 1; //-1 is left | +1 is right
-    public static final int AXIS_LEFT_Y = 0; //-1 is up | +1 is down
-    public static final int AXIS_LEFT_TRIGGER = 4; //value 0 to 1f
-    public static final int AXIS_RIGHT_X = 3; //-1 is left | +1 is right
-    public static final int AXIS_RIGHT_Y = 2; //-1 is up | +1 is down
-    public static final int AXIS_RIGHT_TRIGGER = 4; //value 0 to -1f
+    public static final int AXIS_LEFT_X = 2; //-1 is left | +1 is right
+    public static final int AXIS_LEFT_Y = 3; //-1 is up | +1 is down
+    public static final int AXIS_LEFT_TRIGGER = 0; //value 0 to 1f
+    public static final int AXIS_RIGHT_X = 4; //-1 is left | +1 is right
+    public static final int AXIS_RIGHT_Y = 5; //-1 is up | +1 is down
+    public static final int AXIS_RIGHT_TRIGGER = 1; //value 0 to -1f
 }
 
-//Controllers.addListener(this);
-//, ControllerListener
-//// connected and disconnect dont actually appear to work for XBox 360 controllers.
-//@Override
-//public void connected(Controller controller) {
-//        System.out.println("Controlled Connected");
-//        }
-//
-//@Override
-//public void disconnected(Controller controller) {
-//        System.out.println("Controlled Disconnected");
-//        }
-//
-//@Override
-//public boolean buttonDown(Controller controller, int buttonCode) {
-//
-//        if(buttonCode == XBox360Pad.BUTTON_Y)
-//        System.out.println("Y");
-//        else if(buttonCode == XBox360Pad.BUTTON_A)
-//        System.out.println("A");
-//        else if(buttonCode == XBox360Pad.BUTTON_X)
-//        System.out.println("X");
-//        else if(buttonCode == XBox360Pad.BUTTON_B)
-//        System.out.println("B");
-//        else if(buttonCode == XBox360Pad.BUTTON_LB)
-//        System.out.println("LB");
-//        else if(buttonCode == XBox360Pad.BUTTON_RB)
-//        System.out.println("RB");
-//        else if(buttonCode == XBox360Pad.BUTTON_L3)
-//        System.out.println("L3");
-//        else if(buttonCode == XBox360Pad.BUTTON_R3)
-//        System.out.println("R3");
-//        else if(buttonCode == XBox360Pad.BUTTON_GUIDE)
-//        System.out.println("GUIDE");
-//        else if(buttonCode == XBox360Pad.BUTTON_BACK)
-//        System.out.println("BACK");
-//        else if(buttonCode == XBox360Pad.BUTTON_START)
-//        System.out.println("START");
-//        else if(buttonCode == XBox360Pad.BUTTON_DPAD_LEFT)
-//        System.out.println("L");
-//        else if(buttonCode == XBox360Pad.BUTTON_DPAD_RIGHT)
-//        System.out.println("R");
-//        else if(buttonCode == XBox360Pad.BUTTON_DPAD_UP)
-//        System.out.println("U");
-//        else if(buttonCode == XBox360Pad.BUTTON_DPAD_DOWN)
-//        System.out.println("D");
-//        else
-//        System.out.println(buttonCode);
-//
-//        return false;
-//        }
-//
-//@Override
-//public boolean buttonUp(Controller controller, int buttonCode) {
-//        return false;
-//        }
-//
-//@Override
-//public boolean axisMoved(Controller controller, int axisCode, float value) {
-//        // This is your analog stick
-//        // Value will be from -1 to 1 depending how far left/right, up/down the stick is
-//        // For the Y translation, I use a negative because I like inverted analog stick
-//        // Like all normal people do! ;)
-//
-////        // Left Stick
-////        if(axisCode == XBox360Pad.AXIS_LEFT_X)
-////            System.out.printf("%d: %f\n", axisCode, value);
-////        if(axisCode == XBox360Pad.AXIS_LEFT_Y)
-////            System.out.printf("%d: %f\n", axisCode, value);
-////
-////        // Right stick
-////        if(axisCode == XBox360Pad.AXIS_RIGHT_X)
-////            System.out.printf("%d: %f\n", axisCode, value);
-////        if(axisCode == XBox360Pad.AXIS_RIGHT_Y)
-////            System.out.printf("%d: %f\n", axisCode, value);
-//
-//        return false;
-//        }
-//
-//@Override
-//public boolean povMoved(Controller controller, int povCode, PovDirection value) {
-//        // This is the dpad
-//        return false;
-//        }
-//
-//@Override
-//public boolean xSliderMoved(Controller controller, int sliderCode, boolean value) {
-//        return false;
-//        }
-//
-//@Override
-//public boolean ySliderMoved(Controller controller, int sliderCode, boolean value) {
-//        return false;
-//        }
-//
-//@Override
-//public boolean accelerometerMoved(Controller controller, int accelerometerCode, Vector3 value) {
-//        return false;
-//        }

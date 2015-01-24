@@ -2,17 +2,25 @@ package ggj.escape;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
+
+import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.math.Vector2;
+
 import ggj.escape.components.*;
+
 import ggj.escape.systems.CameraSystem;
 import ggj.escape.systems.MovementSystem;
 import ggj.escape.systems.PlayerSystem;
 import ggj.escape.systems.RenderSystem;
 import ggj.escape.world.World;
+
+import java.util.ArrayList;
+
 
 public class GameScreen extends ScreenAdapter {
 
@@ -20,7 +28,7 @@ public class GameScreen extends ScreenAdapter {
     public Engine engine;
 
     // references to important entities
-    public Entity player;
+    public Family players = Family.getFor(PlayerComponent.class);
     public Entity camera;
     public Entity backgroundCamera;
 
@@ -40,24 +48,31 @@ public class GameScreen extends ScreenAdapter {
         // create the world
         world = new World(engine);
 
-        // add the player entity
-        player = new Entity();
-        PlayerComponent p = new PlayerComponent();
-        player.add(p);
-        player.add(new PhysicsComponent(48, 60));
-        player.add(new SpriteComponent(p.regionRight));
-        player.getComponent(PhysicsComponent.class).pos0.x = -2.0f;
-        player.getComponent(PhysicsComponent.class).pos0.y = -3.0f;
-        engine.addEntity(player);
+        int numPlayers = Controllers.getControllers().size;
+
+        // add the player entities
+        for (int i = 0; i < numPlayers; i++) {
+            Entity player = new Entity();
+            PlayerComponent p = new PlayerComponent();
+            player.add(p);
+            player.add(new PhysicsComponent(48, 60));
+            player.add(new SpriteComponent(p.regions.get(i)));
+            player.getComponent(PhysicsComponent.class).pos.x = 256 + 128f * i;
+            player.getComponent(PhysicsComponent.class).pos.y = 128f;
+            player.getComponent(PhysicsComponent.class).pos0.x = 256+128f * i;
+            player.getComponent(PhysicsComponent.class).pos0.y = 125f;
+            engine.addEntity(player);
+
+        }
 
         // add the main camera entity
         camera = new Entity();
-        camera.add(new CameraComponent(h, w, new Vector2(1.0f, 1.0f), world, player));
+        camera.add(new CameraComponent(h, w, new Vector2(1.0f, 1.0f), world, engine.getEntitiesFor(players).first()));
         engine.addEntity(camera);
 
         // add the background camera entity
         backgroundCamera = new Entity();
-        backgroundCamera.add(new CameraComponent(h, w, new Vector2(0.5f, 0.0f), world, player));
+        backgroundCamera.add(new CameraComponent(h, w, new Vector2(0.5f, 0.0f), world, engine.getEntitiesFor(players).first()));
         engine.addEntity(backgroundCamera);
 
         // set up input handling
@@ -96,7 +111,7 @@ public class GameScreen extends ScreenAdapter {
         engine.update(delta);
 
         // update the world
-//        world.update(delta);
+        world.update(delta);
 
     }
 
@@ -121,4 +136,8 @@ public class GameScreen extends ScreenAdapter {
         // render world top
 //        world.renderTop(Mappers.camera.get(camera).camera);
     }
+
+
+
+
 }
