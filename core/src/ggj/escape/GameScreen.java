@@ -3,6 +3,7 @@ package ggj.escape;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -14,7 +15,6 @@ import com.badlogic.gdx.math.Vector2;
 import ggj.escape.components.*;
 
 import ggj.escape.systems.CameraSystem;
-import ggj.escape.systems.MovementSystem;
 import ggj.escape.systems.PlayerSystem;
 import ggj.escape.systems.RenderSystem;
 import ggj.escape.world.Level;
@@ -22,8 +22,11 @@ import ggj.escape.world.Level;
 
 public class GameScreen extends ScreenAdapter {
 
+
+
     public Level level;
     public Engine engine;
+    public PooledEngine pool;
 
     // references to important entities
     public Family players = Family.getFor(PlayerComponent.class);
@@ -35,15 +38,19 @@ public class GameScreen extends ScreenAdapter {
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
 
-        // create the engine
+        // created the pooled engine
+        pool = new PooledEngine(32, 2048, 2, 8);
+
+        // create the main engine
         engine = new Engine();
-        engine.addSystem(new PlayerSystem());
-//        engine.addSystem(new MovementSystem());
+
+        // create the level
+        level = new Level(engine);
+
+        // add systems
+        engine.addSystem(new PlayerSystem(pool, engine, level.world));
         engine.addSystem(new RenderSystem());
         engine.addSystem(new CameraSystem());
-
-        // create the world
-        level = new Level(engine);
 
         int numPlayers = Controllers.getControllers().size;
 
@@ -52,7 +59,7 @@ public class GameScreen extends ScreenAdapter {
             Entity player = new Entity();
             PlayerComponent p = new PlayerComponent();
             player.add(p);
-            player.add(new PhysicsComponent(level.world, 256 + 128 * i, 1440, 32, 64));
+            player.add(new PhysicsComponent(level.world, 8 + 4 * i, 45, 0.5f, 0.5f, (short) 1));
             player.add(new SpriteComponent(p.regions.get(i)));
 
             engine.addEntity(player);
@@ -60,7 +67,7 @@ public class GameScreen extends ScreenAdapter {
 
         // add the main camera entity
         camera = new Entity();
-        camera.add(new CameraComponent(h, w, new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(players)));
+        camera.add(new CameraComponent(w, h, new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(players)));
         engine.addEntity(camera);
 
         // set up input handling

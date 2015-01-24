@@ -8,6 +8,7 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import ggj.escape.components.Mappers;
@@ -17,6 +18,8 @@ import ggj.escape.components.SpriteComponent;
 public class RenderSystem extends EntitySystem {
 
     public static Texture tex = new Texture("sprites/placeholders.png");
+    public static TextureRegion bullet = new TextureRegion(RenderSystem.tex, 128, 0, 32, 32);
+
     private ImmutableArray<Entity> entities;
     private SpriteBatch batch = new SpriteBatch();
 
@@ -34,8 +37,8 @@ public class RenderSystem extends EntitySystem {
 
             Vector2 pos = physics.body.getPosition();
             Vector2 interpolated = sprite.last.cpy().interpolate(pos, alpha, Interpolation.linear);
-            sprite.x = interpolated.x - 16;
-            sprite.y = interpolated.y - 16;
+            sprite.x = (pos.x) - 0.5f; //interpolated.x - 16;
+            sprite.y = (pos.y) - 0.5f; //interpolated.y - 16;
 
             sprite.last = pos.cpy();
         }
@@ -48,7 +51,7 @@ public class RenderSystem extends EntitySystem {
         for (int i = 0; i < entities.size(); i++) {
             Entity entity = entities.get(i);
             SpriteComponent sprite = Mappers.sprite.get(entity);
-            batch.draw(sprite.region, sprite.x, sprite.y);
+            batch.draw(sprite.region, sprite.x, sprite.y, sprite.w, sprite.h);
         }
         batch.end();
     }

@@ -1,9 +1,6 @@
 package ggj.escape.systems;
 
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -11,20 +8,26 @@ import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import ggj.escape.components.Mappers;
-import ggj.escape.components.PhysicsComponent;
-import ggj.escape.components.PlayerComponent;
-import ggj.escape.components.SpriteComponent;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.World;
+import ggj.escape.components.*;
 import ggj.escape.input.XBox360Pad;
 
 public class PlayerSystem extends EntitySystem  implements ControllerListener {
 
     public Family family = Family.getFor(PlayerComponent.class);
+    private PooledEngine pool;
+    private Engine engine;
+    private World world;
 
-    public PlayerSystem() {
+    public PlayerSystem(PooledEngine pool, Engine engine, World world) {
         super();
         Controllers.addListener(this);
+        this.pool = pool;
+        this.engine = engine;
+        this.world = world;
     }
 
     private ImmutableArray<Entity> entities;
@@ -44,17 +47,54 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
         for (int i = 0; i < entities.size(); ++i) {
 
             Entity entity = entities.get(i);
+
             PhysicsComponent p = Mappers.physics.get(entity);
             SpriteComponent s = Mappers.sprite.get(entity);
             PlayerComponent pl = Mappers.player.get(entity);
 
-            float x = Controllers.getControllers().get(i).getAxis(XBox360Pad.AXIS_LEFT_X);
-            float y = Controllers.getControllers().get(i).getAxis(XBox360Pad.AXIS_LEFT_Y);
+            Vector2 pos = p.body.getPosition();
+            Vector2 movement = new Vector2();
+            Vector2 firing = new Vector2();
 
-            if (Math.abs(x) < 0.2)  x = 0;
-            if (Math.abs(y) < 0.2)  y = 0;
+            movement.x = Controllers.getControllers().get(i).getAxis(XBox360Pad.AXIS_LEFT_X);
+            movement.y = Controllers.getControllers().get(i).getAxis(XBox360Pad.AXIS_LEFT_Y) * -1;
+            firing.x = Controllers.getControllers().get(i).getAxis(XBox360Pad.AXIS_RIGHT_X);
+            firing.y = Controllers.getControllers().get(i).getAxis(XBox360Pad.AXIS_RIGHT_Y) * -1;
 
-            p.body.setLinearVelocity(x * 2000, y * -2000);
+            // deadzone
+            if (movement.len2() > 0.4) {
+                movement.scl(4);
+//                System.out.println(movement);
+                p.body.setLinearVelocity(movement);
+                p.body.setLinearDamping(0f);
+            } else {
+//                p.body.setLinearVelocity(Vector2.Zero);
+                p.body.setLinearDamping(10f);
+            }
+
+            if (firing.len2() > 0.4 && pl.cooldown <= 0) {
+
+                Vector2 bulletPos = pos.cpy().add(firing.cpy().setLength2(1));
+                Entity bullet = new Entity();
+
+                PhysicsComponent b = new PhysicsComponent(world, bulletPos.x, bulletPos.y, 0.0625f, 0.0625f, (short) 2);
+                bullet.add(b);
+                bullet.add(new SpriteComponent(RenderSystem.bullet));
+                bullet.add(new BulletComponent());
+                engine.addEntity(bullet);
+
+                b.body.setBullet(true);
+                b.body.setLinearVelocity(firing.scl(40));
+                b.body.setLinearDamping(0);
+                Fixture f = b.body.getFixtureList().first();
+                f.setSensor(true);
+                f.setUserData(bullet);
+
+                pl.cooldown = pl.maxCooldown;
+
+            }
+
+            pl.cooldown--;
 
         }
     }
