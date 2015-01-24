@@ -32,9 +32,12 @@ public class RenderSystem extends EntitySystem {
             SpriteComponent sprite = Mappers.sprite.get(entity);
             PhysicsComponent physics = Mappers.physics.get(entity);
 
-            Vector2 interpolated = physics.pos0.cpy().interpolate(physics.pos, alpha, Interpolation.linear);
-            sprite.x = interpolated.x;
-            sprite.y = interpolated.y;
+            Vector2 pos = physics.body.getPosition();
+            Vector2 interpolated = sprite.last.cpy().interpolate(pos, alpha, Interpolation.linear);
+            sprite.x = interpolated.x - 16;
+            sprite.y = interpolated.y - 16;
+
+            sprite.last = pos.cpy();
         }
     }
 

@@ -1,20 +1,29 @@
 package ggj.escape.components;
 
 import com.badlogic.ashley.core.Component;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.physics.box2d.*;
 
 public class PhysicsComponent extends Component{
 
-    public Vector2 pos0 = new Vector2();
-    public Vector2 pos = new Vector2();
-    public Vector2 acc = new Vector2();
-    public float damping = 0.99f;
+    public Body body;
 
-    public BoundingBox bounds;
+    public PhysicsComponent(World world, int x, int y, int width, int height) {
 
-    public PhysicsComponent(int width, int height) {
-        bounds = new BoundingBox(new Vector3(0,0,0), new Vector3(width, height, 0));
+        BodyDef bodydef = new BodyDef();
+        bodydef.type = BodyDef.BodyType.DynamicBody;
+        bodydef.position.set(x, y);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(16);
+
+        FixtureDef fixturedef = new FixtureDef();
+        fixturedef.shape = shape;
+        fixturedef.density = 0.5f;
+        fixturedef.friction = 0.4f;
+
+        body = world.createBody(bodydef);
+        Fixture fixture = body.createFixture(fixturedef);
+        shape.dispose();
+
     }
 }
