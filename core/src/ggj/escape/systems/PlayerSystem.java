@@ -47,15 +47,14 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
             PhysicsComponent p = Mappers.physics.get(entity);
             SpriteComponent s = Mappers.sprite.get(entity);
             PlayerComponent pl = Mappers.player.get(entity);
-            
+
             float x = Controllers.getControllers().get(i).getAxis(XBox360Pad.AXIS_LEFT_X);
             float y = Controllers.getControllers().get(i).getAxis(XBox360Pad.AXIS_LEFT_Y);
 
-            if (Math.abs(x) < 0.1)  x = 0;
-            if (Math.abs(y) < 0.1)  y = 0;
+            if (Math.abs(x) < 0.2)  x = 0;
+            if (Math.abs(y) < 0.2)  y = 0;
 
-            p.acc.x = x * 200;
-            p.acc.y = y * -200;
+            p.body.setLinearVelocity(x * 2000, y * -2000);
 
         }
     }

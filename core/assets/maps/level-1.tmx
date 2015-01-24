@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="50" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="50" tilewidth="32" tileheight="32" nextobjectid="1">
  <tileset firstgid="1" name="terrain" tilewidth="32" tileheight="32">
   <image source="../tilesets/terrain.png" width="600" height="600"/>
  </tileset>
@@ -16,12 +16,12 @@
    eJztmE1OwzAQhe1Ff0BCYlfaIiHlDEhcu1wBDgAFVuwiflawoqUs8agZOp3aThwoSqL3SU+MxnFpXyzP2DNjzKfTwmlZxKsiXqr8pdOsiKVWanxVU19mm9w0n1enoTWm7zSw6/igiAcqn0eel+NyXlXR84d2+7u1xb+J+94nTmO7jqfFX53PS57n8bEYryp6/rSl/lWF/ak7nkrX/Pswu3uUBP7F6Xn2KIn279HpwtbXe72f9K+k+Dfy7FES7V+m6gzHmd2tQRzLutO19VeGzz9ZZzjOPLWJY1l3uubfjdNDZFz7dx5Yq6G87/OazpXTbaG5053TfRHPVf7apNXfo4BPobzv85oOnRcWptr5w3dGkGj/zoRPx9afj9EG/8rOH0OVT6m/kiwyj/YFWvN6b2iLf7Hzx0TlU+qvJOYfzXvxzG2Lf38F/d43k97n0b4K/zbrr2/LJfcErL817B/3bxOP9D4xhX8/xPa/snld8I/qIPV58wrS/SKprD8M0RX/6H6F+72q4r4wdIfM0Lthv319Shf869n0e2OuAaxQf0hePDk9m12f6L3Re2jr/T0zsun3xrIOxPrDmH+9gPdt82+fxPwbBbyHfxti/sXmNB349zvk/dU+Rb0N+0f/k3uesjkAAAAAAAAAAAAAAAAAAAAAAAAAaD7fGnkHxg==
   </data>
  </layer>
- <layer name="Shadow" width="80" height="50">
+ <layer name="Shadow" width="80" height="50" visible="0">
   <data encoding="base64" compression="zlib">
    eJztwQEBAAAAgJD+r+4ICgAAAAAAAAAAAAAAAAAAAGo+gAAB
   </data>
  </layer>
- <layer name="Over" width="80" height="50">
+ <layer name="Over" width="80" height="50" visible="0">
   <data encoding="base64" compression="zlib">
    eJztwQEBAAAAgJD+r+4ICgAAAAAAAAAAAAAAAAAAAGo+gAAB
   </data>
@@ -31,7 +31,7 @@
    eJztmAsKgzAQBe31EtD736ZSCQ1Lds1HwTUz8BBr0Tptk/jCZ1nCnrhnPUlQErNtFK+3JieI/SdieSml5DQq79k6kuPBX83vTssmtqPx6q+W0j22HG8Ff2Pgb4zZ/bXMS3IuT3k6Lf7OkP565xD8HWj3X+vFg7+Wz9jz/x25pgd/o2s0ea7Z/FnPWfJY2tew/Pa48ODPes6Sx0bWL5aLoHw3HvzdOX/kWC5W/P0orT9qOwn89XcJ+TibM6u/Vhj/Dmb3N9Ibax1yDWkM9Nj/lZ5Xe3pjrUOW507J8ewvFvxd2SFr5855i787sfx57u+v7DstLH8a+PvzVn89HfFZd9yzftYCAAAAAAAAAAAAAAAAAAAAz+cL4A6Ekw==
   </data>
  </layer>
- <layer name="Meta" width="80" height="50">
+ <layer name="Meta" width="80" height="50" visible="0">
   <data encoding="base64" compression="zlib">
    eJztwQEBAAAAgJD+r+4ICgAAAAAAAAAAAAAAAAAAAGo+gAAB
   </data>

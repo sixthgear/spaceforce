@@ -18,20 +18,6 @@ public class MovementSystem extends IteratingSystem {
 
         PhysicsComponent physics = Mappers.physics.get(entity);
 
-        // save temporary position
-        Vector2 p = physics.pos.cpy();
-
-        // integrate verlet
-        float dt2 = dt * dt;
-        Vector2 delta = physics.pos.cpy().sub(physics.pos0);
-        delta.scl(physics.damping);
-        physics.pos.add(delta);
-        physics.pos.mulAdd(physics.acc, dt2);
-
-        // save previous position
-        physics.pos0.x = p.x;
-        physics.pos0.y = p.y;
-
     }
 
 }
