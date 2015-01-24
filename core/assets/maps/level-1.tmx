@@ -1,11 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="25" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="50" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="terrain" tilewidth="32" tileheight="32">
   <image source="../tilesets/terrain.png" width="600" height="600"/>
  </tileset>
- <layer name="Tile Layer 1" width="40" height="25">
+ <tileset firstgid="325" name="collisions" tilewidth="32" tileheight="32">
+  <image source="../tilesets/collisions.png" width="128" height="128"/>
+ </tileset>
+ <layer name="Floor" width="80" height="50">
   <data encoding="base64" compression="zlib">
-   eJy1lk1PAjEQhtsDoCQm3lA0MdnfYOJPVm54RG5yFIMoJ2/Gj5OeQPHoNPYNr8N0t4vh8IRhttt92/lo+865L2EhfEZ7Ge1P5b8U+tFmlur5ckO+hYFwJQyFJ+FN2PHONYWW/7V3o91S/rLx/JzfyyWMbws38v5YuCV9XfEfCIf+1z6Kv9pfNR7PD+l5LmH8cULfuXAh9KKt/8NOjdfPB/9Ex5d9egzbcyNHrPlu/oneP/bpMWw3jByx5sN+PgpnfnM+KF5l4HudmCNV8cV+FqqOYBd+vcZgc13l5ouOJWuy4ov9LFQdwS6M2oPNdZWbL/jeRJhFTaxRxxeaT/1KOxP8A8M/NOJxLdxFpsK98BDtqfKPaD2Yx4ov1rTnV9qZ4Nc+oOcL/X7h8s4P9Piq/BtHTvzK3ve230LPV3Z+7Ch/O6M+rBwOOTd0dl5PYsxmifnKzo+u8h/7v3On4gtY30D5ua5e3Xov5vMgp79YNaH1vbv6fW5E+qx+WtZbWCevrWeA+Zq+Gs4Z3r+qeGhYK6/N6g2YD/2ra6Dz6ChDH/7fuvV+kOqFFhwP/o51fuo45ugLdRT63DQD3S8DVn/EulNnEnTk6Av3E/S7XNAX+Q4MffytCa1nRntXR1/D17/3IscB7je6nsK3noUXQ8c8rlP3fujDHB1f/97LeY7+CH06x1L6GrS2svtGVR/MBXWv9yKlr6PWVqf/bULqjGB9qTv4Nu7jqTtZWXxTd3D9Dt+vtsmI9IVvoidVvfMDw7hyvA==
+   eJztmQGOwjAMBPP/j1CeADyh8KcDqdYte2s3PbVSKu1IEW1IWrJxHDtMrbXru7ze5bl8XkSZlnY3ulfX3Oex9MNy76j/XI+O0ooLjmtuvxoqje7tr8avpd8sno3ac931wHHvxee3sg2gPqzDs33rqvSeqR9q1GOHUfc4cNx7EePlonRE3W7t2xan9m2rqB9qxO8Jn6HqXgeOey8qnZS9oAa8vmMuwkZDP9RI6YX1V7ofnUonZS+8Nm+ijv0iaoTv43rce2IuRkftp2uFteE9Zs1nhnZoi0q/y4Hj3osevTL9ItZhPdR8sD1HW+7D8zk62brNCmujtOP1rXTL7J59wego/1YV3GtYO6Vxtc9yjHOhzzPoF3FqlndkMYvSLtOl8qtZHnMm/6d+t4ql12wqW5sqT+M2GAPh+0eHx8D5U5VfKBtSPix7RuZP0ZZHh+0q0yTbFzBuwfqsLfbhuEXtM6OT+TkVy1Xasr/Da94z1FpnfxrPH50tsXJPzo+5f6Zztp5DO3z+6PTEe9We+Z/vszyRY+oz+D9eW1XuUNmf0npLTq3OEqYDx70Xa+t3S+nVqTrnxvk7w/nz1vytKplOPbar2jwPHPdebM3fetbdXm3OEL985hnPLSu7wnGpc88s1qvsMrPVs8TP4af5f54em+F4Q8V7al9F7TLdzhI/4/jRDtd8faVj7xxUdTEfo8Prkn37lr1Vaa3OVzJbwzww7o0xxhhjjDHGGGOMMcYYY4wxxhgzPj/ANc2N
   </data>
  </layer>
+ <layer name="Walls" width="80" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmE1OwzAQhe1Ff0BCYlfaIiHlDEhcu1wBDgAFVuwiflawoqUs8agZOp3aThwoSqL3SU+MxnFpXyzP2DNjzKfTwmlZxKsiXqr8pdOsiKVWanxVU19mm9w0n1enoTWm7zSw6/igiAcqn0eel+NyXlXR84d2+7u1xb+J+94nTmO7jqfFX53PS57n8bEYryp6/rSl/lWF/ak7nkrX/Pswu3uUBP7F6Xn2KIn279HpwtbXe72f9K+k+Dfy7FES7V+m6gzHmd2tQRzLutO19VeGzz9ZZzjOPLWJY1l3uubfjdNDZFz7dx5Yq6G87/OazpXTbaG5053TfRHPVf7apNXfo4BPobzv85oOnRcWptr5w3dGkGj/zoRPx9afj9EG/8rOH0OVT6m/kiwyj/YFWvN6b2iLf7Hzx0TlU+qvJOYfzXvxzG2Lf38F/d43k97n0b4K/zbrr2/LJfcErL817B/3bxOP9D4xhX8/xPa/snld8I/qIPV58wrS/SKprD8M0RX/6H6F+72q4r4wdIfM0Lthv319Shf869n0e2OuAaxQf0hePDk9m12f6L3Re2jr/T0zsun3xrIOxPrDmH+9gPdt82+fxPwbBbyHfxti/sXmNB349zvk/dU+Rb0N+0f/k3uesjkAAAAAAAAAAAAAAAAAAAAAAAAAaD7fGnkHxg==
+  </data>
+ </layer>
+ <layer name="Shadow" width="80" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztwQEBAAAAgJD+r+4ICgAAAAAAAAAAAAAAAAAAAGo+gAAB
+  </data>
+ </layer>
+ <layer name="Over" width="80" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztwQEBAAAAgJD+r+4ICgAAAAAAAAAAAAAAAAAAAGo+gAAB
+  </data>
+ </layer>
+ <layer name="Collisions" width="80" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztmAsKgzAQBe31EtD736ZSCQ1Lds1HwTUz8BBr0Tptk/jCZ1nCnrhnPUlQErNtFK+3JieI/SdieSml5DQq79k6kuPBX83vTssmtqPx6q+W0j22HG8Ff2Pgb4zZ/bXMS3IuT3k6Lf7OkP565xD8HWj3X+vFg7+Wz9jz/x25pgd/o2s0ea7Z/FnPWfJY2tew/Pa48ODPes6Sx0bWL5aLoHw3HvzdOX/kWC5W/P0orT9qOwn89XcJ+TibM6u/Vhj/Dmb3N9Ibax1yDWkM9Nj/lZ5Xe3pjrUOW507J8ewvFvxd2SFr5855i787sfx57u+v7DstLH8a+PvzVn89HfFZd9yzftYCAAAAAAAAAAAAAAAAAAAAz+cL4A6Ekw==
+  </data>
+ </layer>
+ <layer name="Meta" width="80" height="50">
+  <data encoding="base64" compression="zlib">
+   eJztwQEBAAAAgJD+r+4ICgAAAAAAAAAAAAAAAAAAAGo+gAAB
+  </data>
+ </layer>
+ <objectgroup name="Regions"/>
 </map>
