@@ -36,7 +36,7 @@ public class EscapeGame extends Game {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		// render current screen
-		game.render((float) DT, (float) alpha);
+		game.render((float) t, (float) DT, (float) alpha);
 
 	}
 
