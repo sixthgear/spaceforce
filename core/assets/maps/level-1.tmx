@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="101" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="101" tilewidth="32" tileheight="32" nextobjectid="3">
  <properties>
   <property name="music" value="music/Escape_From_the_Lab_BG_Music_Loop_Jasmine.mp3"/>
  </properties>
@@ -132,7 +132,7 @@
  </layer>
  <layer name="Collisions" width="80" height="101">
   <data encoding="base64" compression="zlib">
-   eJztnGGSpCAMhcejrr2re/8TbPEjtZlMgMATiJpXRbWtAfEzQEC79+3ra3eQjkb7j0ir615KFpujUB6/5tZ6rL6vKDvOr2ZfO8dZyX8qyVK/kZytXJJkXlJLPe8q6zXk+CYdmbzWsnP5n6qrfYaXhWyXyq3ZztS+Xeszsh+Q+3u3ebla+as0it9bZOWX7CjOqtm9SVZ+PLaolYdu5+6Btn/1/aJ+5LN997FcbG/1P6T/y+XV9nvg99n+x6la/Mpj2F7/e6osPkV21vKepl/b98Rl5WdVLYZrmedftSaQ65NKief/I9Iqfpb5r5wLW21b59S1JO8B+V7u/mjX39OX3bn95vz3YL6nrR/M8r+7yTK+B7+yLPxqMUmLnrb+0up/b+7/NI1sv9S38vwe19sRjWy/2pyEmHpJd+Any5P3flabrvlfbp8so/RdO6f0n9o2SRsrVvZ/WtzWws/CVzsn4n9aeavEmXGGaJlcci6s8SvNl7k88hs9fsi5sMavNF/m0vitjP/489grxw+5tkB+lVvf4DZ8n0y5WGWVrOOHzKOVwb/LtQXyq1Pw4fGInC+TjeW9gFWqxS+jxg/iYrHz5G9Slv7PwqPV3jL/sKzdrxYff2fGz0/kxxla44kkLT6pnfOJ/HgfaI0nkrT4pHZOlF+u3xmdcvxKPkjXerJP2kf9u4w9RvNbsSagXRc/Lm3Jnyj2ohhCxhQr+M1UiR+34dvc/+Q7FPKans4vqSdusvR90nYEP6v9SM2MO7k/Is/Pid/hgOFsflc+P/fgh7P5yTUD+Z5CKwdi+BZ+cs1Ajtc9HHg71mIzuR7RG6vkrmkmv9rxXj/6FNjId95G8OuJt1vXPq7gl4tdevPx46VjJX65tUev/LRrqeWzlNtzvKf9euAnfakWT9eO9/LrWacdxe8A2q/UaH8k7YxfS7vV7C3nqtX5Kn6j/ZH0Vn4j/M9iK78j/ORcztKXWGwsvw1B2zevj3X8uJqfnMuR/41I58CyVyb5/FeuIUYqJ/n8V5uDWZXrp7VjHpQbXxC71et5d1bwwxT8MAU/TMEPU/DDFPwwBT9MwQ9T8MMU/DAFP0zBD1PwwxT8MAU/TMEP0775ea/0jgp+mIIfpuCHKfhhCn6Ygh+m4Icp+GEKfpiCHyZPvwu8o4IfpuCHKfhhCn6YevhZfy/1htTDb/R/Q4wsf0RC/K9HpfwHWPYMofxGyzvDVK/fQPudId6evSnV6y/zv9zzt9V1b/mN78o6euWXZO3DV9ZP+w+e0v29Oga4szR+tft79fh/Z+XGj71ybdxvWnyp1d+8+/BeGH9X+waP8b36cInfSnF2nrUXxt9V2h34lVXe/I/+a8dTnUpqiVEj/Uyp7f4DI5vpnA==
+   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
   </data>
  </layer>
  <layer name="Meta" width="80" height="101">
@@ -141,10 +141,10 @@
   </data>
  </layer>
  <objectgroup name="Regions" visible="0">
-  <object name="room-2" x="352" y="224">
+  <object id="1" name="room-2" x="352" y="224">
    <polygon points="0,0 0,-128 32,-128 32,-192 256,-192 256,384 96,384 96,608 -320,608 -320,160 32,160 32,0 0,0"/>
   </object>
-  <object name="room-1" x="320" y="224">
+  <object id="2" name="room-1" x="320" y="224">
    <polygon points="0,0 0,-128 -32,-128 -32,-192 -192,-192 -192,-64 -288,-64 -288,64 -32,64 -32,0 0,0"/>
   </object>
  </objectgroup>

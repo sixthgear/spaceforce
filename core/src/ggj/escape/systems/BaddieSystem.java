@@ -32,6 +32,10 @@ public class BaddieSystem extends IntervalIteratingSystem {
 
         @Override
         public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+
+            if (fixture == null)
+                return 0;
+            
             Entity e = (Entity) fixture.getUserData();
             if (e == null) {
                 found = false;

@@ -13,6 +13,10 @@ public class Mappers {
         public static Family physics = Family.getFor(PhysicsComponent.class);
         public static Family sprites = Family.getFor(SpriteComponent.class);
         public static Family bullets = Family.getFor(BulletComponent.class);
+        public static Family triggers = Family.one(TriggerComponent.class, ExitComponent.class).get();
+        public static Family exits = Family.getFor(ExitComponent.class);
+        public static Family doors = Family.getFor(DoorComponent.class);
+        public static Family props = Family.getFor(PropComponent.class);
     }
 
     public static final ComponentMapper<PhysicsComponent> physics = ComponentMapper.getFor(PhysicsComponent.class);
@@ -24,5 +28,6 @@ public class Mappers {
     public static final ComponentMapper<SpiderComponent> spider = ComponentMapper.getFor(SpiderComponent.class);
     public static final ComponentMapper<BaddieComponent> enemy = ComponentMapper.getFor(BaddieComponent.class);
     public static final ComponentMapper<ExplosionComponent> fx = ComponentMapper.getFor(ExplosionComponent.class);
+    public static final ComponentMapper<ExitComponent> exit = ComponentMapper.getFor(ExitComponent.class);
 
 }

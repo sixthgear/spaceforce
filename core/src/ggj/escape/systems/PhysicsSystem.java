@@ -15,6 +15,26 @@ import java.util.ArrayList;
 
 public class PhysicsSystem extends EntitySystem implements ContactListener, EntityListener {
 
+    public World world;
+    public ObjectSet<Entity> toRemove = new ObjectSet<>();
+    private Engine engine;
+    private ImmutableArray<Entity> entities;
+
+    public PhysicsSystem(Engine engine) {
+        this.world = new World(Vector2.Zero, true);
+        this.world.setContactListener(this);
+        this.engine = engine;
+    }
+
+    @Override
+    public void removedFromEngine(Engine engine) {
+        super.removedFromEngine(engine);
+        world.dispose();
+    }
+
+    public void addedToEngine(Engine engine) {
+        entities = engine.getEntitiesFor(Family.getFor(PhysicsComponent.class));
+    }
 
     public Body createCircBody(float x, float y, float radius, short category, short mask) {
 
@@ -72,20 +92,6 @@ public class PhysicsSystem extends EntitySystem implements ContactListener, Enti
 
     }
 
-    public World world;
-    public ObjectSet<Entity> toRemove = new ObjectSet<>();
-    private Engine engine;
-    private ImmutableArray<Entity> entities;
-
-    public PhysicsSystem(Engine engine) {
-        this.world = new World(Vector2.Zero, true);
-        this.world.setContactListener(this);
-        this.engine = engine;
-    }
-
-    public void addedToEngine(Engine engine) {
-        entities = engine.getEntitiesFor(Family.getFor(PhysicsComponent.class));
-    }
 
     @Override
     public void update(float deltaTime) {
@@ -123,10 +129,6 @@ public class PhysicsSystem extends EntitySystem implements ContactListener, Enti
                 toRemove.add(eB);
         }
 
-//        System.out.print(eA);
-//        System.out.print(" vs ");
-//        System.out.println(eB);
-
         if (eA == null || eB == null)
             return;
 
@@ -145,6 +147,15 @@ public class PhysicsSystem extends EntitySystem implements ContactListener, Enti
         // baddie hits player
         else if (Mappers.families.players.matches(eB) && Mappers.families.baddies.matches(eA))
             engine.getSystem(CharacterSystem.class).hurt(eB, eA);
+
+        // character hits trigger
+        else if (Mappers.families.triggers.matches(eA) && Mappers.families.characters.matches(eB))
+            engine.getSystem(TriggerSystem.class).enter(eA, eB);
+
+        // character hits trigger
+        else if (Mappers.families.triggers.matches(eB) && Mappers.families.characters.matches(eA))
+            engine.getSystem(TriggerSystem.class).enter(eB, eA);
+
 
     }
 

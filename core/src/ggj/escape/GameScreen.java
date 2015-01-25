@@ -2,7 +2,7 @@ package ggj.escape;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.PooledEngine;
+import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
@@ -26,11 +26,10 @@ import ggj.escape.world.Level;
 public class GameScreen extends ScreenAdapter {
 
     public Level level;
-    public Engine engine;
-    public PooledEngine pool;
+    public Engine engine ;
 
     public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
-
+    public int numPlayers;
     // references to important entities
     public Entity camera;
     public OrthographicCamera hud;
@@ -40,17 +39,10 @@ public class GameScreen extends ScreenAdapter {
     public SpriteBatch uiBatch;
     public SpriteBatch hudBatch;
 
-    @Override
-    public void show() {
+    public void init() {
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
-
-        // created the pooled engine
-        pool = new PooledEngine(32, 2048, 2, 8);
-
-        // create the main engine
-        engine = new Engine();
 
         // add systems
         engine.addSystem(new PhysicsSystem(engine));
@@ -60,25 +52,20 @@ public class GameScreen extends ScreenAdapter {
         engine.addSystem(new ExplosionSystem());
         engine.addSystem(new BaddieSystem());
         engine.addSystem(new PlayerSystem());
+        engine.addSystem(new TriggerSystem());
 
         engine.addEntityListener(Mappers.families.physics, engine.getSystem(PhysicsSystem.class));
 
-        // create the level
-        level = new Level(engine);
-
         // count connected controllers
-        int numPlayers = Controllers.getControllers().size;
+        numPlayers = Controllers.getControllers().size;
 
-        // add one player for each controller
-        for (int i = 0; i < numPlayers; i++) {
-            Entity player = engine.getSystem(PlayerSystem.class).createPlayer(level, i);
-            engine.addEntity(player);
-        }
+    }
 
-        // add the main camera entity
-        camera = new Entity();
-        camera.add(new CameraComponent(w, h, new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(Mappers.families.players)));
-        engine.addEntity(camera);
+    @Override
+    public void show() {
+
+        float w = Gdx.graphics.getWidth();
+        float h = Gdx.graphics.getHeight();
 
         hud = new OrthographicCamera(w, h);
         hud.setToOrtho(false, w, h);
@@ -122,17 +109,62 @@ public class GameScreen extends ScreenAdapter {
                             "music/Escape_From_the_Lab_BG_Music_Boss_Loop_Jeremy-Lim.mp3",
                             1.0f);
                         return true;
+
+                    case Input.Keys.N:
+                        Entity ex = engine.getEntitiesFor(Mappers.families.exits).first();
+                        if (ex != null){
+                            Mappers.exit.get(ex).triggered = true;
+                        }
+                        return true;
+
                     default:
                         return false;
                 }
             }
         });
+
+
+        // create the main engine
+        engine = new Engine();
+
+        // setup engine
+        init();
+
+        // create the level
+        level = new Level(engine, numPlayers); // , "maps/blank.tmx"
+
+        // add the main camera entity
+        camera = new Entity();
+        camera.add(new CameraComponent(w, h, new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(Mappers.families.players)));
+        engine.addEntity(camera);
     }
 
     public void update(float delta) {
 
         // update the engine
         engine.update(delta);
+
+        for (Entity e : engine.getEntitiesFor(Mappers.families.exits)) {
+
+            if (Mappers.exit.get(e).triggered) {
+                System.out.println("NEXT!");
+
+                engine.removeAllEntities();
+
+                for (EntitySystem s : engine.getSystems()) {
+                    engine.removeSystem(s);
+                }
+                init();
+
+                level = new Level(engine, "maps/level-2.tmx", numPlayers);
+
+
+                // add the main camera entity
+                camera = new Entity();
+                camera.add(new CameraComponent(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(Mappers.families.players)));
+                engine.addEntity(camera);
+            }
+        }
 
         // update the level
         level.update(delta);

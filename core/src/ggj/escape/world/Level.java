@@ -16,6 +16,9 @@ import com.badlogic.gdx.physics.box2d.*;
 import ggj.escape.Resources;
 import ggj.escape.components.*;
 import ggj.escape.systems.PhysicsSystem;
+import ggj.escape.systems.PlayerSystem;
+
+import java.util.ArrayList;
 
 
 public class Level {
@@ -33,11 +36,14 @@ public class Level {
     public int height;
     public static int TILESIZE = 32;
 
-    public Level(Engine engine) {
+    public int numPlayers;
 
-        this.map = new TmxMapLoader().load("maps/level-1.tmx");
+    public Level(Engine engine, String mapName, int players) {
+
+        this.map = new TmxMapLoader().load(mapName);
         this.mapRenderer = new OrthogonalTiledMapRenderer(map, 1.0f/TILESIZE);
         this.engine = engine;
+        this.numPlayers = players;
 
         // collect and validate map properties
         MapProperties prop = map.getProperties();
@@ -65,6 +71,10 @@ public class Level {
         }
     }
 
+    public Level(Engine engine, int players) {
+        this(engine, "maps/level-1.tmx", players);
+    }
+
     private void addMeta(TiledMapTileLayer.Cell cell, int x, int y) {
 
         PhysicsSystem ph = engine.getSystem(PhysicsSystem.class);
@@ -83,6 +93,36 @@ public class Level {
             return;
 
         switch (spawn) {
+
+            case "player-1":
+                System.out.println("Spawning Player 1");
+                if (numPlayers >= 1) {
+                    Entity player = engine.getSystem(PlayerSystem.class).createPlayer(0, x, y);
+                    engine.addEntity(player);
+                }
+                break;
+
+            case "player-2":
+                System.out.println("Spawning Player 2");
+                if (numPlayers >= 2) {
+                    Entity player = engine.getSystem(PlayerSystem.class).createPlayer(1, x, y);
+                    engine.addEntity(player);
+                }
+                break;
+            case "player-3":
+                System.out.println("Spawning Player 3");
+                if (numPlayers >= 3) {
+                    Entity player = engine.getSystem(PlayerSystem.class).createPlayer(2, x, y);
+                    engine.addEntity(player);
+                }
+                break;
+            case "player-4":
+                System.out.println("Spawning Player 4");
+                if (numPlayers == 4) {
+                    Entity player = engine.getSystem(PlayerSystem.class).createPlayer(3, x, y);
+                    engine.addEntity(player);
+                }
+                break;
 
             // spider
             case "spider":
@@ -151,6 +191,9 @@ public class Level {
         if (collide == null)
             return;
 
+        Fixture fixture;
+        Body body;
+
         // create body def
         BodyDef bodydef = new BodyDef();
         bodydef.position.set((x + 0.5f), (y + 0.5f));
@@ -169,14 +212,32 @@ public class Level {
             case "solid":
                 fixturedef.filter.categoryBits = Level.category;
                 fixturedef.filter.maskBits = Level.mask;
+                body = world.createBody(bodydef);
+                body.createFixture(fixturedef);
                 break;
 
             case "trigger":
+//                fixturedef.filter.categoryBits = 0x0032;
+//                fixturedef.filter.maskBits = (short) ~BulletComponent.category;
                 fixturedef.isSensor = true;
+                body = world.createBody(bodydef);
+                fixture = body.createFixture(fixturedef);
+                Entity trigger = new Entity();
+                trigger.add(new TriggerComponent());
+                engine.addEntity(trigger);
+                fixture.setUserData(trigger);
                 break;
 
             case "exit":
+//                fixturedef.filter.categoryBits = 0x0032;
+//                fixturedef.filter.maskBits = (short) ~BulletComponent.category ;
                 fixturedef.isSensor = true;
+                body = world.createBody(bodydef);
+                fixture = body.createFixture(fixturedef);
+                Entity exit = new Entity();
+                exit.add(new ExitComponent());
+                engine.addEntity(exit);
+                fixture.setUserData(exit);
                 break;
 
             case "default":
@@ -184,11 +245,8 @@ public class Level {
                 System.out.println(id);
                 box.dispose();
                 return;
-
         }
 
-        Body body = world.createBody(bodydef);
-        body.createFixture(fixturedef);
         box.dispose();
 
     }
@@ -233,7 +291,7 @@ public class Level {
             music.dispose();
 
         music = Gdx.audio.newMusic(Gdx.files.internal(track));
-//        music.play();
+        music.play();
         music.setPosition(pos);
 
         if (followUp.isEmpty()) {

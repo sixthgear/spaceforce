@@ -42,13 +42,14 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
         entities = null;
     }
 
-    public Entity createPlayer(Level level, int role) {
+    public Entity createPlayer(int role, int x, int y) {
+
         Entity player = new Entity();
         PhysicsSystem ph = engine.getSystem(PhysicsSystem.class);
 
         player.add(new PlayerComponent(role));
         player.add(new CharacterComponent(20));
-        player.add(new PhysicsComponent(ph.createCircBody(8 + role, 95, 0.48f, PlayerComponent.category, PlayerComponent.mask)));
+        player.add(new PhysicsComponent(ph.createCircBody(x, y, 0.48f, PlayerComponent.category, PlayerComponent.mask)));
         player.add(new SpriteComponent(player.getComponent(PlayerComponent.class).regions.get(0)));
         return player;
     }
@@ -80,7 +81,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
 
             // deadzone
             if (movement.len2() > 0.4) {
-                movement.scl(4);
+                movement.scl(7);
                 p.body.setLinearVelocity(movement);
                 p.body.setLinearDamping(0f);
             } else {
