@@ -25,7 +25,7 @@ public class RenderSystem extends SortedIteratingSystem {
         public int compare(Entity e1, Entity e2) {
             PhysicsComponent ph1 = Mappers.physics.get(e1);
             PhysicsComponent ph2 = Mappers.physics.get(e2);
-            return (int)Math.signum(ph1.body.getPosition().y - ph2.body.getPosition().y);
+            return (int)Math.signum(ph2.body.getPosition().y - ph1.body.getPosition().y);
         }
     }
 

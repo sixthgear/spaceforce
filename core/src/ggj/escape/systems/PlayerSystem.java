@@ -2,10 +2,12 @@ package ggj.escape.systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -67,16 +69,15 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
 
             Vector2 pos = p.body.getPosition();
             Vector2 movement = new Vector2();
-            Vector2 aiming = new Vector2();
+//            Vector2 aiming = new Vector2();
 
-            boolean isAiming;
-            float angleAim;
+
             float trigger;
 
             movement.x = controller.getAxis(XBox360Pad.AXIS_LEFT_X);
             movement.y = controller.getAxis(XBox360Pad.AXIS_LEFT_Y) * -1;
-            aiming.x = controller.getAxis(XBox360Pad.AXIS_RIGHT_X);
-            aiming.y = controller.getAxis(XBox360Pad.AXIS_RIGHT_Y) * -1;
+            pl.aiming.x = controller.getAxis(XBox360Pad.AXIS_RIGHT_X);
+            pl.aiming.y = controller.getAxis(XBox360Pad.AXIS_RIGHT_Y) * -1;
             trigger = controller.getAxis(XBox360Pad.AXIS_RIGHT_TRIGGER);
 
             // deadzone
@@ -88,14 +89,14 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
                 p.body.setLinearDamping(10f);
             }
 
-            isAiming = (aiming.len2() > 0.4);
+            pl.isAiming = (pl.aiming.len2() > 0.4);
 
             if (trigger > 0.3 && c.cooldown <= 0) {
 
-                if (!isAiming)
-                    aiming = movement.cpy();
+                if (!pl.isAiming)
+                    pl.aiming = movement.cpy();
 
-                Vector2 bulletPos = pos.cpy().add(aiming.cpy().setLength2(0.5f));
+                Vector2 bulletPos = pos.cpy().add(pl.aiming.cpy().setLength2(0.5f));
                 Entity bullet = new Entity();
                 PhysicsSystem ph = engine.getSystem(PhysicsSystem.class);
                 Body body = ph.createBody(bulletPos.x, bulletPos.y, 0.0625f, BulletComponent.category, BulletComponent.mask);
@@ -107,37 +108,44 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
                 engine.addEntity(bullet);
 
                 b.body.setBullet(true);
-                b.body.setLinearVelocity(aiming.setLength(24));
+                b.body.setLinearVelocity(pl.aiming.setLength(24));
                 b.body.setLinearDamping(0);
                 Fixture f = b.body.getFixtureList().first();
                 f.setSensor(true);
-//                f.setUserData(bullet);
 
-                Resources.sfx.pistol_1.play();
+                float r = MathUtils.random();
+
+                if (r < 0.7)
+                    Resources.sfx.pistol_1.play();
+                else if (r < 0.9)
+                    Resources.sfx.pistol_2.play();
+                else
+                    Resources.sfx.pistol_3.play();
+
                 c.cooldown = c.maxCooldown;
             }
 
-            if (isAiming)
-                angleAim = aiming.angle();
+            if (pl.isAiming)
+                pl.angleAim = pl.aiming.angle();
             else
-                angleAim = movement.angle();
+                pl.angleAim = movement.angle();
 
             // change torso angle
-            if (angleAim > 337.5 || angleAim <= 22.5)
+            if (pl.angleAim > 337.5 || pl.angleAim <= 22.5)
                 s.region = pl.regions.get(2);
-            if (angleAim > 22.5  && angleAim <= 67.5)
+            if (pl.angleAim > 22.5  && pl.angleAim <= 67.5)
                 s.region = pl.regions.get(1);
-            if (angleAim > 67.5  && angleAim <= 112.5)
+            if (pl.angleAim > 67.5  && pl.angleAim <= 112.5)
                 s.region = pl.regions.get(0);
-            if (angleAim > 112.5 && angleAim <= 157.5)
+            if (pl.angleAim > 112.5 && pl.angleAim <= 157.5)
                 s.region = pl.regions.get(7);
-            if (angleAim > 157.5 && angleAim <= 202.5)
+            if (pl.angleAim > 157.5 && pl.angleAim <= 202.5)
                 s.region = pl.regions.get(6);
-            if (angleAim > 202.5 && angleAim <= 247.5)
+            if (pl.angleAim > 202.5 && pl.angleAim <= 247.5)
                 s.region = pl.regions.get(5);
-            if (angleAim > 247.5 && angleAim <= 292.5)
+            if (pl.angleAim > 247.5 && pl.angleAim <= 292.5)
                 s.region = pl.regions.get(4);
-            if (angleAim > 292.5 && angleAim <= 337.5)
+            if (pl.angleAim > 292.5 && pl.angleAim <= 337.5)
                 s.region = pl.regions.get(3);
 
 

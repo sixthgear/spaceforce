@@ -9,6 +9,10 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.ScreenAdapter;
 
 import com.badlogic.gdx.controllers.Controllers;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -30,6 +34,9 @@ public class GameScreen extends ScreenAdapter {
     public Entity camera;
 
     private boolean debug = false;
+
+    public SpriteBatch uiBatch;
+    public Sprite uiCrosshair;
 
     @Override
     public void show() {
@@ -69,6 +76,8 @@ public class GameScreen extends ScreenAdapter {
         camera = new Entity();
         camera.add(new CameraComponent(w, h, new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(Mappers.families.players)));
         engine.addEntity(camera);
+
+        uiBatch = new SpriteBatch(100);
 
         // set up main window input handling
         Gdx.input.setInputProcessor(new InputAdapter() {
@@ -127,6 +136,7 @@ public class GameScreen extends ScreenAdapter {
         RenderSystem renderSystem = engine.getSystem(RenderSystem.class);
         CameraSystem cameraSystem = engine.getSystem(CameraSystem.class);
         PhysicsSystem physicsSystem = engine.getSystem(PhysicsSystem.class);
+        OrthographicCamera cam = Mappers.camera.get(camera).camera;
 
         // interpolate all sprites according to alpha
         renderSystem.interpolate(delta, alpha);
@@ -135,17 +145,38 @@ public class GameScreen extends ScreenAdapter {
         cameraSystem.follow();
 
         // render the level
-        level.render(Mappers.camera.get(camera).camera);
+        level.render(cam);
 
         // render engine entities
-        renderSystem.render(Mappers.camera.get(camera).camera);
+        renderSystem.render(cam);
 
         // render the level overlay
-        level.renderOverlay(Mappers.camera.get(camera).camera);
+        level.renderOverlay(cam);
+
+        uiBatch.setProjectionMatrix(cam.combined);
+        uiBatch.begin();
+
+        for (Entity p : engine.getEntitiesFor(Mappers.families.players)) {
+
+            SpriteComponent sp = Mappers.sprite.get(p);
+            PlayerComponent pl = Mappers.player.get(p);
+
+            if (pl.isAiming) {
+                uiBatch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
+                Sprite crosshair = Resources.sprites.crosshair[pl.role];
+                crosshair.setX(sp.x);
+                crosshair.setY(sp.y + 1f);
+                crosshair.setRotation(pl.angleAim);
+                crosshair.draw(uiBatch);
+
+            }
+
+        }
+        uiBatch.end();
 
         if (debug) {
-            level.renderDebug(Mappers.camera.get(camera).camera);
-            debugRenderer.render(physicsSystem.world, Mappers.camera.get(camera).camera.combined);
+            level.renderDebug(cam);
+            debugRenderer.render(physicsSystem.world, cam.combined);
         }
 
     }

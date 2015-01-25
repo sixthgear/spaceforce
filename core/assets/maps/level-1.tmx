@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="101" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="101" tilewidth="32" tileheight="32" nextobjectid="6">
  <properties>
   <property name="music" value="music/Escape_From_the_Lab_BG_Music_Loop_Jasmine.mp3"/>
  </properties>
@@ -74,8 +74,15 @@
  </layer>
  <layer name="Meta" width="80" height="101">
   <data encoding="base64" compression="zlib">
-   eJzt22tuwyAQRtFkcX2l+99P5R+oFjGGYWZ43iNZTdoEw1cEBMePBwBA4vX8f/zzTL9uN1+nLD4EuVhneJRXU2Z4n+dhwbv/rZ5f6zb0PLekLt+nv3/evPYlaJPUzPnNbqb8fhf/X3gK2ZFhPbIDxnCeV1KPV8G4o0N+OuSnU5vf8b5wxFYd/85tvmu/tCzIkR9G1Wr8S/V/q9/PpCbb1vkd+5TxXuV5H+pqT+rqPR5m2E8cOT9L0jrP2EYL5ISemH91yA9AS7tcO/finV9qfWb1+97Ib2zkp0N+OuQHAKiVW1t6rz1TP63PdVXuDt+VLskz1/aW+fXqjzFJP/T4zv9OQpt3uuZSMu6VZrFjfgAA7CD3XWKPexfjtUTN2mKUe1LjvFrkZ2GUesX3XXrml+t3ms9mO+RnaZR69ciP8Y/+F7Scf1cc/3JGreeo9WrBYvwDUrT9a7X+aXW/qHV5knKs2yCt593zoHR+TZUnnZ9L6yV9rbXcGrtXeZJyrNsgIT13ab9JlVc6/q2aX6vyZssv9Txg/Eufm/m3HdZ/vnbKZ9TP6aPUi/0rHfZPddi/1+H6kQ7XL3UY/3Razr/BSuMfAACjq1n/5ebZ2mNmkvUL+emE9l6tUzXHLshPxzO/lfe9Q9vofzot8lu5H9L/dBj/3rH+q8PnD+DeHyDZLyM=
+   eJzt2+1uwyAMheHu4vZ9//cz5QdSlIWAsTEG3keKtnYrMUcIaNK+XgCAVt9voyuI4/OUxbsgF+sMj/Za2kyv63lY69XmLvl59GHkuSW1fJ3+/jFoXps5v9mRHwBgJud1Jff7Kn4X7JMn8tMhP53W/I7XpeNq1fnv3Oen/kvbghz5IaqW+e+nYRznxr/V8zOZIb+jxmud5+tQd9ek7l7Tg8c5tCLnZ0la84x9tEBOGIn1V4f8AHji3q9O7/xy+zOr50cjv9jIT4f8dMgPANCqtLfsvffM/bQ+1127O3zWtybPUt898xs1Hq8k47DHZ/53kvq80z2XmnmvNosd8wMAYAelzxL3+O7idS/RsreI8p3Ka14e+VmIUlfK6/qzR52lcad5b7ZDfpai1DUiP+Y/xl/iuf6uOP+VRK0zal0eLOY/IEc7vlYbn1bfF7VuT9KOdR+kdT49TmrX11x70vW5ti7p/1or7bFHtSdpx7oPEtJz146bXHu189+q+Xm1N1t+uccJ81/+3Ky/ftj/9bVTPlHfp0epi+tXOlw/1eH6vQ73j3S4f6nD/Kfjuf4mK81/AABE17L/K62zrcfMJPsX8tNJ/b3bp2qOXZCfTs/8Vr7unfrG+NPxyG/lccj402H++4/9XxvefwDP/gBu+C0V
   </data>
  </layer>
- <objectgroup name="Regions"/>
+ <objectgroup name="Regions">
+  <object id="1" name="room-2" x="352" y="224">
+   <polygon points="0,0 0,-128 32,-128 32,-192 256,-192 256,384 96,384 96,608 -320,608 -320,160 32,160 32,0 0,0"/>
+  </object>
+  <object id="4" name="room-1" x="320" y="224">
+   <polygon points="0,0 0,-128 -32,-128 -32,-192 -192,-192 -192,-64 -288,-64 -288,64 -32,64 -32,0 0,0"/>
+  </object>
+ </objectgroup>
 </map>
