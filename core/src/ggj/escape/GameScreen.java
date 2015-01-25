@@ -36,7 +36,7 @@ public class GameScreen extends ScreenAdapter {
     private boolean debug = false;
 
     public SpriteBatch uiBatch;
-    public Sprite uiCrosshair;
+    public SpriteBatch hudBatch;
 
     @Override
     public void show() {
@@ -77,7 +77,9 @@ public class GameScreen extends ScreenAdapter {
         camera.add(new CameraComponent(w, h, new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(Mappers.families.players)));
         engine.addEntity(camera);
 
-        uiBatch = new SpriteBatch(100);
+        uiBatch = new SpriteBatch(1000);
+        hudBatch = new SpriteBatch(1000);
+        Resources.fonts.roboto_white_cache.addText("ROBOTS!", 10, 10);
 
         // set up main window input handling
         Gdx.input.setInputProcessor(new InputAdapter() {
@@ -161,18 +163,25 @@ public class GameScreen extends ScreenAdapter {
             SpriteComponent sp = Mappers.sprite.get(p);
             PlayerComponent pl = Mappers.player.get(p);
 
+            uiBatch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
             if (pl.isAiming) {
-                uiBatch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
+
                 Sprite crosshair = Resources.sprites.crosshair[pl.role];
                 crosshair.setX(sp.x);
                 crosshair.setY(sp.y + 1f);
                 crosshair.setRotation(pl.angleAim);
                 crosshair.draw(uiBatch);
 
-            }
 
+            }
         }
         uiBatch.end();
+
+        hudBatch.setProjectionMatrix(cam.view);
+        hudBatch.begin();
+        Resources.fonts.roboto_white_cache.draw(hudBatch);
+        hudBatch.end();
+
 
         if (debug) {
             level.renderDebug(cam);

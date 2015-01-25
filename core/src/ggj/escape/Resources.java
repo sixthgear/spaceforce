@@ -4,9 +4,7 @@ package ggj.escape;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.*;
 import ggj.escape.components.BaddieComponent;
 import ggj.escape.world.Level;
 
@@ -18,6 +16,11 @@ public class Resources {
         public static Texture baddies = new Texture("sprites/enemy-sprites.png");
         public static Texture map = new Texture("sprites/map-sprites.png");
         public static Texture ui = new Texture("sprites/ui-sprites-01.png");
+    }
+
+    public static class fonts {
+        public static BitmapFont roboto_white = new BitmapFont(Gdx.files.internal("fnt/roboto-white-32.fnt"));
+        public static BitmapFontCache roboto_white_cache = new BitmapFontCache(roboto_white);
     }
 
     public static class sprites {
