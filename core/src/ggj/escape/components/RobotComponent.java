@@ -1,11 +1,8 @@
 package ggj.escape.components;
 
+import com.badlogic.ashley.core.Component;
 
-public class RobotComponent extends BaddieComponent {
+public class RobotComponent extends Component {
 
-
-    public RobotComponent(int sight, int speed) {
-        super(sight, speed);
-    }
 
 }

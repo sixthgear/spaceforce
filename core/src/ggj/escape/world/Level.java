@@ -86,8 +86,9 @@ public class Level {
                 Entity spider = new Entity();
                 spider.add(new PhysicsComponent(ph.createBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
                 spider.add(new SpriteComponent(Resources.animations.spider.walk));
-                spider.add(new BaddieComponent(10, 4));
                 spider.add(new CharacterComponent(1));
+                spider.add(new BaddieComponent(10, 4));
+                spider.add(new SpiderComponent());
                 engine.addEntity(spider);
                 break;
 
@@ -96,8 +97,9 @@ public class Level {
                 Entity robot = new Entity();
                 robot.add(new PhysicsComponent(ph.createBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
                 robot.add(new SpriteComponent(Resources.animations.robot.walk));
-                robot.add(new BaddieComponent(20, 3));
                 robot.add(new CharacterComponent(5));
+                robot.add(new BaddieComponent(20, 3));
+                robot.add(new RobotComponent());
                 engine.addEntity(robot);
                 break;
 
@@ -106,8 +108,9 @@ public class Level {
                 Entity slime = new Entity();
                 slime.add(new PhysicsComponent(ph.createBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
                 slime.add(new SpriteComponent(Resources.animations.slime.walk));
-                slime.add(new BaddieComponent(6, 2));
                 slime.add(new CharacterComponent(3));
+                slime.add(new BaddieComponent(10, 2));
+                slime.add(new SlimeComponent());
                 engine.addEntity(slime);
                 break;
 
@@ -188,7 +191,7 @@ public class Level {
             music.dispose();
 
         music = Gdx.audio.newMusic(Gdx.files.internal(track));
-        music.play();
+//        music.play();
         music.setPosition(pos);
 
         if (followUp.isEmpty()) {

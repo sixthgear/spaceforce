@@ -1,10 +1,7 @@
 package ggj.escape.components;
 
+import com.badlogic.ashley.core.Component;
 
-public class SpiderComponent extends BaddieComponent {
-
-    public SpiderComponent(int sight, int speed) {
-        super(sight, speed);
-    }
+public class SpiderComponent extends Component {
 
 }

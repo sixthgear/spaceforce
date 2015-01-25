@@ -23,9 +23,9 @@ public class RenderSystem extends SortedIteratingSystem {
     private static class YComparator implements Comparator<Entity> {
         @Override
         public int compare(Entity e1, Entity e2) {
-            PhysicsComponent ph1 = Mappers.physics.get(e1);
-            PhysicsComponent ph2 = Mappers.physics.get(e2);
-            return (int)Math.signum(ph2.body.getPosition().y - ph1.body.getPosition().y);
+            SpriteComponent sp1 = Mappers.sprite.get(e1);
+            SpriteComponent sp2 = Mappers.sprite.get(e2);
+            return (int)Math.signum(sp2.y - sp1.y);
         }
     }
 
@@ -42,12 +42,14 @@ public class RenderSystem extends SortedIteratingSystem {
             SpriteComponent sprite = Mappers.sprite.get(entity);
             PhysicsComponent physics = Mappers.physics.get(entity);
 
-            Vector2 pos = physics.body.getPosition();
-            Vector2 interpolated = sprite.last.cpy().interpolate(pos, alpha, Interpolation.linear);
-            sprite.x = (pos.x) - 0.5f; //interpolated.x - 16;
-            sprite.y = (pos.y) - 0.5f; //interpolated.y - 16;
+            if (physics != null) {
+                Vector2 pos = physics.body.getPosition();
+                Vector2 interpolated = sprite.last.cpy().interpolate(pos, alpha, Interpolation.linear);
+                sprite.x = (pos.x) - 0.5f; //interpolated.x - 16;
+                sprite.y = (pos.y) - 0.5f; //interpolated.y - 16;
+                sprite.last = pos.cpy();
+            }
 
-            sprite.last = pos.cpy();
         }
     }
 

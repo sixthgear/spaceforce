@@ -20,16 +20,12 @@ import ggj.escape.world.Level;
 
 public class PlayerSystem extends EntitySystem  implements ControllerListener {
 
-    private PooledEngine pool;
     private Engine engine;
     private World world;
 
-    public PlayerSystem(PooledEngine pool, Engine engine) {
+    public PlayerSystem() {
         super();
         Controllers.addListener(this);
-        this.pool = pool;
-        this.engine = engine;
-        this.world = engine.getSystem(PhysicsSystem.class).world;
     }
 
     private ImmutableArray<Entity> entities;
@@ -37,7 +33,10 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
     @Override
     public void addedToEngine(Engine engine) {
         entities = engine.getEntitiesFor(Mappers.families.players);
+        this.engine = engine;
+        this.world = engine.getSystem(PhysicsSystem.class).world;
     }
+
 
     @Override
     public void removedFromEngine(Engine engine) {

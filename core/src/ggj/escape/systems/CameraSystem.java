@@ -8,6 +8,7 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import ggj.escape.components.CameraComponent;
+import ggj.escape.components.CharacterComponent;
 import ggj.escape.components.Mappers;
 import ggj.escape.components.PhysicsComponent;
 
@@ -33,26 +34,41 @@ public class CameraSystem extends EntitySystem {
 
             Entity entity = entities.get(i);
             CameraComponent c = Mappers.camera.get(entity);
-//            SpriteComponent s = Mappers.sprite.get(c.target);
+
+
             Vector2 avg = new Vector2();
+
+            int total = 0;
             for (int j = 0; j < c.targets.size(); j++) {
-                avg.add(Mappers.physics.get(c.targets.get(j)).body.getPosition());
+                Entity t = c.targets.get(j);
+                CharacterComponent ch = Mappers.character.get(t);
+                if (ch.alive) {
+                    total++;
+                    avg.add(Mappers.physics.get(t).body.getPosition());
+                }
             }
-            avg.scl(1.0f / c.targets.size());
 
-            // conform scolling to bounds
-            float lb = c.camera.viewportWidth / 2;
-            float rb = c.level.width - lb;
-            float bb = c.camera.viewportHeight / 2;
-            float tb = c.level.height - bb;
+            if (total > 0) {
 
-            // clamp to edges
-            float x = MathUtils.clamp((avg.x - lb) * c.scale.x + lb, lb, (rb - lb) * c.scale.x + lb);
-            float y = MathUtils.clamp((avg.y - bb) * c.scale.y + bb, bb, (tb - bb) * c.scale.y + bb);
+                avg.scl(1.0f / total);
 
-            // update positions
-            c.camera.position.set(x, y, 0);
+                // conform scolling to bounds
+                float lb = c.camera.viewportWidth / 2;
+                float rb = c.level.width - lb;
+                float bb = c.camera.viewportHeight / 2;
+                float tb = c.level.height - bb;
+
+                // clamp to edges
+                float x = MathUtils.clamp((avg.x - lb) * c.scale.x + lb, lb, (rb - lb) * c.scale.x + lb);
+                float y = MathUtils.clamp((avg.y - bb) * c.scale.y + bb, bb, (tb - bb) * c.scale.y + bb);
+
+                // update positions
+                c.camera.position.set(x, y, 0);
+
+            }
+
             c.camera.update();
+
         }
     }
 

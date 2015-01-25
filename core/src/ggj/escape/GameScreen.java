@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -32,6 +33,7 @@ public class GameScreen extends ScreenAdapter {
 
     // references to important entities
     public Entity camera;
+    public OrthographicCamera hud;
 
     private boolean debug = false;
 
@@ -55,8 +57,9 @@ public class GameScreen extends ScreenAdapter {
         engine.addSystem(new RenderSystem());
         engine.addSystem(new CameraSystem());
         engine.addSystem(new CharacterSystem());
+        engine.addSystem(new ExplosionSystem());
         engine.addSystem(new BaddieSystem());
-        engine.addSystem(new PlayerSystem(pool, engine));
+        engine.addSystem(new PlayerSystem());
 
         engine.addEntityListener(Mappers.families.physics, engine.getSystem(PhysicsSystem.class));
 
@@ -76,6 +79,9 @@ public class GameScreen extends ScreenAdapter {
         camera = new Entity();
         camera.add(new CameraComponent(w, h, new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(Mappers.families.players)));
         engine.addEntity(camera);
+
+        hud = new OrthographicCamera(w, h);
+        hud.setToOrtho(false, w, h);
 
         uiBatch = new SpriteBatch(1000);
         hudBatch = new SpriteBatch(1000);
@@ -165,21 +171,33 @@ public class GameScreen extends ScreenAdapter {
 
             uiBatch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
             if (pl.isAiming) {
-
                 Sprite crosshair = Resources.sprites.crosshair[pl.role];
                 crosshair.setX(sp.x);
                 crosshair.setY(sp.y + 1f);
                 crosshair.setRotation(pl.angleAim);
                 crosshair.draw(uiBatch);
-
-
             }
         }
         uiBatch.end();
 
-        hudBatch.setProjectionMatrix(cam.view);
+        hudBatch.setProjectionMatrix(hud.combined);
         hudBatch.begin();
+
         Resources.fonts.roboto_white_cache.draw(hudBatch);
+
+        for (Entity p : engine.getEntitiesFor(Mappers.families.players)) {
+            SpriteComponent sp = Mappers.sprite.get(p);
+            PlayerComponent pl = Mappers.player.get(p);
+            CharacterComponent ch = Mappers.character.get(p);
+
+            float f = (float) ch.hp / ch.maxHp;
+            int w = 32 + (int) (224.0f * f);
+            TextureRegion tr = new TextureRegion(Resources.sprites.health[pl.role], 0, 0, w, 32);
+
+            hudBatch.draw(tr, 16 + pl.role * 288, 752);
+
+        }
+
         hudBatch.end();
 
 

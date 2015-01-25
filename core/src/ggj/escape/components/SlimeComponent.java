@@ -1,10 +1,7 @@
 package ggj.escape.components;
 
+import com.badlogic.ashley.core.Component;
 
-public class SlimeComponent extends BaddieComponent {
+public class SlimeComponent extends Component {
 
-
-    public SlimeComponent(int sight, int speed) {
-        super(sight, speed);
-    }
 }

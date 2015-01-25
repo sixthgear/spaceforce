@@ -1,14 +1,12 @@
 package ggj.escape.systems;
 
-
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 
-import ggj.escape.components.CharacterComponent;
-import ggj.escape.components.Mappers;
+import ggj.escape.Resources;
+import ggj.escape.components.*;
 
 
 public class CharacterSystem extends IteratingSystem {
@@ -28,7 +26,6 @@ public class CharacterSystem extends IteratingSystem {
     public void addedToEngine(Engine engine) {
         super.addedToEngine(engine);
         this.engine = engine;
-//        this.world = engine.getSystem(PhysicsSystem.class).world;
     }
 
     public void hurt(Entity me, Entity other) {
@@ -45,8 +42,36 @@ public class CharacterSystem extends IteratingSystem {
     public void die(Entity me, Entity other) {
 
         CharacterComponent character = Mappers.character.get(me);
-        engine.getSystem(PhysicsSystem.class).toRemove.add(me);
+        SpriteComponent sprite = Mappers.sprite.get(me);
+
+        if (Family.getFor(SpiderComponent.class).matches(me)){
+            Entity explosion = new Entity();
+            explosion.add(new ExplosionComponent(10));
+            SpriteComponent sp = new SpriteComponent(Resources.animations.spider.explode);
+            sp.x = sprite.x;
+            sp.y = sprite.y;
+            explosion.add(sp);
+            engine.addEntity(explosion);
+        } else if (Family.getFor(RobotComponent.class).matches(me)){
+            Entity explosion = new Entity();
+            explosion.add(new ExplosionComponent(10));
+            SpriteComponent sp = new SpriteComponent(Resources.animations.robot.explode);
+            sp.x = sprite.x - 0.5f;
+            sp.y = sprite.y;
+            explosion.add(sp);
+            engine.addEntity(explosion);
+        } else if (Family.getFor(SlimeComponent.class).matches(me)){
+            Entity explosion = new Entity();
+            explosion.add(new ExplosionComponent(10));
+            SpriteComponent sp = new SpriteComponent(Resources.animations.slime.explode);
+            sp.x = sprite.x;
+            sp.y = sprite.y;
+            explosion.add(sp);
+            engine.addEntity(explosion);
+        }
+
         character.alive = false;
+        engine.getSystem(PhysicsSystem.class).toRemove.add(me);
 
     }
 
