@@ -47,7 +47,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
         PhysicsSystem ph = engine.getSystem(PhysicsSystem.class);
 
         player.add(new PlayerComponent(role));
-        player.add(new CharacterComponent());
+        player.add(new CharacterComponent(20));
         player.add(new PhysicsComponent(ph.createBody(8 + role, 95, 0.48f, PlayerComponent.category, PlayerComponent.mask)));
         player.add(new SpriteComponent(player.getComponent(PlayerComponent.class).regions.get(0)));
         return player;
@@ -111,7 +111,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
                 b.body.setLinearDamping(0);
                 Fixture f = b.body.getFixtureList().first();
                 f.setSensor(true);
-                f.setUserData(bullet);
+//                f.setUserData(bullet);
 
                 Resources.sfx.pistol_1.play();
                 c.cooldown = c.maxCooldown;

@@ -4,11 +4,8 @@ package ggj.escape.components;
 public class RobotComponent extends BaddieComponent {
 
 
-
-    public void SpiderComponent() {
-
-
-
+    public RobotComponent(int sight, int speed) {
+        super(sight, speed);
     }
 
 }

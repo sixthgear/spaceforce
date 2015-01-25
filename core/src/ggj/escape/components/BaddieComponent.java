@@ -1,6 +1,7 @@
 package ggj.escape.components;
 
 import com.badlogic.ashley.core.Component;
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
@@ -22,6 +23,16 @@ public class BaddieComponent extends Component {
                 keyFrames.add(t);
 
         return new Animation(0.1f, keyFrames);
+    }
+
+    public Entity target;
+    public int mode = 0;
+    public float sight = 100;
+    public float speed = 3;
+
+    public BaddieComponent(int sight, int speed) {
+        this.sight = sight * sight;
+        this.speed = speed;
     }
 
 }

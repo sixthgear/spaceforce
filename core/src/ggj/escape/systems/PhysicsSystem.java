@@ -6,6 +6,7 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.ObjectSet;
+import ggj.escape.components.CharacterComponent;
 import ggj.escape.components.Mappers;
 import ggj.escape.components.PhysicsComponent;
 
@@ -40,7 +41,7 @@ public class PhysicsSystem extends EntitySystem implements ContactListener, Enti
     @Override
     public void entityAdded(Entity entity) {
         PhysicsComponent ph = Mappers.physics.get(entity);
-        ph.body.setUserData(entity);
+        ph.body.getFixtureList().first().setUserData(entity);
     }
 
     @Override
@@ -84,28 +85,44 @@ public class PhysicsSystem extends EntitySystem implements ContactListener, Enti
     @Override
     public void beginContact(Contact contact) {
 
-        ArrayList<Fixture> fixtures = new ArrayList<>();
-        fixtures.add(contact.getFixtureA());
-        fixtures.add(contact.getFixtureB());
+        Fixture fA = contact.getFixtureA();
+        Fixture fB = contact.getFixtureB();
+        Entity eA = (Entity) fA.getUserData();
+        Entity eB = (Entity) fB.getUserData();
 
-        for (Fixture f : fixtures) {
-
-            if (f.getUserData() == null)
-                continue;
-
-            if (f.getUserData().getClass() == Entity.class) {
-
-                Entity e = (Entity) f.getUserData();
-
-                if (Mappers.bullet.get(e) != null) {
-                    toRemove.add(e);
-
-                } else if (Mappers.enemy.get(e) != null) {
-                    toRemove.add(e);
-                }
-
-            }
+        if (eA != null) {
+            if (Mappers.bullet.get(eA) != null)
+                toRemove.add(eA);
         }
+
+        if (eB != null) {
+            if (Mappers.bullet.get(eB) != null)
+                toRemove.add(eB);
+        }
+
+//        System.out.print(eA);
+//        System.out.print(" vs ");
+//        System.out.println(eB);
+
+        if (eA == null || eB == null)
+            return;
+
+        // bullet hits character
+        if (Mappers.families.characters.matches(eA) && Mappers.families.bullets.matches(eB))
+            engine.getSystem(CharacterSystem.class).hurt(eA, eB);
+
+        // bullet hits character
+        else if (Mappers.families.characters.matches(eB) && Mappers.families.bullets.matches(eA))
+            engine.getSystem(CharacterSystem.class).hurt(eB, eA);
+
+        // baddie hits player
+        else if (Mappers.families.players.matches(eA) && Mappers.families.baddies.matches(eB))
+            engine.getSystem(CharacterSystem.class).hurt(eA, eB);
+
+        // baddie hits player
+        else if (Mappers.families.players.matches(eB) && Mappers.families.baddies.matches(eA))
+            engine.getSystem(CharacterSystem.class).hurt(eB, eA);
+
     }
 
     @Override

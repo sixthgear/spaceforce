@@ -86,8 +86,8 @@ public class Level {
                 Entity spider = new Entity();
                 spider.add(new PhysicsComponent(ph.createBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
                 spider.add(new SpriteComponent(Resources.animations.spider.walk));
-                spider.add(new SpiderComponent());
-                spider.add(new BaddieComponent());
+                spider.add(new BaddieComponent(10, 4));
+                spider.add(new CharacterComponent(1));
                 engine.addEntity(spider);
                 break;
 
@@ -96,7 +96,8 @@ public class Level {
                 Entity robot = new Entity();
                 robot.add(new PhysicsComponent(ph.createBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
                 robot.add(new SpriteComponent(Resources.animations.robot.walk));
-                robot.add(new BaddieComponent());
+                robot.add(new BaddieComponent(20, 3));
+                robot.add(new CharacterComponent(5));
                 engine.addEntity(robot);
                 break;
 
@@ -105,7 +106,8 @@ public class Level {
                 Entity slime = new Entity();
                 slime.add(new PhysicsComponent(ph.createBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
                 slime.add(new SpriteComponent(Resources.animations.slime.walk));
-                slime.add(new BaddieComponent());
+                slime.add(new BaddieComponent(6, 2));
+                slime.add(new CharacterComponent(3));
                 engine.addEntity(slime);
                 break;
 

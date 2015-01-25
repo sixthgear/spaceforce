@@ -5,11 +5,16 @@ import com.badlogic.ashley.core.Component;
 public class CharacterComponent extends Component {
 
 
-    public int maxCooldown = 10;
+    public boolean alive = true;
+
+    public int maxCooldown = 8;
     public int cooldown = 0;
 
     public int maxHp = 10;
     public int hp = maxHp;
 
-
+    public CharacterComponent(int maxHp) {
+        this.maxHp = maxHp;
+        this.hp = maxHp;
+    }
 }

@@ -4,11 +4,7 @@ package ggj.escape.components;
 public class SlimeComponent extends BaddieComponent {
 
 
-
-    public void SpiderComponent() {
-
-
-
+    public SlimeComponent(int sight, int speed) {
+        super(sight, speed);
     }
-
 }

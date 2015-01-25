@@ -1,35 +1,44 @@
 package ggj.escape.systems;
 
-import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.ashley.core.Family;
-import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import ggj.escape.components.Mappers;
 import ggj.escape.components.PhysicsComponent;
 import ggj.escape.components.SpriteComponent;
 
-public class RenderSystem extends EntitySystem {
+import java.util.Comparator;
 
-    private ImmutableArray<Entity> entities;
+public class RenderSystem extends SortedIteratingSystem {
+
     private SpriteBatch batch = new SpriteBatch();
 
-    public void addedToEngine(Engine engine) {
-        entities = engine.getEntitiesFor(Family.getFor(SpriteComponent.class));
+    public RenderSystem() {
+        super(Mappers.families.sprites, new YComparator());
+    }
+
+    private static class YComparator implements Comparator<Entity> {
+        @Override
+        public int compare(Entity e1, Entity e2) {
+            PhysicsComponent ph1 = Mappers.physics.get(e1);
+            PhysicsComponent ph2 = Mappers.physics.get(e2);
+            return (int)Math.signum(ph1.body.getPosition().y - ph2.body.getPosition().y);
+        }
+    }
+
+    @Override
+    protected void processEntity(Entity entity, float deltaTime) {
+
     }
 
     public void interpolate(float delta, float alpha) {
 
+        for (Entity entity : getEntities()) {
         // interpolate sprites according to frame alpha
-        for (int i = 0; i < entities.size(); ++i) {
-            Entity entity = entities.get(i);
+
             SpriteComponent sprite = Mappers.sprite.get(entity);
             PhysicsComponent physics = Mappers.physics.get(entity);
 
@@ -46,8 +55,9 @@ public class RenderSystem extends EntitySystem {
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        for (int i = 0; i < entities.size(); i++) {
-            Entity entity = entities.get(i);
+
+        for (Entity entity : getEntities()) {
+
             SpriteComponent sprite = Mappers.sprite.get(entity);
             if (sprite.animation != null) {
                 sprite.stateTime += Gdx.graphics.getDeltaTime();
