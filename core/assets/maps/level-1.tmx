@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="50" tilewidth="32" tileheight="32" nextobjectid="1">
+ <properties>
+  <property name="music" value="music/level-theme.wav"/>
+ </properties>
  <tileset firstgid="1" name="terrain" tilewidth="32" tileheight="32">
   <image source="../tilesets/terrain.png" width="600" height="600"/>
  </tileset>
