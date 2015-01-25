@@ -3,6 +3,7 @@ package ggj.escape.world;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,33 +15,24 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 
 import com.badlogic.gdx.utils.ObjectSet;
+import ggj.escape.Resources;
 import ggj.escape.components.*;
-import ggj.escape.systems.RenderSystem;
-
-import java.util.ArrayList;
+import ggj.escape.systems.PhysicsSystem;
 
 
-public class Level implements ContactListener {
+public class Level {
 
     private Engine engine;
     private TiledMap map;
     private TiledMapRenderer mapRenderer;
-
-    public World world;
-    public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();;
-    public ObjectSet<Entity> toRemove = new ObjectSet<Entity>();
 
     public Music music;
 
     public int width;
     public int height;
     public static int TILESIZE = 32;
-    private boolean debug = false;
 
     public Level(Engine engine) {
-
-        this.world = new World(Vector2.Zero, true);
-        this.world.setContactListener(this);
 
         this.map = new TmxMapLoader().load("maps/level-1.tmx");
         this.mapRenderer = new OrthogonalTiledMapRenderer(map, 1.0f/TILESIZE);
@@ -51,10 +43,9 @@ public class Level implements ContactListener {
         width = prop.get("width", 0, int.class);
         height = prop.get("height", 0, int.class);
 
-//        if (!prop.get("music", String.class).equals("")) {
-//            music = Gdx.audio.newMusic(Gdx.files.internal(prop.get("music", String.class)));
-//            music.play();
-//        }
+        if (!prop.get("music", String.class).equals("")) {
+            dropTheBass("music/Escape_From_the_Lab_BG_Music_Loop_Jasmine.mp3", "", 0.0f);
+        }
 
         assert prop.get("tileheight", int.class) == TILESIZE;
         assert prop.get("tilewidth", int.class) == TILESIZE;
@@ -75,6 +66,8 @@ public class Level implements ContactListener {
 
     private void addMeta(TiledMapTileLayer.Cell cell, int x, int y) {
 
+        World world = engine.getSystem(PhysicsSystem.class).world;
+
         if (cell == null)
             return;
 
@@ -87,7 +80,7 @@ public class Level implements ContactListener {
             case 345:
                 Entity spider = new Entity();
                 spider.add(new PhysicsComponent(world, x, y, 0.45f, 0.45f, (short) 3));
-                spider.add(new SpriteComponent(new TextureRegion(RenderSystem.tex, 0, 96, 32, 32)));
+                spider.add(new SpriteComponent(SpiderComponent.animation));
                 spider.add(new SpiderComponent());
                 spider.add(new BaddieComponent());
                 engine.addEntity(spider);
@@ -103,6 +96,8 @@ public class Level implements ContactListener {
     }
 
     public void addCollision(TiledMapTileLayer.Cell cell, int x, int y) {
+
+        World world = engine.getSystem(PhysicsSystem.class).world;
 
         if (cell == null || cell.getTile().getId() == 0)
             return;
@@ -123,10 +118,6 @@ public class Level implements ContactListener {
         map.getLayers().get(layer).setVisible(!map.getLayers().get(layer).isVisible());
     }
 
-    public void toggleDebug() {
-        this.debug = !this.debug;
-    }
-
 
     // render the world
     public void render(OrthographicCamera camera) {
@@ -136,15 +127,13 @@ public class Level implements ContactListener {
     }
 
     public void renderOverlay(OrthographicCamera camera) {
-
         mapRenderer.setView(camera);
         mapRenderer.render(new int[]{3});
+    }
 
-        if (debug){
-            mapRenderer.render(new int[]{4,5});
-            debugRenderer.render(world, camera.combined);
-        }
-
+    public void renderDebug(OrthographicCamera camera) {
+        mapRenderer.setView(camera);
+        mapRenderer.render(new int[]{4,5});
     }
 
     public TiledMapTileLayer.Cell getTileAt(Vector3 pos) {
@@ -156,64 +145,34 @@ public class Level implements ContactListener {
 
     public void update(float delta) {
 
-        // step the world
-        world.step(delta, 6, 2);
-
-        // remove dead entities
-        for (Entity e : toRemove) {
-            PhysicsComponent ph = Mappers.physics.get(e);
-            ph.body.destroyFixture(ph.body.getFixtureList().first());
-            world.destroyBody(ph.body);
-            engine.removeEntity(e);
-        }
-
-        toRemove.clear();
-
-
     }
-    @Override
-    public void beginContact(Contact contact) {
 
-        ArrayList<Fixture> fixtures = new ArrayList<Fixture>();
-        fixtures.add(contact.getFixtureA());
-        fixtures.add(contact.getFixtureB());
+    public void dropTheBass(String track, final String followUp, float pos) {
 
-        for (Fixture f : fixtures) {
+        if (music != null)
+            music.dispose();
 
-            if (f.getUserData() == null)
-                continue;
+        music = Gdx.audio.newMusic(Gdx.files.internal(track));
+        music.play();
+        music.setPosition(pos);
 
-            if(f.getUserData().getClass() == Entity.class) {
+        if (followUp.isEmpty()) {
 
-                Entity e = (Entity) f.getUserData();
+            music.setLooping(true);
 
-                if (Mappers.bullet.get(e) != null) {
-                    toRemove.add(e);
-
-                } else if (Mappers.enemy.get(e) != null) {
-                    toRemove.add(e);
+        } else{
+            music.setLooping(false);
+            music.setOnCompletionListener(new Music.OnCompletionListener() {
+                @Override
+                public void onCompletion(Music music) {
+                    System.out.println("Starting followup.");
+                    music.dispose();
+                    music = Gdx.audio.newMusic(Gdx.files.internal(followUp));
+                    music.play();
+                    music.setPosition(0.15f);
+                    music.setLooping(true);
                 }
-
-            }
-
-
+            });
         }
     }
-
-    @Override
-    public void endContact(Contact contact) {
-
-    }
-
-    @Override
-    public void preSolve(Contact contact, Manifold oldManifold) {
-
-    }
-
-    @Override
-    public void postSolve(Contact contact, ContactImpulse impulse) {
-
-    }
-
-
 }

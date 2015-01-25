@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,10 +17,6 @@ import ggj.escape.components.PhysicsComponent;
 import ggj.escape.components.SpriteComponent;
 
 public class RenderSystem extends EntitySystem {
-
-    public static Texture tex = new Texture("sprites/placeholders.png");
-    public static Texture sprites = new Texture("sprites/sprite-sheet.png");
-    public static TextureRegion bullet = new TextureRegion(RenderSystem.tex, 128, 0, 32, 32);
 
     private ImmutableArray<Entity> entities;
     private SpriteBatch batch = new SpriteBatch();
@@ -52,7 +49,13 @@ public class RenderSystem extends EntitySystem {
         for (int i = 0; i < entities.size(); i++) {
             Entity entity = entities.get(i);
             SpriteComponent sprite = Mappers.sprite.get(entity);
-            batch.draw(sprite.region, sprite.x, sprite.y, sprite.w, sprite.h);
+            if (sprite.animation != null) {
+                sprite.stateTime += Gdx.graphics.getDeltaTime();
+                batch.draw(sprite.animation.getKeyFrame(sprite.stateTime, true), sprite.x, sprite.y, sprite.w, sprite.h);
+            } else {
+                batch.draw(sprite.region, sprite.x, sprite.y, sprite.w, sprite.h);
+            }
+
         }
         batch.end();
     }
