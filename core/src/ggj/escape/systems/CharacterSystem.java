@@ -48,24 +48,24 @@ public class CharacterSystem extends IteratingSystem {
             Entity explosion = new Entity();
             explosion.add(new ExplosionComponent(10));
             SpriteComponent sp = new SpriteComponent(Resources.animations.spider.explode);
-            sp.x = sprite.x;
-            sp.y = sprite.y;
+            sp.x = sprite.x - 1f;
+            sp.y = sprite.y - 1f;
             explosion.add(sp);
             engine.addEntity(explosion);
         } else if (Family.getFor(RobotComponent.class).matches(me)){
             Entity explosion = new Entity();
             explosion.add(new ExplosionComponent(10));
             SpriteComponent sp = new SpriteComponent(Resources.animations.robot.explode);
-            sp.x = sprite.x - 0.5f;
-            sp.y = sprite.y;
+            sp.x = sprite.x - 3f;
+            sp.y = sprite.y - 1.5f;
             explosion.add(sp);
             engine.addEntity(explosion);
         } else if (Family.getFor(SlimeComponent.class).matches(me)){
             Entity explosion = new Entity();
             explosion.add(new ExplosionComponent(10));
             SpriteComponent sp = new SpriteComponent(Resources.animations.slime.explode);
-            sp.x = sprite.x;
-            sp.y = sprite.y;
+            sp.x = sprite.x  - 1f;
+            sp.y = sprite.y  - 1f;
             explosion.add(sp);
             engine.addEntity(explosion);
         }

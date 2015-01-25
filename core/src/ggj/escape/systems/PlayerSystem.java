@@ -95,7 +95,8 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
                 if (!pl.isAiming)
                     pl.aiming = movement.cpy();
 
-                Vector2 bulletPos = pos.cpy().add(pl.aiming.cpy().setLength2(0.5f));
+                Vector2 bulletPos = pos.cpy().add(pl.aiming.cpy().setLength2(0.125f));
+                bulletPos.y += 0.75;
                 Entity bullet = new Entity();
                 PhysicsSystem ph = engine.getSystem(PhysicsSystem.class);
                 Body body = ph.createBody(bulletPos.x, bulletPos.y, 0.0625f, BulletComponent.category, BulletComponent.mask);
