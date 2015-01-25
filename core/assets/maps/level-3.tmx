@@ -40,7 +40,22 @@
   </tile>
   <tile id="6">
    <properties>
+    <property name="spawn" value="spiders"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="spawn" value="robots"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
     <property name="spawn" value="slime"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="spawn" value="crate"/>
    </properties>
   </tile>
  </tileset>
@@ -64,6 +79,7 @@
   <tile id="7">
    <properties>
     <property name="collide" value="exit"/>
+    <property name="next" value="end-credits"/>
    </properties>
   </tile>
   <tile id="8">
@@ -87,6 +103,9 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="365" name="boss-spawn-01" tilewidth="32" tileheight="32">
+  <image source="../sprites/boss-spawn-01.png" width="128" height="192"/>
+ </tileset>
  <layer name="Floor" width="40" height="50">
   <data encoding="base64" compression="zlib">
    eJydmEtu5DAQQ30H+wrx/Y84s0iAmjePLHUWAty2VF+SJfR9Xdfzd93faz5/fa8b6xnfXtn3yBmz8cDWtPOU52njPdhjvi0W+t/iv8f+FOtT7D2yj+9Zqwd+rHbWR/phnrTHOF/Z++L7e/3fD9Yl4WmLL8VK/1vvaC/1oGF24t7iZw1e8XuCtRTrCZ9+6kFMGCbnOavz5Phcr9ieMaV+39e/dSE+U3ysX8u/aYXxNeX3Yj/jb/xNfEoawryIa/PJ+BI3N31J8SVNsdgMa7T1Xj2PjX/Wv8Sr+3JNICeZC2sz9yassF5WW+pbO5t6bu8m163XxnOri80Xw2rCVtPqk5ok7qe9jUuMs/Fj8t248El+aQYZdyy3poEbR5hL0hh7f5InZ+zPuzYjfssP6nLSCqtT4kfqxXbXaO9Y26YjSadSTid12zS89T7xafbVtHKLL3HvBBecEZwXfE53sKYNxtMNt9O34TRp9HN5DZPGnOxtunLyzu4yTTO2+Dbem89t2T3TeEpMTAzYHZE9m3G2PLh+sLlp2if9bZw+qfHWzzY77V5mWrXZSf2xft7w0WYW/ac5Rv1I+VtOph1WI/u2zbHGXdtrNok35jx1jfXedGTrp3GMWCPv7JvdYea5T3Ce6ph0O/Vm/neRuJt6c8JR4jLNSvrizEv4TPjbNNfqk3DPOBK/aIf4s96YtpCnCQu2h3dRyyVhh3bZ21QjyzNxxno44+a7dMaW1andjSyuU5yZRpxwoflnP1tPrNasN2dB62eyT3y33IyLdjZhfcbX+Goc4H9+p5iZ8dl9hr0xzJm/L9Rjuy9Y3dJv8qXN7saRmXf6n2zDjWnOiTZuXPmS86f6mDSA/j7BS+oT80322h1p41XKYYu3Yazxi2dmnpzfDS+tvxsHEr94x2qzm78Tfxv+0hxqej6xSd075fimG8Rfw7rFS9xtszblTh5Om23eGsb4zFitbwkHJxwx3rEmrTZzX/q28XfTLqtf2m86nHC44fGEI38AcYXCBg==
@@ -97,9 +116,9 @@
    eJzt11lOwlAUgOFbfRDQB31k0A0w6AYcN+C4GccNWKrR8GpioitwDS5D3YBGfHB4Uv/GkhCkeOi9CGnOSb6ElEP5gZCmu8aYvRGyjwMc4gjH8CN1BDjpeDwsp1HfoM7vm+6f3Y95rnOv1Rc4MoEMssL9Xp8tGMD3l0cBRce/b/0PZ7gUKKOCqnD/vMtv3U7aF+7dCCxiCcvC/fb/pm3frcA6NrAp3HfZN4jRPu3TPu3TPu3TPu3TPu1LY9+V6X6v/4VXvOEdH9H7dh77jHn9tbDvIqEZj3teZJBFDvfm97Fpr/d54u7vwr4GmhbyvHcBRZS8+GNJNCJjXnJlVFBFrcexJFp9ozraZzfaZzfaZzdp6LszP9csiRwmMSXcf3DQ92zk16MSZjEn3H9x0Of1cT2qsT+PBSPbH/fs+/qZFaxizdH5XPdtYRs7js6Xhv/vMEf77Eb77CZsezTy69d/e8I3nQYbww==
   </data>
  </layer>
- <layer name="Shadow" width="40" height="50" visible="0">
+ <layer name="Shadow" width="40" height="50">
   <data encoding="base64" compression="zlib">
-   eJztwQEBAAAAgJD+r+4ICgAAAAAAAAAYH0AAAQ==
+   eJzt10EKgCAQRuE5RWfoUp2hK+jNbVHQJh37R3TxPpiNhL2EiMwAADXbNSl4Iu3B+0WjT0Ofhj4NfRr6NPRp6NPQh1UdzrVZTufaX+q/Wb73aa31ziPyWUegT0Ofhj4Nfd8838GZfZ57165JHfPm/WZmaxtxfpF7Ru2VrO9cvHh/NfRpVu9bWQHZczWQ
   </data>
  </layer>
  <layer name="Over" width="40" height="50">
@@ -107,14 +126,17 @@
    eJzt1UsKgCAURuHrqLK20Bra/2baRY9R9kM1EYWCsAbngzORK+pIMwAAAAAAgHeMiYKa1KwWtZ6z8dqW2V9C5cxq1SjvjnPjNQAA/ib3d6byqlXdzflQ8B2X/oMznxi+vgAAoIgd8AMmbA==
   </data>
  </layer>
- <layer name="Collisions" width="40" height="50">
+ <layer name="Collisions" width="40" height="50" visible="0">
   <data encoding="base64" compression="zlib">
-   eJztl1EKgzAQRPWoTW30/idQP/ajQuJuZtOsdB4MQtDt8KiGpHma3kfSgKvmnnxkHXTV3DPCG/3RXy9/S3B/2yB/PfD01wP6w6A/jCf4k/lR/UmXqP6kS1R/Mp/+7NAfBv359YvoT3r88/77mr9TWqv18/BXmvG55OS6lhpjOZfV3IunVFiT562xnMtq7sVTLqythd+/i8e7ifz/7uj57fCA/TDYDyN6v8x+EJp+rXunNmi/ln3JErSfhdPHovCixbvfOW9TeLHMe/r7MRL2w2A/DORs8KvsPMl3tQ==
+   eJztl1EKgzAQRPWojW3s/U9Q/VioQpJdZ9ONdB4MQohxeKghaZ6mZUsKuGrm5C1r0FUzJ8Ib/dFfL3+LYX6Ev2eQvx54+usB/WHQH8Yd/H3/N0f0J11G9SddRvUn69OfHfrDoD+/fiP6kx7/vP8+5mNKY7V+Hv5Ka7xO2TmPpYuxnMtq7sVTKozJ/dZYzmU19+IpF8bWwvNb8fg2kfevRc9/hwfsh8F+GKP3y+wHoel3de/UBu13ZV+yBO1nQfbklhct3v329d4KL5b17v59RMJ+GOyHgZwNfpUPwep3sg==
   </data>
  </layer>
  <layer name="Meta" width="40" height="50">
+  <properties>
+   <property name="spawn" value="boss"/>
+  </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1DEKgDAMBdD2cFZX738ZO3SXQFqqvLeELB8C4ZcCAAAAAGS7a2xfnber6J1vd2fnfYX/A/iHo/drGx179nnpW5juAQrGB4c=
+   eJzt1EkKwkAYBeHuw2ncehBn45Q4e3Br4S6IBNT8Sn1QhGyaFwidkiRJemaUUxrThKa56zVNMzbNaUHLgPtKNq1oTZuA+7Zs2lFFdcB9ezYd6EingPvObLrQlW4B90mSJHVtmNu9f/u8qNp+56vvfvd5v8L/T5L+Q4/7tf+4YwueA+9b6ePuyu8S6w==
   </data>
  </layer>
  <objectgroup name="Regions" visible="0">
