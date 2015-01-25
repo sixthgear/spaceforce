@@ -44,9 +44,8 @@ public class Resources {
 
     public static class sprites {
         public static TextureRegion bullet = new TextureRegion(tex.placeholder, 128, 0, 32, 32);
-        public static Sprite[] crosshair = new Sprite[4];
         public static TextureRegion[] health = new TextureRegion[4];
-
+        public static Sprite[] crosshair = new Sprite[4];
 
         static {
             crosshair[0] = new Sprite(new TextureRegion(tex.ui, 0, 128, 128, 32));
@@ -62,6 +61,8 @@ public class Resources {
             health[2] = new TextureRegion(tex.ui, 0, 64, 256, 32);
             health[3] = new TextureRegion(tex.ui, 0, 96, 256, 32);
         }
+
+        public static TextureRegion crate = new TextureRegion(tex.map, 0, 192, 32, 64);
     }
 
     public static class sfx {

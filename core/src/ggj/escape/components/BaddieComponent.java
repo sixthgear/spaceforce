@@ -2,16 +2,12 @@ package ggj.escape.components;
 
 import com.badlogic.ashley.core.Component;
 import com.badlogic.ashley.core.Entity;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Array;
-import ggj.escape.Resources;
-import ggj.escape.world.Level;
+
 
 public class BaddieComponent extends Component {
 
     public static short category = 0x0008;
-    public static short mask = (short) (Level.category | BulletComponent.category | PlayerComponent.category | BaddieComponent.category);
+    public static short mask = (short) ~0;
 
     public Entity target;
     public int mode = 0;
