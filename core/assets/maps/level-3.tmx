@@ -46,6 +46,46 @@
  </tileset>
  <tileset firstgid="349" name="collisions" tilewidth="32" tileheight="32">
   <image source="../tilesets/collisions.png" width="128" height="128"/>
+  <tile id="4">
+   <properties>
+    <property name="collide" value="trigger"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="collide" value="solid"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="collide" value="solid"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="collide" value="exit"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="collide" value="trigger"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="collide" value="solid"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="collide" value="solid"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="collide" value="exit"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Floor" width="40" height="50">
   <data encoding="base64" compression="zlib">
@@ -69,7 +109,7 @@
  </layer>
  <layer name="Collisions" width="40" height="50">
   <data encoding="base64" compression="zlib">
-   eJztl1EKhDAMBfWqCnr/G6gfD6SIJr7URHgDQRC3DOMu3U7jMMz7TAlXyzPLPmvS1fJMRjf1U79e/Q4q9zvI6NeDyH49UD8O9eP4Qz+sX7UfXKr2g0vVflhf/fyoH4f6xflV7AcP7b+cX0Q/xhv/A7zjOZfdtW892nv4vHc857K79uf3dXVvNfq00/O7FYH8OOTHIT+ORX4UFr+3e6d1WL83+5JnWD8P6PHUxUq0H3o8dfGs9/ffRyby45AfB3M2+Go2bc9pqQ==
+   eJztl1EKgzAQRPWoTW30/idQP/ajQuJuZtOsdB4MQtDt8KiGpHma3kfSgKvmnnxkHXTV3DPCG/3RXy9/S3B/2yB/PfD01wP6w6A/jCf4k/lR/UmXqP6kS1R/Mp/+7NAfBv359YvoT3r88/77mr9TWqv18/BXmvG55OS6lhpjOZfV3IunVFiT562xnMtq7sVTLqythd+/i8e7ifz/7uj57fCA/TDYDyN6v8x+EJp+rXunNmi/ln3JErSfhdPHovCixbvfOW9TeLHMe/r7MRL2w2A/DORs8KvsPMl3tQ==
   </data>
  </layer>
  <layer name="Meta" width="40" height="50">
