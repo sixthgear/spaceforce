@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="50" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="50" tilewidth="32" tileheight="32" nextobjectid="3">
  <properties>
   <property name="music" value="music/Escape_From_the_Lab_BG_Music_Loop_Jasmine.mp3"/>
  </properties>
@@ -105,6 +105,11 @@
  </tileset>
  <tileset firstgid="365" name="boss-spawn-01" tilewidth="32" tileheight="32">
   <image source="../sprites/boss-spawn-01.png" width="128" height="192"/>
+  <tile id="20">
+   <properties>
+    <property name="spawn" value="boss"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="Floor" width="40" height="50">
   <data encoding="base64" compression="zlib">
@@ -140,10 +145,10 @@
   </data>
  </layer>
  <objectgroup name="Regions" visible="0">
-  <object name="room-2" x="352" y="224">
+  <object id="1" name="room-2" x="352" y="224">
    <polygon points="0,0 0,-128 32,-128 32,-192 256,-192 256,384 96,384 96,608 -320,608 -320,160 32,160 32,0 0,0"/>
   </object>
-  <object name="room-1" x="320" y="224">
+  <object id="2" name="room-1" x="320" y="224">
    <polygon points="0,0 0,-128 -32,-128 -32,-192 -192,-192 -192,-64 -288,-64 -288,64 -32,64 -32,0 0,0"/>
   </object>
  </objectgroup>

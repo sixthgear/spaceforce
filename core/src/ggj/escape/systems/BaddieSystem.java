@@ -3,6 +3,7 @@ package ggj.escape.systems;
 
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IntervalIteratingSystem;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.badlogic.gdx.math.Vector2;
@@ -18,12 +19,12 @@ import java.util.ArrayList;
 
 public class BaddieSystem extends IntervalIteratingSystem {
 
-    private Engine engine;
-    private World world;
+    protected Engine engine;
+    protected World world;
 
     public static class BaddieCanSee implements RayCastCallback {
 
-        private Entity target;
+        protected Entity target;
         public boolean found = true;
 
         public BaddieCanSee(Entity target) {
@@ -35,7 +36,7 @@ public class BaddieSystem extends IntervalIteratingSystem {
 
             if (fixture == null)
                 return 0;
-            
+
             Entity e = (Entity) fixture.getUserData();
             if (e == null) {
                 found = false;
@@ -51,6 +52,12 @@ public class BaddieSystem extends IntervalIteratingSystem {
     public BaddieSystem() {
         super(Mappers.families.baddies, 1 / 4f);
     }
+
+    public BaddieSystem(Family family, float interval) {
+        super(family, interval);
+    }
+
+
 
     @Override
     public void addedToEngine(Engine engine) {

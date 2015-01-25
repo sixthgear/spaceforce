@@ -45,8 +45,12 @@ public class RenderSystem extends SortedIteratingSystem {
             if (physics != null) {
                 Vector2 pos = physics.body.getPosition();
                 Vector2 interpolated = sprite.last.cpy().interpolate(pos, alpha, Interpolation.linear);
-                sprite.x = (pos.x) - 0.5f; //interpolated.x - 16;
-                sprite.y = (pos.y) - 0.5f; //interpolated.y - 16;
+
+                float xOff = (float) (sprite.region.getRegionWidth() / 32) / 2;
+                float yOff = (float) (sprite.region.getRegionHeight() / 32) / 2;
+
+                sprite.x = (pos.x) - xOff; //interpolated.x - 16;
+                sprite.y = (pos.y) - yOff; //interpolated.y - 16;
                 sprite.last = pos.cpy();
             }
 

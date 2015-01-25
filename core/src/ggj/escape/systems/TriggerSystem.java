@@ -34,7 +34,6 @@ public class TriggerSystem extends IteratingSystem {
             System.out.println("EXIT!");
             ExitComponent ex = Mappers.exit.get(me);
             ex.triggered = true;
-            ex.nextLevel = "maps/level-2.tmx";
         }
     }
 

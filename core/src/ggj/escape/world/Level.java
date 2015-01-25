@@ -50,7 +50,12 @@ public class Level {
         width = prop.get("width", 0, int.class);
         height = prop.get("height", 0, int.class);
 
-        if (!prop.get("music", String.class).equals("")) {
+        if (mapName.contains("level-3")) {
+            dropTheBass(
+                    "music/Escape_From_the_Lab_BG_Music_Boss_Init_Jeremy-Lim.mp3",
+                    "music/Escape_From_the_Lab_BG_Music_Boss_Loop_Jeremy-Lim.mp3",
+                    1.0f);
+        } else if (!prop.get("music", String.class).equals("")) {
             dropTheBass("music/Escape_From_the_Lab_BG_Music_Loop_Jasmine.mp3", "", 0.0f);
         }
 
@@ -122,6 +127,17 @@ public class Level {
                     Entity player = engine.getSystem(PlayerSystem.class).createPlayer(3, x, y);
                     engine.addEntity(player);
                 }
+                break;
+
+            // spider
+            case "boss":
+                Entity boss = new Entity();
+                boss.add(new PhysicsComponent(ph.createBoxBody(x, y, 2, 3, BaddieComponent.category, BaddieComponent.mask)));
+                boss.add(new SpriteComponent(Resources.animations.boss.idle));
+                boss.add(new CharacterComponent(100));
+//                boss.add(new BaddieComponent(10, 4));
+                boss.add(new BossComponent());
+                engine.addEntity(boss);
                 break;
 
             // spider
@@ -235,7 +251,8 @@ public class Level {
                 body = world.createBody(bodydef);
                 fixture = body.createFixture(fixturedef);
                 Entity exit = new Entity();
-                exit.add(new ExitComponent());
+                String next = prop.get("next", String.class);
+                exit.add(new ExitComponent(next));
                 engine.addEntity(exit);
                 fixture.setUserData(exit);
                 break;

@@ -3,10 +3,7 @@ package ggj.escape;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputAdapter;
-import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.*;
 
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.graphics.GL20;
@@ -38,11 +35,20 @@ public class GameScreen extends ScreenAdapter {
 
     public SpriteBatch uiBatch;
     public SpriteBatch hudBatch;
+    public EscapeGame game;
+
+    public GameScreen(EscapeGame game ) {
+        super();
+        this.game = game;
+    }
 
     public void init() {
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
+
+        // create the main engine
+        engine = new Engine();
 
         // add systems
         engine.addSystem(new PhysicsSystem(engine));
@@ -53,6 +59,7 @@ public class GameScreen extends ScreenAdapter {
         engine.addSystem(new BaddieSystem());
         engine.addSystem(new PlayerSystem());
         engine.addSystem(new TriggerSystem());
+        engine.addSystem(new BossSystem());
 
         engine.addEntityListener(Mappers.families.physics, engine.getSystem(PhysicsSystem.class));
 
@@ -123,10 +130,6 @@ public class GameScreen extends ScreenAdapter {
             }
         });
 
-
-        // create the main engine
-        engine = new Engine();
-
         // setup engine
         init();
 
@@ -156,13 +159,20 @@ public class GameScreen extends ScreenAdapter {
                 }
                 init();
 
-                level = new Level(engine, "maps/level-2.tmx", numPlayers);
+                String next = Mappers.exit.get(e).nextLevel;
 
+                if (next.equals("end-credits")) {
+                    game.setScreen(game.creditsScreen);
+                    return;
+                } else {
 
-                // add the main camera entity
-                camera = new Entity();
-                camera.add(new CameraComponent(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(Mappers.families.players)));
-                engine.addEntity(camera);
+                    level = new Level(engine, next, numPlayers);
+
+                    // add the main camera entity
+                    camera = new Entity();
+                    camera.add(new CameraComponent(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(Mappers.families.players)));
+                    engine.addEntity(camera);
+                }
             }
         }
 

@@ -29,6 +29,9 @@ public class PhysicsSystem extends EntitySystem implements ContactListener, Enti
     @Override
     public void removedFromEngine(Engine engine) {
         super.removedFromEngine(engine);
+
+        System.out.println("Destroying World.");
+        world.clearForces();
         world.dispose();
     }
 

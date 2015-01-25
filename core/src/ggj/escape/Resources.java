@@ -35,6 +35,7 @@ public class Resources {
         public static Texture map = new Texture("sprites/map-sprites.png");
         public static Texture ui = new Texture("sprites/ui-sprites-01.png");
         public static Texture fx = new Texture("sprites/explosion-sprites.png");
+        public static Texture boss = new Texture("sprites/boss-sprites.png");
     }
 
     public static class fonts {
@@ -63,6 +64,11 @@ public class Resources {
         }
 
         public static TextureRegion crate = new TextureRegion(tex.map, 0, 192, 32, 64);
+    }
+
+    public static class screens {
+        public static Texture credits = new Texture("screens/end-credits.png");
+        public static Texture title = new Texture("screens/title-screen.png");
     }
 
     public static class sfx {
@@ -95,6 +101,15 @@ public class Resources {
             public static Animation die = buildAnim(Resources.tex.baddies, 0.1f, 3, 1, 32, 32);
             public static Animation explode = buildAnim(Resources.tex.fx, 0.05f, 10, 14, 128, 128, Animation.PlayMode.NORMAL);
         }
+        public static class boss {
+            public static Animation idle = buildAnim(Resources.tex.boss, 0.1f, 0, 12, 128, 192);
+            public static Animation walk = buildAnim(Resources.tex.boss, 0.1f, 1, 14, 128, 192);
+            public static Animation walk_side = buildAnim(Resources.tex.boss, 0.1f, 2, 12, 128, 192);
+//            public static Animation attack = buildAnim(Resources.tex.baddies, 0.1f, 3, 1, 128, 160);
+//            public static Animation die = buildAnim(Resources.tex.baddies, 0.1f, 3, 1, 128, 160);
+//            public static Animation explode = buildAnim(Resources.tex.fx, 0.05f, 10, 14, 128, 128, Animation.PlayMode.NORMAL);
+        }
+
     }
 
 }

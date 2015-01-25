@@ -17,6 +17,7 @@ public class Mappers {
         public static Family exits = Family.getFor(ExitComponent.class);
         public static Family doors = Family.getFor(DoorComponent.class);
         public static Family props = Family.getFor(PropComponent.class);
+        public static Family boss = Family.getFor(BossComponent.class);
     }
 
     public static final ComponentMapper<PhysicsComponent> physics = ComponentMapper.getFor(PhysicsComponent.class);
@@ -29,5 +30,6 @@ public class Mappers {
     public static final ComponentMapper<BaddieComponent> enemy = ComponentMapper.getFor(BaddieComponent.class);
     public static final ComponentMapper<ExplosionComponent> fx = ComponentMapper.getFor(ExplosionComponent.class);
     public static final ComponentMapper<ExitComponent> exit = ComponentMapper.getFor(ExitComponent.class);
+    public static final ComponentMapper<BossComponent> boss = ComponentMapper.getFor(BossComponent.class);
 
 }
