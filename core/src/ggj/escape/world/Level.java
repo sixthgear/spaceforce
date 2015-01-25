@@ -21,7 +21,7 @@ import ggj.escape.systems.PhysicsSystem;
 public class Level {
 
     public static short category = 0x0001;
-    public static short mask = (short) (PlayerComponent.category | BaddieComponent.category | BulletComponent.category);
+    public static short mask = (short) (~Level.category) ;
 
     private Engine engine;
     private TiledMap map;
@@ -79,12 +79,15 @@ public class Level {
 
         String spawn = prop.get("spawn", String.class);
 
+        if (spawn == null)
+            return;
+
         switch (spawn) {
 
             // spider
             case "spider":
                 Entity spider = new Entity();
-                spider.add(new PhysicsComponent(ph.createBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
+                spider.add(new PhysicsComponent(ph.createCircBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
                 spider.add(new SpriteComponent(Resources.animations.spider.walk));
                 spider.add(new CharacterComponent(1));
                 spider.add(new BaddieComponent(10, 4));
@@ -95,7 +98,7 @@ public class Level {
             // robot
             case "robot":
                 Entity robot = new Entity();
-                robot.add(new PhysicsComponent(ph.createBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
+                robot.add(new PhysicsComponent(ph.createCircBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
                 robot.add(new SpriteComponent(Resources.animations.robot.walk));
                 robot.add(new CharacterComponent(5));
                 robot.add(new BaddieComponent(20, 3));
@@ -106,7 +109,7 @@ public class Level {
             // slime"
             case "slime":
                 Entity slime = new Entity();
-                slime.add(new PhysicsComponent(ph.createBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
+                slime.add(new PhysicsComponent(ph.createCircBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
                 slime.add(new SpriteComponent(Resources.animations.slime.walk));
                 slime.add(new CharacterComponent(3));
                 slime.add(new BaddieComponent(10, 2));
@@ -114,15 +117,21 @@ public class Level {
                 engine.addEntity(slime);
                 break;
 
+            // crate"
+            case "crate":
+                Entity crate = new Entity();
+                crate.add(new PhysicsComponent(ph.createBoxBody(x, y, 0.45f, 0.45f, PropComponent.category, PropComponent.mask)));
+                crate.add(new SpriteComponent(Resources.sprites.crate));
+                crate.add(new PropComponent());
+                engine.addEntity(crate);
+                break;
+
             default:
-                System.out.print("Unknown ID: ");
+                System.out.print("Unknown Meta ID: ");
                 System.out.println(id);
                 break;
 
         }
-
-//        System.out.print("Meta: ");
-//        System.out.printf("id: %d, ", tile.getId(), tile.getProperties());
 
     }
 
@@ -130,22 +139,55 @@ public class Level {
 
         World world = engine.getSystem(PhysicsSystem.class).world;
 
-        if (cell == null || cell.getTile().getId() == 0)
+        if (cell == null)
             return;
 
+        TiledMapTile tile = cell.getTile();
+        MapProperties prop = tile.getProperties();
+        int id = tile.getId();
+
+        String collide = prop.get("collide", String.class);
+
+        if (collide == null)
+            return;
+
+        // create body def
         BodyDef bodydef = new BodyDef();
         bodydef.position.set((x + 0.5f), (y + 0.5f));
-        Body body = world.createBody(bodydef);
 
+        // create shape
         PolygonShape box = new PolygonShape();
         box.setAsBox(0.5f, 0.5f);
 
+        // create fixture def
         FixtureDef fixturedef = new FixtureDef();
-        fixturedef.filter.categoryBits = Level.category;
-        fixturedef.filter.maskBits = Level.mask;
         fixturedef.density = 0.0f;
         fixturedef.shape = box;
 
+        switch (collide) {
+
+            case "solid":
+                fixturedef.filter.categoryBits = Level.category;
+                fixturedef.filter.maskBits = Level.mask;
+                break;
+
+            case "trigger":
+                fixturedef.isSensor = true;
+                break;
+
+            case "exit":
+                fixturedef.isSensor = true;
+                break;
+
+            case "default":
+                System.out.print("Unknown Collision ID: ");
+                System.out.println(id);
+                box.dispose();
+                return;
+
+        }
+
+        Body body = world.createBody(bodydef);
         body.createFixture(fixturedef);
         box.dispose();
 
@@ -166,12 +208,12 @@ public class Level {
 
     public void renderOverlay(OrthographicCamera camera) {
         mapRenderer.setView(camera);
-        mapRenderer.render(new int[]{3});
+        mapRenderer.render(new int[]{3,4});
     }
 
     public void renderDebug(OrthographicCamera camera) {
         mapRenderer.setView(camera);
-        mapRenderer.render(new int[]{4,5});
+        mapRenderer.render(new int[]{5,6});
     }
 
     public TiledMapTileLayer.Cell getTileAt(Vector3 pos) {

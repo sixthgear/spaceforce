@@ -2,7 +2,6 @@ package ggj.escape.systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
@@ -49,7 +48,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
 
         player.add(new PlayerComponent(role));
         player.add(new CharacterComponent(20));
-        player.add(new PhysicsComponent(ph.createBody(8 + role, 95, 0.48f, PlayerComponent.category, PlayerComponent.mask)));
+        player.add(new PhysicsComponent(ph.createCircBody(8 + role, 95, 0.48f, PlayerComponent.category, PlayerComponent.mask)));
         player.add(new SpriteComponent(player.getComponent(PlayerComponent.class).regions.get(0)));
         return player;
     }
@@ -99,7 +98,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
                 bulletPos.y += 0.75;
                 Entity bullet = new Entity();
                 PhysicsSystem ph = engine.getSystem(PhysicsSystem.class);
-                Body body = ph.createBody(bulletPos.x, bulletPos.y, 0.0625f, BulletComponent.category, BulletComponent.mask);
+                Body body = ph.createCircBody(bulletPos.x, bulletPos.y, 0.0625f, BulletComponent.category, BulletComponent.mask);
                 PhysicsComponent b = new PhysicsComponent(body);
 
                 bullet.add(b);

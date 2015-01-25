@@ -16,13 +16,15 @@ import java.util.ArrayList;
 public class PhysicsSystem extends EntitySystem implements ContactListener, EntityListener {
 
 
-    public Body createBody(float x, float y, float radius, short category, short mask) {
-        BodyDef bodydef = new BodyDef();
-        bodydef.type = BodyDef.BodyType.DynamicBody;
-        bodydef.position.set(x, y);
+    public Body createCircBody(float x, float y, float radius, short category, short mask) {
 
         CircleShape shape = new CircleShape();
         shape.setRadius(radius);
+
+        BodyDef bodydef = new BodyDef();
+        bodydef.type = BodyDef.BodyType.DynamicBody;
+        bodydef.position.set(x, y);
+        bodydef.fixedRotation = true;
 
         FixtureDef fixturedef = new FixtureDef();
         fixturedef.shape = shape;
@@ -30,10 +32,31 @@ public class PhysicsSystem extends EntitySystem implements ContactListener, Enti
         fixturedef.filter.maskBits = mask;
 
         Body body = world.createBody(bodydef);
-        body.setFixedRotation(true);
-
         body.createFixture(fixturedef);
+        shape.dispose();
+        return body;
+    }
 
+    public Body createBoxBody(float x, float y, float width, float height, short category, short mask) {
+
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width, height);
+
+        BodyDef bodydef = new BodyDef();
+        bodydef.type = BodyDef.BodyType.DynamicBody;
+        bodydef.position.set(x, y);
+        bodydef.fixedRotation = true;
+        bodydef.linearDamping = 2.0f;
+
+        FixtureDef fixturedef = new FixtureDef();
+        fixturedef.shape = shape;
+        fixturedef.density = 40.0f;
+        fixturedef.friction = 10.0f;
+        fixturedef.filter.categoryBits = category;
+        fixturedef.filter.maskBits = mask;
+
+        Body body = world.createBody(bodydef);
+        body.createFixture(fixturedef);
         shape.dispose();
         return body;
     }
