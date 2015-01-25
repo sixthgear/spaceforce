@@ -33,18 +33,21 @@ public class Resources {
             public static Animation walk = BaddieComponent.buildAnim(0, 5, 32, 32);
             public static Animation attack = BaddieComponent.buildAnim(0, 1, 32, 32);
             public static Animation die = BaddieComponent.buildAnim(0, 1, 32, 32);
+            public static Animation explode = BaddieComponent.buildAnim(3, 14, 32, 32);
         }
         public static class robot {
             public static Animation idle = BaddieComponent.buildAnim(1, 1, 32, 64);
             public static Animation walk = BaddieComponent.buildAnim(1, 4, 32, 64);
             public static Animation attack = BaddieComponent.buildAnim(1, 1, 32, 64);
             public static Animation die = BaddieComponent.buildAnim(1, 1, 32, 64);
+            public static Animation explode = BaddieComponent.buildAnim(0, 14, 64, 64);
         }
         public static class slime{
             public static Animation idle = BaddieComponent.buildAnim(3, 1, 32, 32);
             public static Animation walk = BaddieComponent.buildAnim(3, 4, 32, 32);
             public static Animation attack = BaddieComponent.buildAnim(3, 1, 32, 32);
             public static Animation die = BaddieComponent.buildAnim(3, 1, 32, 32);
+            public static Animation explode = BaddieComponent.buildAnim(2, 14, 32, 32);
         }
 
     }
