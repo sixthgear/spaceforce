@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="101" tilewidth="32" tileheight="32" nextobjectid="3">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="101" tilewidth="32" tileheight="32">
  <properties>
   <property name="music" value="music/Escape_From_the_Lab_BG_Music_Loop_Jasmine.mp3"/>
  </properties>
@@ -79,6 +79,7 @@
   <tile id="7">
    <properties>
     <property name="collide" value="exit"/>
+    <property name="next" value="maps/level-2.tmx"/>
    </properties>
   </tile>
   <tile id="8">
@@ -99,6 +100,7 @@
   <tile id="11">
    <properties>
     <property name="collide" value="exit"/>
+    <property name="next" value="maps/level-3.tmx"/>
    </properties>
   </tile>
  </tileset>
@@ -132,7 +134,7 @@
  </layer>
  <layer name="Collisions" width="80" height="101">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <layer name="Meta" width="80" height="101">
@@ -141,10 +143,10 @@
   </data>
  </layer>
  <objectgroup name="Regions" visible="0">
-  <object id="1" name="room-2" x="352" y="224">
+  <object name="room-2" x="352" y="224">
    <polygon points="0,0 0,-128 32,-128 32,-192 256,-192 256,384 96,384 96,608 -320,608 -320,160 32,160 32,0 0,0"/>
   </object>
-  <object id="2" name="room-1" x="320" y="224">
+  <object name="room-1" x="320" y="224">
    <polygon points="0,0 0,-128 -32,-128 -32,-192 -192,-192 -192,-64 -288,-64 -288,64 -32,64 -32,0 0,0"/>
   </object>
  </objectgroup>
