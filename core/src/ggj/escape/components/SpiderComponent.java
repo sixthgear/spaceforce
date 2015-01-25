@@ -1,7 +1,7 @@
 package ggj.escape.components;
 
 
-public class SpiderComponent extends EnemyComponent {
+public class SpiderComponent extends BaddieComponent {
 
 
 }

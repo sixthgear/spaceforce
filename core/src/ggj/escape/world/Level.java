@@ -3,7 +3,9 @@ package ggj.escape.world;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -12,9 +14,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 
 import com.badlogic.gdx.utils.ObjectSet;
-import ggj.escape.components.BulletComponent;
-import ggj.escape.components.Mappers;
-import ggj.escape.components.PhysicsComponent;
+import ggj.escape.components.*;
+import ggj.escape.systems.RenderSystem;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,8 @@ public class Level implements ContactListener {
     public World world;
     public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();;
     public ObjectSet<Entity> toRemove = new ObjectSet<Entity>();
+
+    public Music music;
 
     public int width;
     public int height;
@@ -48,31 +51,73 @@ public class Level implements ContactListener {
         width = prop.get("width", 0, int.class);
         height = prop.get("height", 0, int.class);
 
+//        if (!prop.get("music", String.class).equals("")) {
+//            music = Gdx.audio.newMusic(Gdx.files.internal(prop.get("music", String.class)));
+//            music.play();
+//        }
+
         assert prop.get("tileheight", int.class) == TILESIZE;
         assert prop.get("tilewidth", int.class) == TILESIZE;
         assert prop.get("orientation", String.class).equals("orthogonal");
 
+
         // Iterate cells and create collision boxes
-        TiledMapTileLayer cells = (TiledMapTileLayer) this.map.getLayers().get("Collisions");
+        TiledMapTileLayer collision = (TiledMapTileLayer) this.map.getLayers().get("Collisions");
+        TiledMapTileLayer meta = (TiledMapTileLayer) this.map.getLayers().get("Meta");
+
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-
-                TiledMapTileLayer.Cell cell = cells.getCell(x, y);
-
-                if (cell == null || cell.getTile().getId() == 0)
-                    continue;
-
-                BodyDef bodydef = new BodyDef();
-                bodydef.position.set((x + 0.5f), (y + 0.5f));
-                Body body = world.createBody(bodydef);
-
-                PolygonShape box = new PolygonShape();
-                box.setAsBox(0.5f, 0.5f);
-                body.createFixture(box, 0.0f);
-                box.dispose();
+                addCollision(collision.getCell(x, y), x, y);
+                addMeta(meta.getCell(x, y), x, y);
             }
         }
     }
+
+    private void addMeta(TiledMapTileLayer.Cell cell, int x, int y) {
+
+        if (cell == null)
+            return;
+
+        TiledMapTile tile = cell.getTile();
+        int id = tile.getId();
+
+        switch (id) {
+
+            // spider
+            case 345:
+                Entity spider = new Entity();
+                spider.add(new PhysicsComponent(world, x, y, 0.45f, 0.45f, (short) 3));
+                spider.add(new SpriteComponent(new TextureRegion(RenderSystem.tex, 0, 96, 32, 32)));
+                spider.add(new SpiderComponent());
+                spider.add(new BaddieComponent());
+                engine.addEntity(spider);
+                break;
+            default:
+                break;
+
+        }
+
+//        System.out.print("Meta: ");
+//        System.out.printf("id: %d, ", tile.getId(), tile.getProperties());
+
+    }
+
+    public void addCollision(TiledMapTileLayer.Cell cell, int x, int y) {
+
+        if (cell == null || cell.getTile().getId() == 0)
+            return;
+
+        BodyDef bodydef = new BodyDef();
+        bodydef.position.set((x + 0.5f), (y + 0.5f));
+        Body body = world.createBody(bodydef);
+
+        PolygonShape box = new PolygonShape();
+        box.setAsBox(0.5f, 0.5f);
+        body.createFixture(box, 0.0f);
+        box.dispose();
+
+    }
+
 
     public void toggleLayer(int layer) {
         map.getLayers().get(layer).setVisible(!map.getLayers().get(layer).isVisible());
@@ -134,12 +179,24 @@ public class Level implements ContactListener {
         fixtures.add(contact.getFixtureB());
 
         for (Fixture f : fixtures) {
-            if (f.getUserData() != null && f.getUserData().getClass() == Entity.class) {
+
+            if (f.getUserData() == null)
+                continue;
+
+            if(f.getUserData().getClass() == Entity.class) {
+
                 Entity e = (Entity) f.getUserData();
-                if (e.getComponent(BulletComponent.class) != null) {
+
+                if (Mappers.bullet.get(e) != null) {
+                    toRemove.add(e);
+
+                } else if (Mappers.enemy.get(e) != null) {
                     toRemove.add(e);
                 }
+
             }
+
+
         }
     }
 

@@ -14,9 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import ggj.escape.components.*;
 
-import ggj.escape.systems.CameraSystem;
-import ggj.escape.systems.PlayerSystem;
-import ggj.escape.systems.RenderSystem;
+import ggj.escape.systems.*;
 import ggj.escape.world.Level;
 
 
@@ -27,8 +25,8 @@ public class GameScreen extends ScreenAdapter {
     public PooledEngine pool;
 
     // references to important entities
-    public Family players = Family.getFor(PlayerComponent.class);
-    public Family enemies = Family.getFor(EnemyComponent.class);
+    public Family players = Family.getFor(CharacterComponent.class);
+    public Family enemies = Family.getFor(BaddieComponent.class);
     public Entity camera;
 
     @Override
@@ -48,8 +46,11 @@ public class GameScreen extends ScreenAdapter {
 
         // add systems
         engine.addSystem(new PlayerSystem(pool, engine, level.world));
+        engine.addSystem(new PhysicsSystem());
         engine.addSystem(new RenderSystem());
         engine.addSystem(new CameraSystem());
+        engine.addSystem(new CharacterSystem());
+
 
         // count connected controllers
         int numPlayers = Controllers.getControllers().size;
@@ -57,9 +58,9 @@ public class GameScreen extends ScreenAdapter {
         // add one player for each controller
         for (int i = 0; i < numPlayers; i++) {
             Entity player = new Entity();
-            PlayerComponent p = new PlayerComponent();
+            CharacterComponent p = new CharacterComponent();
             player.add(p);
-            player.add(new PhysicsComponent(level.world, 8 + 5 * i, 45, 0.5f, 0.5f, (short) 1));
+            player.add(new PhysicsComponent(level.world, 8 + i, 45, 0.48f, 0.48f, (short) 1));
             player.add(new SpriteComponent(p.regions.get(i)));
             engine.addEntity(player);
         }
