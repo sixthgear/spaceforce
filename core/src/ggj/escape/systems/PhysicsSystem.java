@@ -1,9 +1,6 @@
 package ggj.escape.systems;
 
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 
 import com.badlogic.gdx.math.Vector2;
@@ -15,10 +12,44 @@ import ggj.escape.components.PhysicsComponent;
 import java.util.ArrayList;
 
 
-public class PhysicsSystem extends EntitySystem implements ContactListener {
+public class PhysicsSystem extends EntitySystem implements ContactListener, EntityListener {
+
+
+    public Body createBody(float x, float y, float radius, short category, short mask) {
+        BodyDef bodydef = new BodyDef();
+        bodydef.type = BodyDef.BodyType.DynamicBody;
+        bodydef.position.set(x, y);
+
+        CircleShape shape = new CircleShape();
+        shape.setRadius(radius);
+
+        FixtureDef fixturedef = new FixtureDef();
+        fixturedef.shape = shape;
+        fixturedef.filter.categoryBits = category;
+        fixturedef.filter.maskBits = mask;
+
+        Body body = world.createBody(bodydef);
+        body.setFixedRotation(true);
+
+        body.createFixture(fixturedef);
+
+        shape.dispose();
+        return body;
+    }
+
+    @Override
+    public void entityAdded(Entity entity) {
+        PhysicsComponent ph = Mappers.physics.get(entity);
+        ph.body.setUserData(entity);
+    }
+
+    @Override
+    public void entityRemoved(Entity entity) {
+
+    }
 
     public World world;
-    public ObjectSet<Entity> toRemove = new ObjectSet<Entity>();
+    public ObjectSet<Entity> toRemove = new ObjectSet<>();
     private Engine engine;
     private ImmutableArray<Entity> entities;
 
@@ -30,7 +61,6 @@ public class PhysicsSystem extends EntitySystem implements ContactListener {
 
     public void addedToEngine(Engine engine) {
         entities = engine.getEntitiesFor(Family.getFor(PhysicsComponent.class));
-        System.out.println("Added PHYSOCS");
     }
 
     @Override
@@ -54,7 +84,7 @@ public class PhysicsSystem extends EntitySystem implements ContactListener {
     @Override
     public void beginContact(Contact contact) {
 
-        ArrayList<Fixture> fixtures = new ArrayList<Fixture>();
+        ArrayList<Fixture> fixtures = new ArrayList<>();
         fixtures.add(contact.getFixtureA());
         fixtures.add(contact.getFixtureB());
 

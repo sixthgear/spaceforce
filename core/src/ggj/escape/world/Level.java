@@ -6,21 +6,22 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
+
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 
-import com.badlogic.gdx.utils.ObjectSet;
 import ggj.escape.Resources;
 import ggj.escape.components.*;
 import ggj.escape.systems.PhysicsSystem;
 
 
 public class Level {
+
+    public static short category = 0x0001;
+    public static short mask = (short) (PlayerComponent.category | BaddieComponent.category | BulletComponent.category);
 
     private Engine engine;
     private TiledMap map;
@@ -66,26 +67,51 @@ public class Level {
 
     private void addMeta(TiledMapTileLayer.Cell cell, int x, int y) {
 
-        World world = engine.getSystem(PhysicsSystem.class).world;
+        PhysicsSystem ph = engine.getSystem(PhysicsSystem.class);
 
         if (cell == null)
             return;
 
         TiledMapTile tile = cell.getTile();
+        MapProperties prop = tile.getProperties();
+
         int id = tile.getId();
 
-        switch (id) {
+        String spawn = prop.get("spawn", String.class);
+
+        switch (spawn) {
 
             // spider
-            case 345:
+            case "spider":
                 Entity spider = new Entity();
-                spider.add(new PhysicsComponent(world, x, y, 0.45f, 0.45f, (short) 3));
-                spider.add(new SpriteComponent(SpiderComponent.animation));
+                spider.add(new PhysicsComponent(ph.createBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
+                spider.add(new SpriteComponent(Resources.animations.spider.walk));
                 spider.add(new SpiderComponent());
                 spider.add(new BaddieComponent());
                 engine.addEntity(spider);
                 break;
+
+            // robot
+            case "robot":
+                Entity robot = new Entity();
+                robot.add(new PhysicsComponent(ph.createBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
+                robot.add(new SpriteComponent(Resources.animations.robot.walk));
+                robot.add(new BaddieComponent());
+                engine.addEntity(robot);
+                break;
+
+            // slime"
+            case "slime":
+                Entity slime = new Entity();
+                slime.add(new PhysicsComponent(ph.createBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
+                slime.add(new SpriteComponent(Resources.animations.slime.walk));
+                slime.add(new BaddieComponent());
+                engine.addEntity(slime);
+                break;
+
             default:
+                System.out.print("Unknown ID: ");
+                System.out.println(id);
                 break;
 
         }
@@ -108,7 +134,14 @@ public class Level {
 
         PolygonShape box = new PolygonShape();
         box.setAsBox(0.5f, 0.5f);
-        body.createFixture(box, 0.0f);
+
+        FixtureDef fixturedef = new FixtureDef();
+        fixturedef.filter.categoryBits = Level.category;
+        fixturedef.filter.maskBits = Level.mask;
+        fixturedef.density = 0.0f;
+        fixturedef.shape = box;
+
+        body.createFixture(fixturedef);
         box.dispose();
 
     }

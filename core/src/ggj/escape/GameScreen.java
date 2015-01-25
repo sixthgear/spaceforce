@@ -24,7 +24,7 @@ public class GameScreen extends ScreenAdapter {
     public Engine engine;
     public PooledEngine pool;
 
-    public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();;
+    public Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
     // references to important entities
     public Entity camera;
@@ -50,6 +50,8 @@ public class GameScreen extends ScreenAdapter {
         engine.addSystem(new CharacterSystem());
         engine.addSystem(new PlayerSystem(pool, engine));
 
+        engine.addEntityListener(Mappers.families.physics, engine.getSystem(PhysicsSystem.class));
+
         // create the level
         level = new Level(engine);
 
@@ -64,7 +66,7 @@ public class GameScreen extends ScreenAdapter {
 
         // add the main camera entity
         camera = new Entity();
-        camera.add(new CameraComponent(w, h, new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(Mappers.players)));
+        camera.add(new CameraComponent(w, h, new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(Mappers.families.players)));
         engine.addEntity(camera);
 
         // set up main window input handling

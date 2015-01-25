@@ -12,6 +12,9 @@ import java.util.ArrayList;
 
 public class PlayerComponent extends Component {
 
+    public static short category = 0x0002;
+    public static short mask = (short) (Level.category | BaddieComponent.category);
+
     public ArrayList<TextureRegion> regions = new ArrayList<TextureRegion>(8);
     public int role;
 

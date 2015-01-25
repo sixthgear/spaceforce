@@ -5,9 +5,12 @@ import com.badlogic.ashley.core.Family;
 
 public class Mappers {
 
-    public static Family players = Family.getFor(PlayerComponent.class, CharacterComponent.class);
-    public static Family enemies = Family.getFor(BaddieComponent.class);
-    public static Family characters = Family.getFor(CharacterComponent.class);
+    public static class families {
+        public static Family players = Family.getFor(PlayerComponent.class, CharacterComponent.class);
+        public static Family enemies = Family.getFor(BaddieComponent.class);
+        public static Family characters = Family.getFor(CharacterComponent.class);
+        public static Family physics = Family.getFor(PhysicsComponent.class);
+    }
 
     public static final ComponentMapper<PhysicsComponent> physics = ComponentMapper.getFor(PhysicsComponent.class);
     public static final ComponentMapper<SpriteComponent> sprite = ComponentMapper.getFor(SpriteComponent.class);

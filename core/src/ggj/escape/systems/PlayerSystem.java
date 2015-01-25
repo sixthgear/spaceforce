@@ -8,6 +8,7 @@ import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import ggj.escape.Resources;
@@ -33,7 +34,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
 
     @Override
     public void addedToEngine(Engine engine) {
-        entities = engine.getEntitiesFor(Mappers.players);
+        entities = engine.getEntitiesFor(Mappers.families.players);
     }
 
     @Override
@@ -43,9 +44,11 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
 
     public Entity createPlayer(Level level, int role) {
         Entity player = new Entity();
+        PhysicsSystem ph = engine.getSystem(PhysicsSystem.class);
+
         player.add(new PlayerComponent(role));
         player.add(new CharacterComponent());
-        player.add(new PhysicsComponent(world, 8 + role, 45, 0.48f, 0.48f, (short) 1));
+        player.add(new PhysicsComponent(ph.createBody(8 + role, 95, 0.48f, PlayerComponent.category, PlayerComponent.mask)));
         player.add(new SpriteComponent(player.getComponent(PlayerComponent.class).regions.get(0)));
         return player;
     }
@@ -94,8 +97,9 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
 
                 Vector2 bulletPos = pos.cpy().add(aiming.cpy().setLength2(0.5f));
                 Entity bullet = new Entity();
-
-                PhysicsComponent b = new PhysicsComponent(world, bulletPos.x, bulletPos.y, 0.0625f, 0.0625f, (short) 2);
+                PhysicsSystem ph = engine.getSystem(PhysicsSystem.class);
+                Body body = ph.createBody(bulletPos.x, bulletPos.y, 0.0625f, BulletComponent.category, BulletComponent.mask);
+                PhysicsComponent b = new PhysicsComponent(body);
 
                 bullet.add(b);
                 bullet.add(new SpriteComponent(Resources.sprites.bullet));
