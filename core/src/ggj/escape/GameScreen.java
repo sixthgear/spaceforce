@@ -15,7 +15,6 @@ import com.badlogic.gdx.math.Vector2;
 
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import ggj.escape.components.*;
-
 import ggj.escape.systems.*;
 import ggj.escape.world.Level;
 
@@ -37,15 +36,15 @@ public class GameScreen extends ScreenAdapter {
     public SpriteBatch hudBatch;
     public EscapeGame game;
 
+    public final int WIDTH = 1280;
+    public final int HEIGHT = 800;
+
     public GameScreen(EscapeGame game ) {
         super();
         this.game = game;
     }
 
     public void init() {
-
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
 
         // create the main engine
         engine = new Engine();
@@ -71,15 +70,11 @@ public class GameScreen extends ScreenAdapter {
     @Override
     public void show() {
 
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
-
-        hud = new OrthographicCamera(w, h);
-        hud.setToOrtho(false, w, h);
+        hud = new OrthographicCamera(WIDTH, HEIGHT);
+        hud.setToOrtho(false, 40, 25);
 
         uiBatch = new SpriteBatch(1000);
         hudBatch = new SpriteBatch(1000);
-        Resources.fonts.roboto_white_cache.addText("ROBOTS!", 10, 10);
 
         // set up main window input handling
         Gdx.input.setInputProcessor(new InputAdapter() {
@@ -134,11 +129,11 @@ public class GameScreen extends ScreenAdapter {
         init();
 
         // create the level
-        level = new Level(engine, numPlayers); // , "maps/blank.tmx"
+        level = new Level(engine, numPlayers);
 
         // add the main camera entity
         camera = new Entity();
-        camera.add(new CameraComponent(w, h, new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(Mappers.families.players)));
+        camera.add(new CameraComponent(WIDTH, HEIGHT, new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(Mappers.families.players)));
         engine.addEntity(camera);
     }
 
@@ -238,7 +233,7 @@ public class GameScreen extends ScreenAdapter {
             int w = 32 + (int) (224.0f * f);
             TextureRegion tr = new TextureRegion(Resources.sprites.health[pl.role], 0, 0, w, 32);
 
-            hudBatch.draw(tr, 16 + pl.role * 288, 752);
+            hudBatch.draw(tr, 0.5f + pl.role * 9, 23.5f, 1 + 7 * f, 1);
 
         }
 

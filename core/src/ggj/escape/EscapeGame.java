@@ -16,6 +16,9 @@ public class EscapeGame extends Game {
 
 	@Override
 	public void create () {
+
+		Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height, true);
+
 		titleScreen = new TitleScreen(this);
 		creditsScreen= new CreditsScreen(this);
 		gameScreen = new GameScreen(this);

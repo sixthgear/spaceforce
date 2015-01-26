@@ -79,7 +79,6 @@ public class TitleScreen extends ScreenAdapter implements ControllerListener {
         camera = new OrthographicCamera(w, h);
         camera.setToOrtho(false, w, h);
         uiBatch = new SpriteBatch(1000);
-        Resources.fonts.roboto_white_cache.addText("ROBOTS!", 10, 10);
 
         // set up main window input handling
         Gdx.input.setInputProcessor(new InputAdapter() {
@@ -110,8 +109,7 @@ public class TitleScreen extends ScreenAdapter implements ControllerListener {
         uiBatch.setProjectionMatrix(camera.combined);
 
         uiBatch.begin();
-        uiBatch.draw(Resources.screens.title, 0, 0);
-        Resources.fonts.roboto_white_cache.draw(uiBatch);
+        uiBatch.draw(Resources.screens.title, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         uiBatch.end();
 
     }
