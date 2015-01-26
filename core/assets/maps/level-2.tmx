@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="101" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="101" tilewidth="32" tileheight="32" nextobjectid="3">
  <properties>
   <property name="music" value="music/Escape_From_the_Lab_BG_Music_Loop_Jasmine.mp3"/>
  </properties>
@@ -131,21 +131,21 @@
    eJzt3UtugzAUhWEz6kPdbUchEpOqa+gOKmUpXUPVdBV9zFozQIpcu/a1LxjD/0lnYhniEBQuDgFjAKCup9oDaNzJ5pyYe0HfF5sfhfHx+ZY51R5Aww42vc1QeyBK2BfyvJn/v+teM9cb+w4FoIdaogzHjzJjPbGVWgLpYvXDZZ4FfbXrEQAAlvZh82nzZfNdeSytuDzmX3XGXNvc2Nx2snrBXVdK3pd4gwAArNBdV3sEANAeyZzo3HHnXAEAgD7mesu4c70AAAAAyoXOU3ztkr6T2vOeOUkZ99QndJ7ia0/t2xsAAABAz55+myg5Dxjv79E7Gczfev3g6TdlznMUAAAAYE3GuvjoZAj0S7lmOdZ+DqxfSuO6bQBAPQ/CdmzPUsdwt845ZvSPLQNdqfsB9wEBAADAls1xvYL0nr8AkEM6v8d84Po9Kq7Ld73eEGgPPd/Lt89Mvxsa4583cpeR9i+huf32aC3bL7bPaCyT8xoxa9l+reK5PmV4rg+wP3P9/6K1SLcFyv0CgG2oVg==
   </data>
  </layer>
- <layer name="Collisions" width="80" height="101">
+ <layer name="Collisions" width="80" height="101" visible="0">
   <data encoding="base64" compression="zlib">
    eJztnA1u5DAIhTtH3XR35v43WFUVWso+MNg4sTM8yVKb+i/fYBtIpsfj4+NYoDyD9T9FuXruVvHUeRr98XuOzuPqz3WUHedntfWM8Wp8JsT4xYr1WZzB2cOlJa29rHM8cButT3Tt1ZgP/yyulpcf/zwsefq6kzxMov1dJb6uvcWzfqmuNmamzVzJz9pDteLZ+19vwo+UvTceCfxadszr3U0Z/J7M5ltjrazWPofm3+LH27b22d3tr7XP9fBD55DcZ4+Hb19ZnV9Lvfwsv/hL3jPmXfnNHH8nITspfv9LOwvL/nzS7nt1frNyJFaJ3Pfq/DzxUjTn2CqR++7hlxnrZMaCGX3dzf4iekd+q9nfFev31+NniWh3++vx/yS/P4+fJWO+Pdpl/VJ8ywvZ3pU+xk785JlPtof8CH7fyNeQf0NtZB2kmfuflguZsf+h52zyvuXPrTYWN9Rnr67Y/1bRKvysvJ21/9xB1t6KmPTYX/Gz63v851XX8KjO4ndXFb8xZfgvrfOj+P3TFfzOilE8RT5L3IFfRo4zmleV8Q0VFItqc/b6L++0flH+Wqu3iv2tJM6tx/6K33f5zRhq9d6d39fcW7mO4qfra+4y11v8/KL1yXO9xc8vlOstfn5pvhpX8dM1wk/zbYrfz9+Lny5Pfn82v2fxa/ZZ/PD1sr92HeIh4xTih65769IcMp4TXiHPvKmOjFOICYpf0DV0nfqPfN8uUl4T++4pZDfW9aezLs/V0r1S7hF9zw7lej3fz0PtI+1a3/3zjEs/073LOuh6qy7P1fL9z8o3yhJda9l7hXf/o3HRO3kof4OuoevU/67nh0fa+ZvZf/Eb67/4jfV/Z36zfbPiN6aZ/EbeQ8/Szut35D30LJ1hf/zdh96C3qOQfrx8v8Jqn1lm83uCMVHsEPk/IMiP58+2Zeww812P2fw+wbhcrbgB8eDsZMyIWM+8v5nK2P/QmkF9WnvFLO3AD60b7dmWZquzdCd+2h41k9/O/t8K2sH+VlbZ35h24Oc9f3k+X+b2Z/nFFr8s/3x0/0axhMYPFYuf5Rt75PFbqaC4yuOfZ/Hj8YrGD4muSzaWjWXYH5oH96dQXCT7zuBHPoj2TIXPL0sZ9pehTPsjflpMkXlO3YmftD8tptD4adfPXr89yrI/z/mYyW81+xs5v73no/WegjY3a0yPzuLHz2Ov/yBzhy1+1uekzS3D/8v2KRE/Pp7Xx6K/R/2xXl9OzntkvMx5zMx/zFLvuhxhhfRu/LI1O/82S8VvTMVvTMVvTMVvTDvwy8ov3rlY/Lw+ZySm8/QTvd47/ggzXjLyL6N+PPVj9e8ZNyMWQn3Jazw3veP+N0ueuJBijtb6na1ovN4T30flsV1ixm3xCkV5rHLmcln8ovuq1oenX6tNtP6Zavkvo7mf1r5/gLaSR2usK+1yxP+TPkCrLeqf3zvqV841OsZseflF7Q/5bWhs+bv0zbz1R/ymER0Gvwx/rscmouNm2l30Xi1+GephH22TaXc9PtWd37+KajX7201RWxqJo6t88/4LiEpTxA==
   </data>
  </layer>
- <layer name="Meta" width="80" height="101">
+ <layer name="Meta" width="80" height="101" visible="0">
   <data encoding="base64" compression="zlib">
-   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
+   eJztnYmOozAMQIeP20PqITH//zE7lSYay7UTO44Th/WTUOkBhFfjHED78ZEkyc7cDnrakftXuR9f0/OwzWsovs7vServefxMVj6ZdXCvR6LHH4xTq7/XNj+Pd1fltTOIQ+7YXOnvBNuFDqG7M4jDaP7O433SvO+FNi+trD9abla4G5WXvKDizPJ8JDD2Ivrj8h31PmRWPuSOwcfxPs2GymfQIZfvKHdeDmfEX3GPHyVEi79Xm/mO1tXjbmZMtvbd+r4Gyl+t/uRe1/rrib1d2Ln/GgHOX4lVHK/S5QuW/LcTvfWHNX6jt6EKMJ5KTLXKK/Fi8XdDbaTV/iztthFl1273Br5PiT8cq/jzsC0Ly1DiBT9a8z7sv61A6w8y2x91/MJtwrLM6n9YxyBG+9Pu9+r4s4L9cfvO+Wu1LSREH3+pIS2zl7+rxR+H1F9P3uL87X5uDeIVf7X8nf5kcO3+9EevQ7pc+qPXoV1OQnTXPf5w3cH5G9Fvv6I/bh14nvKnrcej+9PA7Svl7wrXAM0i/emQ5L9W+y/5IePPBuUP1hu4DpGe//CiVWdKH7Vk/eFDT/t5pdNV8dcqD5zP+OOZ2f/wYOf4i3D9VTQ8xw882KH+TeRo89/qOmXn/Affi1i3rICLv9VxxhEt/pIkSZLkakiugx3RRsB18uv5ivs1a/3m3vVwDrXepK7h+LDUHzWe3Lr+nisjvH+1UPPXGz/Wa7SpfSjLcGPs3JiJxl9t3KXXn3asTHtfbQtrm5ry19P/7Tl+y+dGXOtQKOvC5ZDGZPmc5XcToo6fYrCTUu6aK4nT7OPrwLH2XFD/JkmSJOvBbSl8DxK+PxH3efLcIg3lMf3xSNp6kfzBvmNtikT6syHxN+tcGvZ0buAvEjvGXyR29Ad/4wk+x0Q8H66l1731+7s3xnQwUcdues9NwN+8wv5w3HHjfnBMr+aScofHnVf51ZyXoJaj/LWgzse0/OH3cdyvygUex28r/8FxbDxGzYHH38t2SwxGPb69wP2Ylr8nitco8eeBNP9pgf5w/ruSPy9Gxx+Vu2b2M2EegkjbfxpgHULlP0v84X2gzlO3ymZhVvu9Fn+9+xBxXG10/oNtHC7/af3VrlPHr3HLUWXsLY8nlD8Yf73nlmv3dUrwil2P/AfbODj/Wc/NP8B38iDiz/P3CeE2PWn1P3pZNfZSvOV9Z9dlh997jUz6s5H+bOAxhxe16wC09OR9bpmIdQjlbxQj3VnW6Ymnv9mU/8ZozY/kSv68+UU4Sn82ruQPHpuSeS2//4P4g+NY3PxIRvjzqGdHLTOSP8L4q7X/avc4aen536BkX/7md5gE4R/oijCt
   </data>
  </layer>
  <objectgroup name="Regions" visible="0">
-  <object name="room-2" x="352" y="224">
+  <object id="1" name="room-2" x="352" y="224">
    <polygon points="0,0 0,-128 32,-128 32,-192 256,-192 256,384 96,384 96,608 -320,608 -320,160 32,160 32,0 0,0"/>
   </object>
-  <object name="room-1" x="320" y="224">
+  <object id="2" name="room-1" x="320" y="224">
    <polygon points="0,0 0,-128 -32,-128 -32,-192 -192,-192 -192,-64 -288,-64 -288,64 -32,64 -32,0 0,0"/>
   </object>
  </objectgroup>

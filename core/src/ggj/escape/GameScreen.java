@@ -151,12 +151,14 @@ public class GameScreen extends ScreenAdapter {
 
             if (Mappers.exit.get(e).triggered) {
                 System.out.println("NEXT!");
-
+                level.music.stop();
+                level.music.dispose();
                 engine.removeAllEntities();
 
                 for (EntitySystem s : engine.getSystems()) {
                     engine.removeSystem(s);
                 }
+
                 init();
 
                 String next = Mappers.exit.get(e).nextLevel;

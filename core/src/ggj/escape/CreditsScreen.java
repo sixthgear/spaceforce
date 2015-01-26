@@ -68,7 +68,7 @@ public class CreditsScreen extends ScreenAdapter implements ControllerListener {
     public CreditsScreen(EscapeGame game) {
         super();
         this.game = game;
-        Controllers.addListener(this);
+//        Controllers.addListener(this);
     }
 
     @Override

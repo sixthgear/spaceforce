@@ -81,7 +81,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
 
             // deadzone
             if (movement.len2() > 0.4) {
-                movement.scl(7);
+                movement.scl(4.5f);
                 p.body.setLinearVelocity(movement);
                 p.body.setLinearDamping(0f);
             } else {
@@ -116,11 +116,11 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
                 float r = MathUtils.random();
 
                 if (r < 0.7)
-                    Resources.sfx.pistol_1.play();
+                    Resources.sfx.pistol_1.play(0.25f);
                 else if (r < 0.9)
-                    Resources.sfx.pistol_2.play();
+                    Resources.sfx.pistol_2.play(0.25f);
                 else
-                    Resources.sfx.pistol_3.play();
+                    Resources.sfx.pistol_3.play(0.25f);
 
                 c.cooldown = c.maxCooldown;
             }

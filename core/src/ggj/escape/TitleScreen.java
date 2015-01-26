@@ -66,7 +66,7 @@ public class TitleScreen extends ScreenAdapter implements ControllerListener {
     public TitleScreen(EscapeGame game) {
         super();
         this.game = game;
-        Controllers.addListener(this);
+//        Controllers.addListener(this);
     }
 
     @Override

@@ -235,13 +235,13 @@ public class Level {
             case "trigger":
 //                fixturedef.filter.categoryBits = 0x0032;
 //                fixturedef.filter.maskBits = (short) ~BulletComponent.category;
-                fixturedef.isSensor = true;
-                body = world.createBody(bodydef);
-                fixture = body.createFixture(fixturedef);
-                Entity trigger = new Entity();
-                trigger.add(new TriggerComponent());
-                engine.addEntity(trigger);
-                fixture.setUserData(trigger);
+//                fixturedef.isSensor = true;
+//                body = world.createBody(bodydef);
+//                fixture = body.createFixture(fixturedef);
+//                Entity trigger = new Entity();
+//                trigger.add(new TriggerComponent());
+//                engine.addEntity(trigger);
+//                fixture.setUserData(trigger);
                 break;
 
             case "exit":

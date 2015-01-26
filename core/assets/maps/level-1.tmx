@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="101" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="80" height="101" tilewidth="32" tileheight="32" nextobjectid="3">
  <properties>
   <property name="music" value="music/Escape_From_the_Lab_BG_Music_Loop_Jasmine.mp3"/>
  </properties>
@@ -132,21 +132,21 @@
    eJzt3ElOwzAUgGFnxSB6WlaAxAZxBm6AxE3gCq0Kp2CQssFRZZUaO8mzEw/J/0lPpI1T0kfqkVQpAEt3nfsEKvcoLH/VyLbHvpbkuJI8CcrGvr8pc1+Kl9wnULEbHbc67nOfyIqEfgZ9n0tJ2dTeB0KK+g9Ylr0aridKi52OTx1fOr51/EyelXmUNNY50/XsuY4LHZdNf7tQSl0tHevgFPmLQ/7iSMbaJSml/lvDWHurDm3Qh/V8rr7Gm447KxivT6sVPsZRl5tNc5qjTfN/f4xS6r8cTO64BlGqMWPhGsfLY4W0H3/beHssPKaM6Ru8WuXs40LmWVNytQ+ux9R//Xz5IW8AlkbSn8jR90i9rtH1BSTzAq4+h2krWmvb1z/BUWv9tLcBAAdLng9IQbJ+jrT6+mnPkft3Cd/HGkn63GaNcO94bm7d/+6yDojc1rAGl9PDzPtdhuYuUtVxQM3WUjf6xnJ9dciUZWL2S36X7zVt0uOZXwUAAAAAAAAAAAAAAAAAAADqUuP3YM8VANy4/zdezTkMuZ9vDkN1OPcILovpnyjl/vtO2X/h2kHJzHfEcw3LbXOfQMXIXThyF67W3OWex3DNZ+Q+F+Zf0vgFsHS7Yw==
   </data>
  </layer>
- <layer name="Collisions" width="80" height="101">
+ <layer name="Collisions" width="80" height="101" visible="0">
   <data encoding="base64" compression="zlib">
    eJztnOuSpCAMhcdHXXtW3/8NtvyRmkw2gcARiZpTleqLEfEzQEC71+Xraw1gW6P/R9jsupfM47MVyuPn3FqP2dcVZcf51fxrx9gr+++Keeo3krOXi2aklnreVd5zsPjSe6Rsa/+n6uyY4WUh70vl1nyvVCnmesuj17NY8rKs8mdpFL+3yMvv8KM8q+b3Jnn58dyiVh763roG2vezrxf1I5/ld4xZub03/pD+z9pX+z4Cv8/yk6dq+SvPYXvj76nyxBT5ect7mv4sv43Ly8+rWg7XMs8/a03A6pNKxvf/K2wWP8/8V86Fvb6tc+qayWtAsWddH+38e/qyO7dfK343Fnva+sFV8Xc3ecb35FeWh18tJ2nR09ZfWuPvzf2fppHtl/pWvn/E9XZEI9uvNichplHsDvxkefLaX9Wma/FnfSfLKH3Wjinjp/aepI0VM/s/LW9r4efhqx0TiT+tvFnizDhDtEwuORfW+JXmy1wR+Y0eP+RcWONXmi9zafxm5n/8HuKZ44dcW6C4stY3uA//TpqVq8ySd/yQ+2hl8M9ybYHiahd8eD4i58vk43kuYJZq+cuo8YO4ePwixZuUp//z8Gj198w/PGv3s8XH3yvz5yfy4wy9+cQhLT+pHfOJ/Hgf6M0nDmn5Se2YKD+r3xltFr9SDNK57uyVvqP+XeYeo/nNWBPQzotvl74UT5R7UQ4hc4oZ/K5UiR/34e95/MlnKOQ5PZ3foZ68ydP3Sd8R/Lz+I3Vl3snjEbl/Tvy2AAyv5nfm/fMIcXg1P7lmIJ9TaOVADN/CT64ZyPG6hwNvx1puJtcjenMV65yu5Ffb3htHnwIb+czbCH49+Xbr2scZ/KzcpXc/vr20rcTPWnuMyk87l9p+nnJ7tve03wj8ZCzV8una9l5+Peu0o/htQPuVGh2PpJXxa2m3mr/nWLU6n8VvdDyS3spvRPx5fOVnhJ+cy3n6Eo+P57chaPvm9fGOH2fzk3M5ir8Rtg8se6bJ+79yDTGtbPL+rzYH88rqp7VtEWSNL4jf7PW8Oyv5YUp+mJIfpuSHKflhSn6Ykh+m5Icp+WFKfpiSH6bkhyn5YUp+mJIfpuSHaV3iPFd6RyU/TMkPU/LDlPwwJT9MyQ9T8sOU/DAlP0zJD1Ok3wXeUckPU/LDlPwwJT9MPfy8v5d6g/XwG/3fECPLH2FI/PWotP8Gln2FUH6jFZ0hf+Y+Ir9DvD1H01GvbxZ/1v232XVv+Y3vzDpG5XfI24fPrJ/2Hzyl63t2DnBnafxq1/fs8f/OssaPtXJuPG5aYqk13qLH8FoYf2fHBs/xo8Zwid9McXaRRblgJK0B4sqraPFH/7UTqU4lteSoaf/b0Xb/ASYv6l0=
   </data>
  </layer>
- <layer name="Meta" width="80" height="101">
+ <layer name="Meta" width="80" height="101" visible="0">
   <data encoding="base64" compression="zlib">
-   eJztnOtqBCEMRrcP1wt0+6Pv/zJlKILIuBoTNeo5MOytE5OPNGacy+MBAACtfL/N9sAPn5EW7wJdrDW87LXYDPv13KzpZfMU/UbEMHNsiS9f0e8fk+rayvqtDvoBAMBKxPNK7v0u/Cwc068D39FPx8r6eaBVv2u/sKXsWv/imF/FL7UFctAPvNJS/54NeZzLf6vvV2IF/S4fUz/jdai7Nam7fXowYgwtnvWzROrzijFagE4wE+ZfHbvrd62PeFgjgbMIORfnH3n4D+d+dfTWL9efWX0/G/TzDfrpQD8d6AcAAK2UesvevWfu1XqsO7snXOtbo2cp9pH6zcrHFEke9rjm/yRCzCedc8nVvXjtrVaLE/UDAAA4gdK1xD3uXUx7iZbewss9laleI/SzwItfQa/0tYefpbzTHJudoJ8lXvyaoR/1j/wLjJx/d6x/Jbz66dWvEVjUP4Ac2vzaLT+t7he1tiexYx2D1M9XnwO182vOnnR+rvVL+rfWlHrsWfYkdqxjkCAduzZvcvZq69+u+o2yt5p+uc8B6l9+bObfcdD/9eUkfbwep3vxi/UrHayf6mD9Xgfnj3Rw/lIH9U/HyPk3sFP9AwAA8E5L/1eaZ1u3kVg/w0jSv6yuX6zbjOfvhHjv+lTNdgqn6mf1P99TP8/r3lr9Qmzkn44R+nnOQy075N/MZzCuXv969C8n9X+WnHr8AVDLHyiUPHk=
+   eJztnOtqwzAMRruH2wXW/dj7v8wIi8GEuL5ItmXrHAhpQ6NIH6qsOJfHAwAAWvl+m+3B+mhreNhrsRn267lo08umF/1GxDDz2CW+vJ/bP87157n+mlDbVtRvF9APAABWIh5XUp934WfhmH4N+I5+MlbWzwKt+h37heXKrvUvjvlV/LW2oB70A6u01L9nQx6n8l9r+0qsoN/h49XPeB7qbk7qbp8ejDiGFMv6aVLr84oxaoBOMBPGXxm763fMj1iYIwFfhJyL8488/IdrvzJ665fqz7S2zwb9bIN+MtBPBvoBAEArud6yd++ZWmsf686uh3t9S/TMxT5Sv1n5eKUmD3vc8++JELOnay6puhfPvZVq4VE/AAAAD+TuJe7x7OK1l2jpLaw8U3nVa4R+GljxK+h1XffwM5d3knMzD/ppYsWvGfpR/8i/wMjxd8f6l8Oqn1b9GoFG/QNIIc2v3fJT63lRbXs1drRjqPXz1fdA6fiaslc7Ppf6VftbbXI99ix7NXa0Y6ih9tileZOyV1r/dtVvlL3V9Et9D1D/0sdm/B0H/V9fPOlj9Tzdil/MX8lg/lQG8/cyuH4kg+uXMqh/MkaOv4Gd6h8AAIB1Wvq/3DjbuoxE+x1GNf3L6vrFus14/06I965PlSxe8Kqf1n++p36W572l+oXYyD8ZI/SznIdSdsi/me9gXL3+9ehfPPV/mng9/wAo5Q8V8jx5
   </data>
  </layer>
  <objectgroup name="Regions" visible="0">
-  <object name="room-2" x="352" y="224">
+  <object id="1" name="room-2" x="352" y="224">
    <polygon points="0,0 0,-128 32,-128 32,-192 256,-192 256,384 96,384 96,608 -320,608 -320,160 32,160 32,0 0,0"/>
   </object>
-  <object name="room-1" x="320" y="224">
+  <object id="2" name="room-1" x="320" y="224">
    <polygon points="0,0 0,-128 -32,-128 -32,-192 -192,-192 -192,-64 -288,-64 -288,64 -32,64 -32,0 0,0"/>
   </object>
  </objectgroup>

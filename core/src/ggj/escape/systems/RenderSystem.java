@@ -47,7 +47,7 @@ public class RenderSystem extends SortedIteratingSystem {
                 Vector2 interpolated = sprite.last.cpy().interpolate(pos, alpha, Interpolation.linear);
 
                 float xOff = (float) (sprite.region.getRegionWidth() / 32) / 2;
-                float yOff = (float) (sprite.region.getRegionHeight() / 32) / 2;
+                float yOff = (float) 0.5;
 
                 sprite.x = (pos.x) - xOff; //interpolated.x - 16;
                 sprite.y = (pos.y) - yOff; //interpolated.y - 16;

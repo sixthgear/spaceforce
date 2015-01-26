@@ -131,12 +131,12 @@
    eJzt1UsKgCAURuHrqLK20Bra/2baRY9R9kM1EYWCsAbngzORK+pIMwAAAAAAgHeMiYKa1KwWtZ6z8dqW2V9C5cxq1SjvjnPjNQAA/ib3d6byqlXdzflQ8B2X/oMznxi+vgAAoIgd8AMmbA==
   </data>
  </layer>
- <layer name="Collisions" width="40" height="50">
+ <layer name="Collisions" width="40" height="50" visible="0">
   <data encoding="base64" compression="zlib">
    eJztl1EKwyAQRJOj1rTm/jdo+rGQBlZdZ+0aOg+GgBg7PJoY07os25EUcG2Zk4/sQdeWORHe6I/+RvnbDPMj/D2D/I3A098I6A+D/jDu4O/83pzRn3SZ1Z90mdWfrE9/dugPg/78+s3oT3r88/77WL+jjZX6efjT1nhd8uE6ljpjOZeV3IunpIzJ/dZYzmUl9+IpK2O78vu1eDybyP+vxsh3hwfsh8F+GLP3y+wH0dKvd+9sDdqvZ1+yBO1nQfbkmpdWvPudvwW81rv78xEJ+2GwHwZyNvhV3r06d7E=
   </data>
  </layer>
- <layer name="Meta" width="40" height="50">
+ <layer name="Meta" width="40" height="50" visible="0">
   <properties>
    <property name="spawn" value="boss"/>
   </properties>
