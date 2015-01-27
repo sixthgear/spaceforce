@@ -105,10 +105,12 @@ public class GameScreen extends ScreenAdapter {
                         level.dropTheBass("music/Escape_From_the_Lab_BG_Music_Loop_Jasmine.mp3", "", 0.0f);
                         return true;
                     case Input.Keys.D:
+
+                        if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
                         level.dropTheBass(
-                            "music/Escape_From_the_Lab_BG_Music_Boss_Init_Jeremy-Lim.mp3",
-                            "music/Escape_From_the_Lab_BG_Music_Boss_Loop_Jeremy-Lim.mp3",
-                            1.0f);
+                                "music/Escape_From_the_Lab_BG_Music_Boss_Init_Jeremy-Lim.mp3",
+                                "music/Escape_From_the_Lab_BG_Music_Boss_Loop_Jeremy-Lim.mp3", 1.0f);
+                        }
                         return true;
 
                     case Input.Keys.N:
