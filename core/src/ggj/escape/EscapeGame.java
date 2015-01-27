@@ -2,6 +2,7 @@ package ggj.escape;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 
 public class EscapeGame extends Game {
@@ -24,7 +25,6 @@ public class EscapeGame extends Game {
 		gameScreen = new GameScreen(this);
 		setScreen(titleScreen);
 	}
-
 
 
 	@Override

@@ -40,7 +40,6 @@ public class GameScreen extends ScreenAdapter {
     public final int HEIGHT = 800;
 
     public GameScreen(EscapeGame game ) {
-        super();
         this.game = game;
     }
 
@@ -72,9 +71,8 @@ public class GameScreen extends ScreenAdapter {
 
         hud = new OrthographicCamera(WIDTH, HEIGHT);
         hud.setToOrtho(false, 40, 25);
-
-        uiBatch = new SpriteBatch(1000);
-        hudBatch = new SpriteBatch(1000);
+        uiBatch = new SpriteBatch();
+        hudBatch = new SpriteBatch();
 
         // set up main window input handling
         Gdx.input.setInputProcessor(new InputAdapter() {

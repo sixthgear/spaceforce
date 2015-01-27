@@ -64,9 +64,7 @@ public class TitleScreen extends ScreenAdapter implements ControllerListener {
     public EscapeGame game;
 
     public TitleScreen(EscapeGame game) {
-        super();
         this.game = game;
-//        Controllers.addListener(this);
     }
 
     @Override
@@ -74,7 +72,6 @@ public class TitleScreen extends ScreenAdapter implements ControllerListener {
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
-
 
         camera = new OrthographicCamera(w, h);
         camera.setToOrtho(false, w, h);
@@ -97,17 +94,22 @@ public class TitleScreen extends ScreenAdapter implements ControllerListener {
             }
         });
 
+        Controllers.addListener(this);
+
+    }
+
+    @Override
+    public void hide() {
+        Controllers.removeListener(this);
     }
 
     public void update(float delta) {
-
 
     }
 
     public void render(float time, float delta, float alpha) {
 
         uiBatch.setProjectionMatrix(camera.combined);
-
         uiBatch.begin();
         uiBatch.draw(Resources.screens.title, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         uiBatch.end();
