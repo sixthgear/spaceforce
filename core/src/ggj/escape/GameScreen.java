@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import ggj.escape.components.*;
 import ggj.escape.systems.*;
@@ -62,7 +63,7 @@ public class GameScreen extends ScreenAdapter {
         engine.addEntityListener(Mappers.families.physics, engine.getSystem(PhysicsSystem.class));
 
         // count connected controllers
-        numPlayers = Controllers.getControllers().size;
+        numPlayers = Math.max(Controllers.getControllers().size, 1);
 
     }
 
@@ -232,6 +233,11 @@ public class GameScreen extends ScreenAdapter {
             TextureRegion tr = new TextureRegion(Resources.sprites.health[pl.role], 0, 0, w, 32);
 
             hudBatch.draw(tr, 0.5f + pl.role * 9, 23.5f, 1 + 7 * f, 1);
+
+            Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+            Vector3 mouse = hud.unproject(mousePos);
+//            System.out.println(mouse);
+            hudBatch.draw(Resources.sprites.mouse, mouse.x - 1f, mouse.y - 1f, 2, 2);
 
         }
 

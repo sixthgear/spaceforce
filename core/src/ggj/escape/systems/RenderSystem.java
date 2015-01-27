@@ -1,6 +1,7 @@
 package ggj.escape.systems;
 
 import com.badlogic.ashley.core.Entity;
+import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

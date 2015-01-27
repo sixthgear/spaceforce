@@ -2,10 +2,13 @@ package ggj.escape.systems;
 
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.controllers.Controller;
 import com.badlogic.gdx.controllers.ControllerListener;
 import com.badlogic.gdx.controllers.Controllers;
 import com.badlogic.gdx.controllers.PovDirection;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -56,28 +59,58 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
 
     @Override
     public void update(float deltaTime) {
-        for (int i = 0; i < entities.size(); ++i) {
+        for (Entity player : entities) {
 
-            Controller controller = Controllers.getControllers().get(i);
+            Controller controller;
+            Entity camera = engine.getEntitiesFor(Mappers.families.cameras).first();
 
-            Entity entity = entities.get(i);
-            PhysicsComponent p = Mappers.physics.get(entity);
-            SpriteComponent s = Mappers.sprite.get(entity);
-            CharacterComponent c = Mappers.character.get(entity);
-            PlayerComponent pl = Mappers.player.get(entity);
+            CameraComponent cam = Mappers.camera.get(camera);
+            PhysicsComponent p = Mappers.physics.get(player);
+            SpriteComponent s = Mappers.sprite.get(player);
+            CharacterComponent c = Mappers.character.get(player);
+            PlayerComponent pl = Mappers.player.get(player);
 
             Vector2 pos = p.body.getPosition();
             Vector2 movement = new Vector2();
-//            Vector2 aiming = new Vector2();
-
-
+            boolean isShooting;
             float trigger;
 
-            movement.x = controller.getAxis(XBox360Pad.AXIS_LEFT_X);
-            movement.y = controller.getAxis(XBox360Pad.AXIS_LEFT_Y) * -1;
-            pl.aiming.x = controller.getAxis(XBox360Pad.AXIS_RIGHT_X);
-            pl.aiming.y = controller.getAxis(XBox360Pad.AXIS_RIGHT_Y) * -1;
-            trigger = controller.getAxis(XBox360Pad.AXIS_RIGHT_TRIGGER);
+            if (Controllers.getControllers().size > 0) {
+
+                controller = Controllers.getControllers().get(pl.role);
+                movement.x = controller.getAxis(XBox360Pad.AXIS_LEFT_X);
+                movement.y = controller.getAxis(XBox360Pad.AXIS_LEFT_Y) * -1;
+                pl.aiming.x = controller.getAxis(XBox360Pad.AXIS_RIGHT_X);
+                pl.aiming.y = controller.getAxis(XBox360Pad.AXIS_RIGHT_Y) * -1;
+                trigger = controller.getAxis(XBox360Pad.AXIS_RIGHT_TRIGGER);
+                isShooting = trigger > 0.3;
+                pl.isAiming = (pl.aiming.len2() > 0.4);
+
+            } else {
+
+                // CHECK MOUSE KEYB
+                if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
+                    movement.x = -1;
+                } else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
+                    movement.x = 1;
+                }
+
+                if (Gdx.input.isKeyPressed(Input.Keys.UP) || Gdx.input.isKeyPressed(Input.Keys.W)) {
+                    movement.y = 1;
+                } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN) || Gdx.input.isKeyPressed(Input.Keys.S)) {
+                    movement.y = -1;
+                }
+
+                movement.nor();
+
+                Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
+                Vector3 mouse = cam.camera.unproject(mousePos);
+
+                pl.aiming = new Vector2(mouse.x, mouse.y).sub(pos).nor();
+                isShooting = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
+                pl.isAiming = true;
+
+            }
 
             // deadzone
             if (movement.len2() > 0.4) {
@@ -88,9 +121,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
                 p.body.setLinearDamping(10f);
             }
 
-            pl.isAiming = (pl.aiming.len2() > 0.4);
-
-            if (trigger > 0.3 && c.cooldown <= 0) {
+            if (isShooting && c.cooldown <= 0) {
 
                 if (!pl.isAiming)
                     pl.aiming = movement.cpy();

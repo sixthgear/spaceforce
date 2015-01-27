@@ -7,6 +7,7 @@ public class Mappers {
 
     public static class families {
         public static Family characters = Family.getFor(CharacterComponent.class);
+        public static Family cameras = Family.getFor(CameraComponent.class);
         public static Family players = Family.getFor(PlayerComponent.class, CharacterComponent.class);
         public static Family baddies = Family.getFor(BaddieComponent.class, PhysicsComponent.class, SpriteComponent.class);
         public static Family fx = Family.getFor(ExplosionComponent.class, SpriteComponent.class);
