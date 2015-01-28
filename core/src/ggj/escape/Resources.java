@@ -88,21 +88,21 @@ public class Resources {
             public static Animation walk = buildAnim(Resources.tex.baddies, 0.1f, 0, 5, 32, 32);
             public static Animation attack = buildAnim(Resources.tex.baddies, 0.1f, 0, 1, 32, 32);
             public static Animation die = buildAnim(Resources.tex.baddies, 0.1f, 0, 1, 32, 32);
-            public static Animation explode = buildAnim(Resources.tex.fx, 0.05f, 6, 14, 128, 128, Animation.PlayMode.NORMAL);
+            public static Animation explode = buildAnim(Resources.tex.fx, 0.05f, 6, 14, 128, 128, Animation.PlayMode.LOOP_PINGPONG);
         }
         public static class robot {
             public static Animation idle = buildAnim(Resources.tex.baddies, 0.1f, 1, 1, 32, 64);
             public static Animation walk = buildAnim(Resources.tex.baddies, 0.1f, 1, 4, 32, 64);
             public static Animation attack = buildAnim(Resources.tex.baddies, 0.1f, 1, 1, 32, 64);
             public static Animation die = buildAnim(Resources.tex.baddies, 0.1f, 1, 1, 32, 64);
-            public static Animation explode = buildAnim(Resources.tex.fx, 0.05f, 0, 14, 192, 192, Animation.PlayMode.NORMAL);
+            public static Animation explode = buildAnim(Resources.tex.fx, 0.05f, 0, 14, 192, 192, Animation.PlayMode.LOOP_PINGPONG);
         }
         public static class slime{
             public static Animation idle = buildAnim(Resources.tex.baddies, 0.1f, 3, 1, 32, 32);
             public static Animation walk = buildAnim(Resources.tex.baddies, 0.1f, 3, 4, 32, 32);
             public static Animation attack = buildAnim(Resources.tex.baddies, 0.1f, 3, 1, 32, 32);
             public static Animation die = buildAnim(Resources.tex.baddies, 0.1f, 3, 1, 32, 32);
-            public static Animation explode = buildAnim(Resources.tex.fx, 0.05f, 10, 14, 128, 128, Animation.PlayMode.NORMAL);
+            public static Animation explode = buildAnim(Resources.tex.fx, 0.05f, 10, 14, 128, 128, Animation.PlayMode.LOOP_PINGPONG);
         }
         public static class boss {
             public static Animation idle = buildAnim(Resources.tex.boss, 0.1f, 0, 12, 128, 192);

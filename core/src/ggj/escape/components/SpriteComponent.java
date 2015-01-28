@@ -17,6 +17,8 @@ public class SpriteComponent extends Component {
     public float w;
     public float h;
     public Vector2 last = new Vector2(0,0);
+    public boolean flipped = false;
+    public boolean show = true;
 
     public SpriteComponent(TextureRegion region) {
         this.region = region;

@@ -10,9 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
-import ggj.escape.components.BaddieComponent;
-import ggj.escape.components.Mappers;
-import ggj.escape.components.PhysicsComponent;
+import ggj.escape.Resources;
+import ggj.escape.components.*;
 
 import java.util.ArrayList;
 
@@ -76,27 +75,40 @@ public class BaddieSystem extends IntervalIteratingSystem {
 
         BaddieComponent baddie = Mappers.enemy.get(entity);
         PhysicsComponent physics = Mappers.physics.get(entity);
+        SpriteComponent sprite = Mappers.sprite.get(entity);
+
         Vector2 baddiePos = physics.body.getPosition();
 
         if (baddie.target != null) {
 
-            Vector2 targetPos = Mappers.physics.get(baddie.target).body.getPosition();
+            CharacterComponent ch = Mappers.character.get(baddie.target);
+            PhysicsComponent ph = Mappers.physics.get(baddie.target);
+
+            if (!ch.alive) {
+                baddie.target = null;
+                return;
+            }
+
+            Vector2 targetPos = ph.body.getPosition();
             Vector2 delta = targetPos.cpy().sub(baddiePos);
 
             if (delta.len2() > baddie.sight) {
 
                 BaddieCanSee canSee = new BaddieCanSee(baddie.target);
                 world.rayCast(canSee, baddiePos, targetPos);
-                if (!canSee.found)
+                if (!canSee.found) {
                     baddie.target = null;
+                    return;
+                }
 
             }
 
             physics.body.setLinearVelocity(delta.setLength(baddie.speed));
+            sprite.flipped = (delta.x < 0);
 
         } else {
 
-            // search
+            // search for players
             for (Entity p : players) {
 
                 Vector2 targetPos = Mappers.physics.get(p).body.getPosition();
@@ -110,7 +122,16 @@ public class BaddieSystem extends IntervalIteratingSystem {
                     baddie.target = canSee.target;
 
             }
+
+            physics.body.setLinearVelocity(Vector2.Zero);
+
         }
+
+
+
+
+
+
     }
 
     public void hit(Entity other) {

@@ -5,6 +5,7 @@ import com.badlogic.ashley.systems.SortedIteratingSystem;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import ggj.escape.components.Mappers;
@@ -66,9 +67,18 @@ public class RenderSystem extends SortedIteratingSystem {
         for (Entity entity : getEntities()) {
 
             SpriteComponent sprite = Mappers.sprite.get(entity);
+
+            if (!sprite.show)
+                continue;
+
             if (sprite.animation != null) {
                 sprite.stateTime += Gdx.graphics.getDeltaTime();
-                batch.draw(sprite.animation.getKeyFrame(sprite.stateTime, true), sprite.x, sprite.y, sprite.w, sprite.h);
+                TextureRegion tr = sprite.animation.getKeyFrame(sprite.stateTime, true);
+
+                if (tr.isFlipX() != sprite.flipped)
+                    tr.flip(true, false);
+
+                batch.draw(tr, sprite.x, sprite.y, sprite.w, sprite.h);
             } else {
                 batch.draw(sprite.region, sprite.x, sprite.y, sprite.w, sprite.h);
             }

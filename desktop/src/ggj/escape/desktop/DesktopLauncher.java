@@ -11,6 +11,7 @@ public class DesktopLauncher {
 //		config.width = Gdx.graphics.getWidth();
 //		config.height = Gdx.graphics.getHeight();
 //		config.fullscreen = true;
+		config.title = "SPACE FORCE";
 		new LwjglApplication(new EscapeGame(), config);
 	}
 }

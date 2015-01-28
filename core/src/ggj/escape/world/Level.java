@@ -18,9 +18,6 @@ import ggj.escape.components.*;
 import ggj.escape.systems.PhysicsSystem;
 import ggj.escape.systems.PlayerSystem;
 
-import java.util.ArrayList;
-
-
 public class Level {
 
     public static short category = 0x0001;
@@ -35,6 +32,7 @@ public class Level {
     public int width;
     public int height;
     public static int TILESIZE = 32;
+
 
     public int numPlayers;
 

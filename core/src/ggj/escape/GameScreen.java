@@ -1,5 +1,6 @@
 package ggj.escape;
 
+import box2dLight.RayHandler;
 import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.EntitySystem;
@@ -136,6 +137,8 @@ public class GameScreen extends ScreenAdapter {
         camera = new Entity();
         camera.add(new CameraComponent(WIDTH, HEIGHT, new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(Mappers.families.players)));
         engine.addEntity(camera);
+
+
     }
 
     public void update(float delta) {

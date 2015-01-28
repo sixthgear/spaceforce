@@ -25,6 +25,7 @@ public class ExplosionSystem extends IteratingSystem {
 
         if (sp.animation.isAnimationFinished(sp.stateTime)) {
             engine.removeEntity(entity);
+            sp.show = false;
         }
 
     }
