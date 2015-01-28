@@ -7,7 +7,7 @@ public class CharacterComponent extends Component {
 
     public boolean alive = true;
 
-    public int maxCooldown = 8;
+    public int maxCooldown = 7;
     public int cooldown = 0;
 
     public int maxHp = 10;

@@ -141,10 +141,10 @@ public class Level {
             // spider
             case "spider":
                 Entity spider = new Entity();
-                spider.add(new PhysicsComponent(ph.createCircBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
+                spider.add(new PhysicsComponent(ph.createCircBody(x, y, 0.48f, BaddieComponent.category, BaddieComponent.mask)));
                 spider.add(new SpriteComponent(Resources.animations.spider.walk));
                 spider.add(new CharacterComponent(1));
-                spider.add(new BaddieComponent(10, 4));
+                spider.add(new BaddieComponent(20, 6));
                 spider.add(new SpiderComponent());
                 engine.addEntity(spider);
                 break;
@@ -152,9 +152,9 @@ public class Level {
             // robot
             case "robot":
                 Entity robot = new Entity();
-                robot.add(new PhysicsComponent(ph.createCircBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
+                robot.add(new PhysicsComponent(ph.createCircBody(x, y, 0.55f, BaddieComponent.category, BaddieComponent.mask)));
                 robot.add(new SpriteComponent(Resources.animations.robot.walk));
-                robot.add(new CharacterComponent(5));
+                robot.add(new CharacterComponent(4));
                 robot.add(new BaddieComponent(20, 3));
                 robot.add(new RobotComponent());
                 engine.addEntity(robot);
@@ -163,10 +163,10 @@ public class Level {
             // slime"
             case "slime":
                 Entity slime = new Entity();
-                slime.add(new PhysicsComponent(ph.createCircBody(x, y, 0.45f, BaddieComponent.category, BaddieComponent.mask)));
+                slime.add(new PhysicsComponent(ph.createCircBody(x, y, 0.48f, BaddieComponent.category, BaddieComponent.mask)));
                 slime.add(new SpriteComponent(Resources.animations.slime.walk));
                 slime.add(new CharacterComponent(3));
-                slime.add(new BaddieComponent(10, 2));
+                slime.add(new BaddieComponent(12, 2));
                 slime.add(new SlimeComponent());
                 engine.addEntity(slime);
                 break;
@@ -174,7 +174,7 @@ public class Level {
             // crate"
             case "crate":
                 Entity crate = new Entity();
-                crate.add(new PhysicsComponent(ph.createBoxBody(x, y, 0.45f, 0.45f, PropComponent.category, PropComponent.mask)));
+                crate.add(new PhysicsComponent(ph.createBoxBody(x, y, 0.48f, 0.48f, PropComponent.category, PropComponent.mask)));
                 crate.add(new SpriteComponent(Resources.sprites.crate));
                 crate.add(new PropComponent());
                 engine.addEntity(crate);
