@@ -47,7 +47,7 @@ public class Resources {
         public static TextureRegion bullet = new TextureRegion(tex.placeholder, 128, 0, 32, 32);
         public static TextureRegion[] health = new TextureRegion[4];
         public static Sprite[] crosshair = new Sprite[4];
-        public static Sprite mouse = new Sprite(tex.ui, 0, 256, 64, 64);
+        public static TextureRegion mouse = new TextureRegion(tex.ui, 0, 256, 64, 64);
 
         static {
             crosshair[0] = new Sprite(new TextureRegion(tex.ui, 0, 128, 128, 32));

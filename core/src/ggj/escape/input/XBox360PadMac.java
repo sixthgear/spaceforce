@@ -3,11 +3,13 @@ package ggj.escape.input;
 // This code was taken from http://www.java-gaming.org/index.php?topic=29223.0
 // With thanks that is!
 
-public class XBox360Pad
+import com.badlogic.gdx.controllers.Controller;
+import com.badlogic.gdx.controllers.PovDirection;
+
+public class XBox360PadMac
 {
     /*
-     * It seems there are different versions of gamepads with different ID
-     Strings.
+     * It seems there are different versions of gamepads with different ID Strings.
      * Therefore its IMO a better bet to check for:
      * if (controller.getName().toLowerCase().contains("xbox") &&
                    controller.getName().contains("360"))
@@ -43,5 +45,8 @@ public class XBox360Pad
     public static final int AXIS_RIGHT_X = 4; //-1 is left | +1 is right
     public static final int AXIS_RIGHT_Y = 5; //-1 is up | +1 is down
     public static final int AXIS_RIGHT_TRIGGER = 1; //value 0 to -1f
-}
 
+    public static boolean isXbox(Controller controller) {
+        return controller.getName().toLowerCase().contains("xbox") && controller.getName().contains("360");
+    }
+}

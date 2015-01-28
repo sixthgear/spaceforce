@@ -17,17 +17,27 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import ggj.escape.Resources;
 import ggj.escape.components.*;
-import ggj.escape.input.XBox360Pad;
-import ggj.escape.world.Level;
+import ggj.escape.input.XBox360PadMac;
+import ggj.escape.input.XBox360PadWin;
+
 
 public class PlayerSystem extends EntitySystem  implements ControllerListener {
 
     private Engine engine;
     private World world;
+    private boolean mac = System.getProperty("os.name").toLowerCase().contains("mac");
 
     public PlayerSystem() {
+
         super();
+
         Controllers.addListener(this);
+
+        for (Controller c : Controllers.getControllers()) {
+            System.out.printf("Controller %s connected\n", c.getName());
+        }
+
+
     }
 
     private ImmutableArray<Entity> entities;
@@ -78,11 +88,21 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
             if (Controllers.getControllers().size > 0) {
 
                 controller = Controllers.getControllers().get(pl.role);
-                movement.x = controller.getAxis(XBox360Pad.AXIS_LEFT_X);
-                movement.y = controller.getAxis(XBox360Pad.AXIS_LEFT_Y) * -1;
-                pl.aiming.x = controller.getAxis(XBox360Pad.AXIS_RIGHT_X);
-                pl.aiming.y = controller.getAxis(XBox360Pad.AXIS_RIGHT_Y) * -1;
-                trigger = controller.getAxis(XBox360Pad.AXIS_RIGHT_TRIGGER);
+
+                if (mac) { // || !XBox360PadWin.isXbox(controller)
+                    movement.x = controller.getAxis(XBox360PadMac.AXIS_LEFT_X);
+                    movement.y = controller.getAxis(XBox360PadMac.AXIS_LEFT_Y) * -1;
+                    pl.aiming.x = controller.getAxis(XBox360PadMac.AXIS_RIGHT_X);
+                    pl.aiming.y = controller.getAxis(XBox360PadMac.AXIS_RIGHT_Y) * -1;
+                    trigger = controller.getAxis(XBox360PadMac.AXIS_RIGHT_TRIGGER);
+                } else {
+                    movement.x = controller.getAxis(XBox360PadWin.AXIS_LEFT_X);
+                    movement.y = controller.getAxis(XBox360PadWin.AXIS_LEFT_Y) * -1;
+                    pl.aiming.x = controller.getAxis(XBox360PadWin.AXIS_RIGHT_X);
+                    pl.aiming.y = controller.getAxis(XBox360PadWin.AXIS_RIGHT_Y) * -1;
+                    trigger = controller.getAxis(XBox360PadWin.AXIS_RIGHT_TRIGGER);
+                }
+
                 isShooting = trigger > 0.3;
                 pl.isAiming = (pl.aiming.len2() > 0.4);
 
@@ -199,38 +219,38 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
     @Override
     public boolean buttonDown(Controller controller, int buttonCode) {
 
-        if(buttonCode == XBox360Pad.BUTTON_Y)
-            System.out.println("Y");
-        else if(buttonCode == XBox360Pad.BUTTON_A)
-            System.out.println("A");
-        else if(buttonCode == XBox360Pad.BUTTON_X)
-            System.out.println("X");
-        else if(buttonCode == XBox360Pad.BUTTON_B)
-            System.out.println("B");
-        else if(buttonCode == XBox360Pad.BUTTON_LB)
-            System.out.println("LB");
-        else if(buttonCode == XBox360Pad.BUTTON_RB)
-            System.out.println("RB");
-        else if(buttonCode == XBox360Pad.BUTTON_L3)
-            System.out.println("L3");
-        else if(buttonCode == XBox360Pad.BUTTON_R3)
-            System.out.println("R3");
-        else if(buttonCode == XBox360Pad.BUTTON_GUIDE)
-            System.out.println("GUIDE");
-        else if(buttonCode == XBox360Pad.BUTTON_BACK)
-            System.out.println("BACK");
-        else if(buttonCode == XBox360Pad.BUTTON_START)
-            System.out.println("START");
-        else if(buttonCode == XBox360Pad.BUTTON_DPAD_LEFT)
-            System.out.println("L");
-        else if(buttonCode == XBox360Pad.BUTTON_DPAD_RIGHT)
-            System.out.println("R");
-        else if(buttonCode == XBox360Pad.BUTTON_DPAD_UP)
-            System.out.println("U");
-        else if(buttonCode == XBox360Pad.BUTTON_DPAD_DOWN)
-            System.out.println("D");
-        else
-            System.out.println(buttonCode);
+//        if(buttonCode == controllerMapping.BUTTON_Y)
+//            System.out.println("Y");
+//        else if(buttonCode == controllerMapping.BUTTON_A)
+//            System.out.println("A");
+//        else if(buttonCode == controllerMapping.BUTTON_X)
+//            System.out.println("X");
+//        else if(buttonCode == controllerMapping.BUTTON_B)
+//            System.out.println("B");
+//        else if(buttonCode == controllerMapping.BUTTON_LB)
+//            System.out.println("LB");
+//        else if(buttonCode == controllerMapping.BUTTON_RB)
+//            System.out.println("RB");
+//        else if(buttonCode == controllerMapping.BUTTON_L3)
+//            System.out.println("L3");
+//        else if(buttonCode == controllerMapping.BUTTON_R3)
+//            System.out.println("R3");
+//        else if(buttonCode == controllerMapping.BUTTON_GUIDE)
+//            System.out.println("GUIDE");
+//        else if(buttonCode == controllerMapping.BUTTON_BACK)
+//            System.out.println("BACK");
+//        else if(buttonCode == controllerMapping.BUTTON_START)
+//            System.out.println("START");
+//        else if(buttonCode == controllerMapping.BUTTON_DPAD_LEFT)
+//            System.out.println("L");
+//        else if(buttonCode == controllerMapping.BUTTON_DPAD_RIGHT)
+//            System.out.println("R");
+//        else if(buttonCode == controllerMapping.BUTTON_DPAD_UP)
+//            System.out.println("U");
+//        else if(buttonCode == controllerMapping.BUTTON_DPAD_DOWN)
+//            System.out.println("D");
+//        else
+//            System.out.println(buttonCode);
 
         return false;
     }
