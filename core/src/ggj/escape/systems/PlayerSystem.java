@@ -142,7 +142,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
                 Vector3 mousePos = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
                 Vector3 mouse = cam.camera.unproject(mousePos);
 
-                pl.aiming = new Vector2(mouse.x, mouse.y).sub(pos).nor();
+                pl.aiming = new Vector2(mouse.x, mouse.y).sub(pos).sub(0, 1f).nor();
                 isShooting = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
                 pl.isAiming = true;
 
