@@ -106,7 +106,7 @@ public class Resources {
         }
         public static class boss {
             public static Animation idle = buildAnim(Resources.tex.boss, 0.1f, 0, 12, 128, 192);
-            public static Animation walk = buildAnim(Resources.tex.boss, 0.1f, 1, 14, 128, 192);
+            public static Animation walk = buildAnim(Resources.tex.boss, 0.1f, 6, 14, 128, 192);
             public static Animation walk_side = buildAnim(Resources.tex.boss, 0.1f, 2, 12, 128, 192);
 //            public static Animation attack = buildAnim(Resources.tex.baddies, 0.1f, 3, 1, 128, 160);
 //            public static Animation die = buildAnim(Resources.tex.baddies, 0.1f, 3, 1, 128, 160);

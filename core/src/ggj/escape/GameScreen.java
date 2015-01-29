@@ -233,7 +233,7 @@ public class GameScreen extends ScreenAdapter {
 
             uiBatch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
             if (pl.isAiming) {
-                Sprite crosshair = Resources.sprites.crosshair[pl.role];
+                Sprite crosshair = Resources.sprites.crosshair[pl.role % 4];
                 crosshair.setX(sp.x);
                 crosshair.setY(sp.y + 1f);
                 crosshair.setRotation(pl.angleAim);
@@ -254,7 +254,7 @@ public class GameScreen extends ScreenAdapter {
 
             float f = (float) ch.hp / ch.maxHp;
             int w = 32 + (int) (224.0f * f);
-            TextureRegion tr = new TextureRegion(Resources.sprites.health[pl.role], 0, 0, w, 32);
+            TextureRegion tr = new TextureRegion(Resources.sprites.health[pl.role % 4], 0, 0, w, 32);
 
             hudBatch.draw(tr, 0.5f + pl.role * 9, 23.5f, 1 + 7 * f, 1);
 

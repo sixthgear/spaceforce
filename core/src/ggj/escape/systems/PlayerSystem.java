@@ -22,6 +22,9 @@ import ggj.escape.input.XBox360PadWin;
 
 public class PlayerSystem extends EntitySystem  implements ControllerListener {
 
+    private final float VEL = 4.5f;
+    private final int COOL= 8;
+
     private Engine engine;
     private World world;
     private boolean mac = System.getProperty("os.name").toLowerCase().contains("mac");
@@ -60,7 +63,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
         PhysicsSystem ph = engine.getSystem(PhysicsSystem.class);
 
         player.add(new PlayerComponent(role));
-        player.add(new CharacterComponent(20));
+        player.add(new CharacterComponent(20, COOL));
         player.add(new PhysicsComponent(ph.createCircBody(x, y, 0.48f, PlayerComponent.category, PlayerComponent.mask)));
         player.add(new SpriteComponent(player.getComponent(PlayerComponent.class).regions.get(0)));
         return player;
@@ -147,7 +150,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
 
             // deadzone
             if (movement.len2() > 0.4) {
-                movement.scl(4.5f);
+                movement.scl(VEL);
                 p.body.setLinearVelocity(movement);
                 p.body.setLinearDamping(0f);
             } else {

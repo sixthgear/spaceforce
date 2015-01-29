@@ -121,8 +121,15 @@ public class Level {
                 break;
             case "player-4":
                 System.out.println("Spawning Player 4");
-                if (numPlayers == 4) {
+                if (numPlayers >= 4) {
                     Entity player = engine.getSystem(PlayerSystem.class).createPlayer(3, x, y);
+                    engine.addEntity(player);
+                }
+                break;
+            case "player-5":
+                System.out.println("Spawning Player 5");
+                if (numPlayers >= 5) {
+                    Entity player = engine.getSystem(PlayerSystem.class).createPlayer(4, x, y);
                     engine.addEntity(player);
                 }
                 break;
@@ -130,10 +137,10 @@ public class Level {
             // spider
             case "boss":
                 Entity boss = new Entity();
-                boss.add(new PhysicsComponent(ph.createBoxBody(x, y, 2, 3, BaddieComponent.category, BaddieComponent.mask)));
-                boss.add(new SpriteComponent(Resources.animations.boss.idle));
-                boss.add(new CharacterComponent(100));
-//                boss.add(new BaddieComponent(10, 4));
+                boss.add(new PhysicsComponent(ph.createBoxBody(x, y, 1.5f, 2, BaddieComponent.category, BaddieComponent.mask)));
+                boss.add(new SpriteComponent(Resources.animations.boss.walk));
+                boss.add(new CharacterComponent(150));
+                boss.add(new BaddieComponent(100, 5));
                 boss.add(new BossComponent());
                 engine.addEntity(boss);
                 break;
@@ -143,7 +150,7 @@ public class Level {
                 Entity spider = new Entity();
                 spider.add(new PhysicsComponent(ph.createCircBody(x, y, 0.48f, BaddieComponent.category, BaddieComponent.mask)));
                 spider.add(new SpriteComponent(Resources.animations.spider.walk));
-                spider.add(new CharacterComponent(1));
+                spider.add(new CharacterComponent((int) (1f * Math.ceil((float) numPlayers * 0.4))));
                 spider.add(new BaddieComponent(20, 6));
                 spider.add(new SpiderComponent());
                 engine.addEntity(spider);
@@ -154,7 +161,7 @@ public class Level {
                 Entity robot = new Entity();
                 robot.add(new PhysicsComponent(ph.createCircBody(x, y, 0.55f, BaddieComponent.category, BaddieComponent.mask)));
                 robot.add(new SpriteComponent(Resources.animations.robot.walk));
-                robot.add(new CharacterComponent(4));
+                robot.add(new CharacterComponent((int) (4f * Math.ceil((float) numPlayers * 0.4))));
                 robot.add(new BaddieComponent(20, 3));
                 robot.add(new RobotComponent());
                 engine.addEntity(robot);
@@ -165,7 +172,7 @@ public class Level {
                 Entity slime = new Entity();
                 slime.add(new PhysicsComponent(ph.createCircBody(x, y, 0.48f, BaddieComponent.category, BaddieComponent.mask)));
                 slime.add(new SpriteComponent(Resources.animations.slime.walk));
-                slime.add(new CharacterComponent(3));
+                slime.add(new CharacterComponent((int) (3f * Math.ceil((float) numPlayers * 0.4))));
                 slime.add(new BaddieComponent(12, 2));
                 slime.add(new SlimeComponent());
                 engine.addEntity(slime);

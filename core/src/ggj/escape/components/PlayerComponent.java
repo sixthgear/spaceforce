@@ -25,7 +25,7 @@ public class PlayerComponent extends Component {
     public PlayerComponent(int role) {
         this.role = role;
         for (int i = 0; i < 8; i++) {
-            regions.add(new TextureRegion(Resources.tex.characters, Level.TILESIZE * i, role * 128, 32, 64));
+            regions.add(new TextureRegion(Resources.tex.characters, Level.TILESIZE * i, (role %4)* 128, 32, 64));
         }
     }
 }
