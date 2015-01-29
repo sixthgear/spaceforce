@@ -123,7 +123,7 @@ public class BaddieSystem extends IntervalIteratingSystem {
 
             }
 
-            physics.body.setLinearVelocity(Vector2.Zero);
+
 
         }
 

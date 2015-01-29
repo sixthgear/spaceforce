@@ -56,6 +56,8 @@ public class PhysicsSystem extends EntitySystem implements ContactListener, Enti
 
         Body body = world.createBody(bodydef);
         body.createFixture(fixturedef);
+        body.setLinearVelocity(new Vector2(0,0));
+        body.setLinearDamping(1.0f);
         shape.dispose();
         return body;
     }
@@ -80,6 +82,8 @@ public class PhysicsSystem extends EntitySystem implements ContactListener, Enti
 
         Body body = world.createBody(bodydef);
         body.createFixture(fixturedef);
+        body.setLinearVelocity(new Vector2(0,0));
+        body.setLinearDamping(1.0f);
         shape.dispose();
         return body;
     }

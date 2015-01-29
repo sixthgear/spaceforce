@@ -26,6 +26,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
     private World world;
     private boolean mac = System.getProperty("os.name").toLowerCase().contains("mac");
 
+
     public PlayerSystem() {
 
         super();
@@ -35,7 +36,6 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
         for (Controller c : Controllers.getControllers()) {
             System.out.printf("Controller %s connected\n", c.getName());
         }
-
 
     }
 
@@ -66,8 +66,22 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
         return player;
     }
 
+    public boolean arePlayersAlive() {
+
+
+
+        for (Entity player : entities) {
+            CharacterComponent ch = Mappers.character.get(player);
+            if (ch.alive)
+                return true;
+        }
+        return false;
+    }
+
+
     @Override
     public void update(float deltaTime) {
+
         for (Entity player : entities) {
 
             Controller controller;
@@ -76,7 +90,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
             CameraComponent cam = Mappers.camera.get(camera);
             PhysicsComponent p = Mappers.physics.get(player);
             SpriteComponent s = Mappers.sprite.get(player);
-            CharacterComponent c = Mappers.character.get(player);
+            CharacterComponent ch = Mappers.character.get(player);
             PlayerComponent pl = Mappers.player.get(player);
 
             Vector2 pos = p.body.getPosition();
@@ -140,7 +154,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
                 p.body.setLinearDamping(10f);
             }
 
-            if (isShooting && c.cooldown <= 0) {
+            if (isShooting && ch.cooldown <= 0) {
 
                 if (!pl.isAiming)
                     pl.aiming = movement.cpy();
@@ -172,7 +186,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
                 else
                     Resources.sfx.pistol_3.play(0.25f);
 
-                c.cooldown = c.maxCooldown;
+                ch.cooldown = ch.maxCooldown;
             }
 
             if (pl.isAiming)
@@ -199,7 +213,7 @@ public class PlayerSystem extends EntitySystem  implements ControllerListener {
                 s.region = pl.regions.get(3);
 
 
-            c.cooldown--;
+            ch.cooldown--;
 
         }
     }

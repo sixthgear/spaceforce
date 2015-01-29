@@ -27,6 +27,15 @@ public class TriggerSystem extends IteratingSystem {
         this.engine = engine;
     }
 
+    public boolean isExitTriggered() {
+        for (Entity e : engine.getEntitiesFor(Mappers.families.exits)) {
+            ExitComponent ex = Mappers.exit.get(e);
+            if (ex.triggered)
+                return true;
+        }
+        return false;
+    }
+
     public void enter(Entity me, Entity other) {
 
         // Player exits

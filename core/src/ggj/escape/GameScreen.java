@@ -69,6 +69,18 @@ public class GameScreen extends ScreenAdapter {
     }
 
     @Override
+    public void hide() {
+        super.hide();
+        level.music.stop();
+        level.music.dispose();
+        engine.removeAllEntities();
+
+        for (EntitySystem s : engine.getSystems()) {
+            engine.removeSystem(s);
+        }
+    }
+
+    @Override
     public void show() {
 
         hud = new OrthographicCamera(WIDTH, HEIGHT);
@@ -143,38 +155,45 @@ public class GameScreen extends ScreenAdapter {
 
     public void update(float delta) {
 
+
+
         // update the engine
         engine.update(delta);
 
-        for (Entity e : engine.getEntitiesFor(Mappers.families.exits)) {
+        PlayerSystem players = engine.getSystem(PlayerSystem.class);
+        TriggerSystem triggers = engine.getSystem(TriggerSystem.class);
 
-            if (Mappers.exit.get(e).triggered) {
-                System.out.println("NEXT!");
-                level.music.stop();
-                level.music.dispose();
-                engine.removeAllEntities();
+        if (!players.arePlayersAlive()) {
+            game.setScreen(game.titleScreen);
+            return;
+        }
 
-                for (EntitySystem s : engine.getSystems()) {
-                    engine.removeSystem(s);
-                }
+        if (triggers.isExitTriggered()) {
 
-                init();
-
-                String next = Mappers.exit.get(e).nextLevel;
-
-                if (next.equals("end-credits")) {
-                    game.setScreen(game.creditsScreen);
-                    return;
-                } else {
-
-                    level = new Level(engine, next, numPlayers);
-
-                    // add the main camera entity
-                    camera = new Entity();
-                    camera.add(new CameraComponent(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(Mappers.families.players)));
-                    engine.addEntity(camera);
+            String next = "";
+            for (Entity e : engine.getEntitiesFor(Mappers.families.exits)) {
+                ExitComponent ex = Mappers.exit.get(e);
+                if (ex.triggered) {
+                    next = ex.nextLevel;
+                    break;
                 }
             }
+
+            hide();
+            init();
+
+            if (next.equals("end-credits")) {
+                game.setScreen(game.creditsScreen);
+                return;
+            } else {
+
+                level = new Level(engine, next, numPlayers);
+                // add the main camera entity
+                camera = new Entity();
+                camera.add(new CameraComponent(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), new Vector2(1.0f, 1.0f), level, engine.getEntitiesFor(Mappers.families.players)));
+                engine.addEntity(camera);
+            }
+
         }
 
         // update the level
