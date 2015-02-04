@@ -101,6 +101,7 @@ public class PhysicsSystem extends EntitySystem implements ContactListener, Enti
         super.update(deltaTime);
         // step the world
         world.step(deltaTime, 6, 2);
+        world.clearForces();
 
         // remove dead entities
         for (Entity e : toRemove) {

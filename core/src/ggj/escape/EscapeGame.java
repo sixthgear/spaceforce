@@ -36,7 +36,6 @@ public class EscapeGame extends Game {
 			// fixed timestep consumes time from accumulator in DT sized chunks
 			accumulator += Gdx.graphics.getDeltaTime();
 			while (accumulator >= DT) {
-
 				gameScreen.update((float) DT);
 				accumulator -= DT;
 				t += DT;
@@ -47,7 +46,6 @@ public class EscapeGame extends Game {
 		// clear window
 		Gdx.gl.glClearColor(0.03f, 0.03f, 0.03f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 
 		if (screen == gameScreen)
 			gameScreen.render((float) t, (float) DT, (float) alpha);

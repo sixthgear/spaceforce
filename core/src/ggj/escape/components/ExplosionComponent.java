@@ -11,4 +11,3 @@ public class ExplosionComponent extends Component {
         this.timer = timer;
     }
 }
-    
